@@ -7,11 +7,11 @@
 - 규칙 정본: 저장소 루트 AGENTS.md (Codex가 자동으로 읽음)
 
 ## 준비
-- Unity Hub에서 Unity 6 LTS 설치, 모듈: Android Build Support
+- Unity Hub에서 Unity 6000.4.7f1 설치, 모듈: Windows Build Support·WebGL Build Support
 - VS Code 확장: C# Dev Kit, Unity, Codex
 - Unity → Preferences → External Tools → Editor = VS Code
 - 환경변수 UNITY_EXE = Unity.exe 전체 경로
-- 예: C:\Program Files\Unity\Hub\Editor\6000.0.x\Editor\Unity.exe
+- 예: C:\Program Files\Unity\Hub\Editor\6000.4.7f1\Editor\Unity.exe
 - VS Code에서 CatVillage 폴더 열기 → Codex 패널 열기
 
 ## Unity CLI 기본 명령
@@ -27,7 +27,11 @@
 |---|---|
 | 스프라이트 일괄 임포트 | `CatVillage.EditorTools.ArtImporter.ImportAll` |
 | 이펙트 프리팹 검사 | `CatVillage.EditorTools.FxValidator.ValidateAll` |
-| 안드로이드 빌드 | `CatVillage.EditorTools.BuildTool.BuildAndroid` |
+| 프로젝트 초기 설정 | `CatVillage.EditorTools.ProjectSetup.Run` |
+| PC 빌드 | `CatVillage.EditorTools.BuildTool.BuildWindows` |
+| 웹앱 빌드 | `CatVillage.EditorTools.BuildTool.BuildWebGL` |
+| PC + 웹 둘 다 | `CatVillage.EditorTools.BuildTool.BuildAll` |
+- 웹앱 로컬 확인: Builds/WebGL에서 `npx serve` → 브라우저로 열기 (파일 더블클릭은 안 됨)
 
 - 로그를 파일로: `-logFile -` 대신 `-logFile Logs/cli.log`
 
