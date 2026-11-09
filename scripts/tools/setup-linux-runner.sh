@@ -42,10 +42,16 @@ ensure_node() {
   major="$(node -v 2>/dev/null | sed 's/^v\([0-9]*\).*/\1/')"
   [ -n "$major" ] && [ "$major" -ge "$NODE_MIN" ] && return 0
   echo "  Node.js ${major:-없음} → $NODE_MIN 설치 (wrangler 요구)"
+  sudo apt-get remove -y nodejs npm libnode-dev libnode72 libnode109 >/dev/null 2>&1 || true
   curl -fsSL "https://deb.nodesource.com/setup_${NODE_MIN}.x" | sudo -E bash - >/dev/null
-  sudo apt-get install -y nodejs >/dev/null
+  sudo apt-get install -y nodejs
   hash -r
-  echo "  node $(node -v)"
+  major="$(node -v 2>/dev/null | sed 's/^v\([0-9]*\).*/\1/')"
+  if [ -z "$major" ] || [ "$major" -lt "$NODE_MIN" ]; then
+    echo "  ✘ Node.js 업그레이드 실패 (현재 $(node -v 2>/dev/null || echo 없음)) → 위 apt 출력 확인"
+    return 1
+  fi
+  echo "  ✔ node $(node -v)"
 }
 
 deps() {
@@ -113,7 +119,7 @@ check() {
 
 cloudflare() {
   echo "[cloudflare] wrangler 로그인 (배포용)"
-  ensure_node
+  ensure_node || return 1
   if [ -n "${CLOUDFLARE_API_TOKEN:-}" ] || as_user npx --yes wrangler whoami 2>/dev/null | grep -q 'You are logged in'; then
     echo "  ✔ Cloudflare 인증 있음"
     return 0
@@ -148,6 +154,7 @@ register() {
 
 case "${1:-all}" in
   deps) deps ;;
+  node) ensure_node ;;
   hub) hub ;;
   editor) editor ;;
   license) license ;;
