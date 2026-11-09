@@ -122,6 +122,7 @@ namespace YangVil.EditorTools
             Check("마을 고양이 생성", FindObjectsByType<SpriteActor>(FindObjectsSortMode.None).Length >= 1);
             Check("고양이 프레임 로드", FindObjectsByType<SpriteActor>(FindObjectsSortMode.None).All(a => a.Ready));
             Check("가이드 안내 표시", !string.IsNullOrEmpty(FindAnyObjectByType<VillageHud>().guideLabel.text));
+            Check("처음엔 쓰다듬기 권유", Guide.Next(GameBootstrap.Game).Target == GuideTarget.Pet);
             var starter = GameBootstrap.Game.Data.cats[0];
             var home = GameBootstrap.Game.House(starter.houseUid);
             Check("고양이 집 위치 판정", world.HouseAt(world.transform.Find("Dynamic").Find(home.uid).position) == home);
@@ -183,6 +184,7 @@ namespace YangVil.EditorTools
             Check("고양이 성격 부여", starter.personality >= 0 && starter.personality < CatLife.PersonalityCount);
             var bond = starter.bond;
             Check("쓰담 바크", !string.IsNullOrEmpty(game.Pet(starter)) && starter.bond > bond);
+            Check("쓰담 후 다음 권유로 넘어감", Guide.Next(game).Target != GuideTarget.Pet);
             var basket = game.Data.baskets[0];
             basket.hatchAtUnix = Game.Now;
             var kitten = game.Hatch(basket);

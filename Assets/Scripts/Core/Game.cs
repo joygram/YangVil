@@ -40,6 +40,7 @@ namespace YangVil.Core
                 if (b.genes == null) b.genes = new CatGenes();
             if (Data.relations == null) Data.relations = new List<Relation>();
             if (Data.episodesSeen == null) Data.episodesSeen = new List<string>();
+            if (Data.tried == null) Data.tried = new List<string>();
             if (Data.expedition == null) Data.expedition = new Expedition();
             Data.version = SaveData.CurrentVersion;
             SaveSystem.Save(Data);
@@ -213,6 +214,7 @@ namespace YangVil.Core
             basket.personality = _rng.NextDouble() < CatLife.PersonalityMutation
                 ? _rng.Next(CatLife.PersonalityCount)
                 : _rng.Next(2) == 0 ? a.personality : b.personality;
+            MarkTried(Tried.Breed);
             Remember(a, $"{DisplayName(b)}와 가족을 꾸렸다");
             Remember(b, $"{DisplayName(a)}와 가족을 꾸렸다");
             Commit();
@@ -256,6 +258,7 @@ namespace YangVil.Core
             GainExp(cat, treat.value);
             cat.fullness = Math.Min(100f, cat.fullness + CatCare.FeedAmount);
             OnFavored(cat, 2f, Grievance.Food, o => o.fullness < CatCare.HighThreshold);
+            MarkTried(Tried.Feed);
             Commit();
             return true;
         }

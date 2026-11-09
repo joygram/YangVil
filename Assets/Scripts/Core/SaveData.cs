@@ -89,7 +89,7 @@ namespace YangVil.Core
     [Serializable]
     public class SaveData
     {
-        public const int CurrentVersion = 6;
+        public const int CurrentVersion = 7;
 
         public int version = CurrentVersion;
         public int coins = 250;
@@ -101,6 +101,7 @@ namespace YangVil.Core
         public List<string> discovered = new List<string>();
         public List<Relation> relations = new List<Relation>();
         public List<string> episodesSeen = new List<string>();
+        public List<string> tried = new List<string>();
         public Expedition expedition = new Expedition();
         public int nextUid = 1;
     }

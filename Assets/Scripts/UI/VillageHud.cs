@@ -75,7 +75,20 @@ namespace YangVil.UI
 
         void OnHouse(OwnedHouse h) => Open($"{Game.HouseDef(h).displayName} Lv{h.level}", () => RenderHouse(h));
 
-        void OnCat(OwnedCat c) => Open(Game.Species(c).displayName, () => RenderCats(new[] { c }));
+        void OnCat(OwnedCat c)
+        {
+            Game.MarkTried(Tried.Card);
+            Game.SaveQuiet();
+            Open(Game.Species(c).displayName, () => RenderCats(new[] { c }));
+        }
+
+        void PointAt(OwnedCat cat, string hint)
+        {
+            Close();
+            var w = cat == null ? null : _world.WandererOf(cat);
+            if (w != null) _world.FocusOn(w.transform.position);
+            toast.Show(hint);
+        }
 
         void OnBuilding(string id)
         {
@@ -137,6 +150,10 @@ namespace YangVil.UI
                 case GuideTarget.Collect: toast.Show($"코인 +{Game.CollectAndSave(step.House)}"); break;
                 case GuideTarget.Party: Open("내 고양이", () => RenderCats(Game.Data.cats)); break;
                 case GuideTarget.Adventure: OnBuilding(VillageWorld.Gate); break;
+                case GuideTarget.Pet: PointAt(step.Cat, "이 고양이를 톡 눌러 보세요"); break;
+                case GuideTarget.Card when !Game.HasTried(Tried.Card): PointAt(step.Cat, "이 고양이를 꾹 길게 눌러 보세요"); break;
+                case GuideTarget.Card: OnCat(step.Cat); break;
+                case GuideTarget.Breed: OnBuilding(VillageWorld.BreedTower); break;
             }
         }
 

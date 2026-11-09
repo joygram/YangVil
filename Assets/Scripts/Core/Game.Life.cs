@@ -23,6 +23,13 @@ namespace YangVil.Core
 
         public void SaveQuiet() => SaveSystem.Save(Data);
 
+        public bool HasTried(string key) => Data.tried.Contains(key);
+
+        public void MarkTried(string key)
+        {
+            if (!Data.tried.Contains(key)) Data.tried.Add(key);
+        }
+
         public void Remember(OwnedCat cat, string text)
         {
             cat.memories.Insert(0, new CatMemory { text = text, unix = Now });
@@ -81,6 +88,7 @@ namespace YangVil.Core
         public string Pet(OwnedCat cat)
         {
             OnFavored(cat, 3f, Grievance.Jealousy, o => o.bond >= 40f);
+            MarkTried(Tried.Pet);
             SaveQuiet();
             return CatLife.Bark(PersonalityOf(cat), "pet");
         }
@@ -185,6 +193,7 @@ namespace YangVil.Core
             var party = Party.ToList();
             if (party.Count == 0) return "파티에 고양이가 없어요";
             Data.expedition = new Expedition { cats = party.Select(c => c.uid).ToList(), stageId = stage.id, startUnix = Now };
+            MarkTried(Tried.Stroll);
             Commit();
             return null;
         }
@@ -237,6 +246,7 @@ namespace YangVil.Core
         public string ResolveEpisode(Episode e, OwnedCat cat, EpisodeChoice choice)
         {
             Data.episodesSeen.Add(Seen(e, cat));
+            MarkTried(Tried.Story);
             AddBond(cat, choice.Bond);
             var friend = BestFriend(cat) ?? Cat(cat.parentA);
             if (friend != null && choice.FriendAffinity != 0) Shift(Rel(cat, friend), choice.FriendAffinity);
