@@ -72,6 +72,7 @@
 - 삭제한 파일은 `.meta`도 같이 삭제 상태인지 확인
 - 커밋 금지: Library/ · Temp/ · Logs/ · UserSettings/ · Builds/ · *.csproj · *.sln
 - 바꾼 파일만 add, 남의 작업·무관한 변경 섞지 않기
+- 에디터 자동 변경(ProjectSettings 정리·폰트 동적 아틀라스 등)도 반영 → 기능 커밋과 분리해 `chore: 에디터 자동 변경 반영`으로 커밋
 - 메시지는 한국어, `종류: 무엇을` (feat·fix·docs·chore)
 - 커밋 후 `git status --short`가 비었거나 의도한 미커밋만 남았는지 재확인
 - 푸시: `git push` → main 푸시 시 GitHub Actions가 WebGL 빌드·Cloudflare 배포
