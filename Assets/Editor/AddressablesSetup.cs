@@ -110,7 +110,12 @@ namespace CatVillage.EditorTools
         }
 
         [MenuItem("CatVillage/Build Addressables")]
-        public static bool BuildContent(bool clean = false)
+        static void BuildContentMenu() => BuildContent(false);
+
+        [MenuItem("CatVillage/Build Addressables (Clean)")]
+        static void BuildContentCleanMenu() => BuildContent(true);
+
+        public static bool BuildContent(bool clean)
         {
             Run();
             if (clean) AddressableAssetSettings.CleanPlayerContent();
