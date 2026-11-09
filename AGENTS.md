@@ -29,6 +29,8 @@
 ## 빌드 규칙
 - 🚫 컴파일 확인 없이 빌드 금지: 먼저 `-batchmode -quit`(executeMethod 없이) → `error CS` 0건 확인 후 빌드
 - BuildTool은 컴파일 실패 상태면 빌드를 거부함 (scriptCompilationFailed)
+- 컴파일 확인 로그에서 `error CS`와 함께 `invalid parameters`(MenuItem 오류)도 0건 확인
+- `[MenuItem]` 메서드는 인자 없음 → 인자 필요하면 메뉴용 래퍼 메서드를 따로 둠
 - 웹 빌드는 증분: Library·Addressables 캐시 재사용, 전체 재빌드는 `-cleanBuild` 인자 줄 때만
 - 빌드보다 플레이 확인이 먼저: 에디터 Play(Intro부터) 동작 확인 → 그다음 웹 빌드
 - 어느 씬에서 Play 해도 Intro(빌드 0번)부터 시작됨
