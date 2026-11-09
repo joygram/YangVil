@@ -10,8 +10,8 @@ UNITY_CHANGESET="$(unity_changeset "$REPO_ROOT")"
 TARGET_USER="${SUDO_USER:-$USER}"
 TARGET_HOME="$(getent passwd "$TARGET_USER" | cut -d: -f6)"
 find_unity() {
-  local p="$TARGET_HOME/Unity/Hub/Editor/$UNITY_VERSION/Editor/Unity"
-  [ -x "$p" ] && { echo "$p"; return; }
+  local p
+  p="$(UNITY_EDITOR_ROOT="$TARGET_HOME/Unity/Hub/Editor" HOME="$TARGET_HOME" unity_exe "$UNITY_VERSION")" && { echo "$p"; return; }
   if command -v unityhub >/dev/null; then
     p="$(as_user unityhub --headless editors --installed 2>/dev/null | grep "$UNITY_VERSION" | grep -o '/[^ ]*' | head -1)"
     [ -n "$p" ] && [ -d "$p" ] && p="$p/Editor/Unity"
