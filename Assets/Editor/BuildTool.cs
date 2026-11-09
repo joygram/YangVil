@@ -56,6 +56,12 @@ namespace CatVillage.EditorTools
 
         static bool Build(BuildTargetGroup group, BuildTarget target, string outputPath)
         {
+            if (EditorUtility.scriptCompilationFailed)
+            {
+                Fail("컴파일 오류가 있어 빌드를 중단합니다. error CS 를 먼저 고치세요.");
+                return false;
+            }
+
             var scenes = EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray();
             if (scenes.Length == 0)
             {
@@ -66,7 +72,7 @@ namespace CatVillage.EditorTools
             if (EditorUserBuildSettings.activeBuildTarget != target)
                 EditorUserBuildSettings.SwitchActiveBuildTarget(group, target);
 
-            if (!AddressablesSetup.BuildContent())
+            if (!AddressablesSetup.BuildContent(System.Environment.GetCommandLineArgs().Contains("-cleanBuild")))
             {
                 Fail("Addressables 빌드 실패");
                 return false;

@@ -209,7 +209,7 @@ namespace CatVillage.World
 
         void Update()
         {
-            if (Time.time < _nextCoinRefresh) return;
+            if (_game == null || Time.time < _nextCoinRefresh) return;
             _nextCoinRefresh = Time.time + 1f;
             foreach (var house in _game.Data.houses) RefreshCoins(house);
         }

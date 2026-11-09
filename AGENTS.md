@@ -26,6 +26,13 @@
 - 에디터 열린 상태의 CLI 작업 → 빌드 전용 클론 `D:/workspace/CatVillage-build`에서 실행
 - 클론 반영: `git -C <클론> pull <원본> main` → 작업 → 클론 커밋 → 원본에서 `pull --ff-only <클론> main`
 
+## 빌드 규칙
+- 🚫 컴파일 확인 없이 빌드 금지: 먼저 `-batchmode -quit`(executeMethod 없이) → `error CS` 0건 확인 후 빌드
+- BuildTool은 컴파일 실패 상태면 빌드를 거부함 (scriptCompilationFailed)
+- 웹 빌드는 증분: Library·Addressables 캐시 재사용, 전체 재빌드는 `-cleanBuild` 인자 줄 때만
+- 빌드보다 플레이 확인이 먼저: 에디터 Play(Intro부터) 동작 확인 → 그다음 웹 빌드
+- 어느 씬에서 Play 해도 Intro(빌드 0번)부터 시작됨
+
 ## 커밋 전 체크 (하나라도 실패하면 커밋 금지)
 - 컴파일 0에러: 클론에서 `-batchmode -quit` 실행 → `error CS` 0건, 종료 코드 0
 - 코드와 생성 콘텐츠 짝 맞춤: 데이터·프리팹·씬을 읽는 코드를 바꿨으면 빌더 실행 결과(SO·프리팹·씬·GameConfig)까지 같은 커밋

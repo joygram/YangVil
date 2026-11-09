@@ -13,6 +13,13 @@ namespace CatVillage.Core
 
         public static Game Game { get; private set; }
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static void StartFromBoot()
+        {
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex != 0)
+                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        }
+
         void Start()
         {
             if (config == null) config = GameConfig.Load();
