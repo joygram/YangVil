@@ -13,6 +13,7 @@ namespace CatVillage.Data
         public string skillName;
         public float skillPower = 2.5f;
         public Color tint = Color.white;
+        public CoatSpec coat = new CoatSpec();
         public SpriteSet sprites;
 
         public const int TeenLevel = 10;

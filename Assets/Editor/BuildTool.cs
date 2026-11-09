@@ -36,7 +36,16 @@ namespace CatVillage.EditorTools
             if (!Build(BuildTargetGroup.WebGL, BuildTarget.WebGL, output)) return false;
             var headers = Path.Combine(output, "_headers");
             if (File.Exists(headers)) File.Delete(headers);
+            WriteVersion(output);
             return CheckAssetLimit(output);
+        }
+
+        static void WriteVersion(string output)
+        {
+            var sha = System.Environment.GetEnvironmentVariable("GITHUB_SHA");
+            var version = string.IsNullOrEmpty(sha) ? System.DateTime.UtcNow.ToString("yyyyMMddHHmmss") : sha.Substring(0, 7);
+            File.WriteAllText(Path.Combine(output, "version.json"),
+                $"{{\"version\":\"{version}\",\"builtAt\":\"{System.DateTime.UtcNow:o}\"}}");
         }
 
         const long WorkerAssetLimitBytes = 25L * 1024 * 1024;

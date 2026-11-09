@@ -27,7 +27,13 @@ MonoBehaviour:
     spd: 1
   skillName: "\uBB3C\uBC29\uC6B8 \uAFB9\uAFB9\uC774"
   skillPower: 2.5
-  tint: {r: 0.6975, g: 0.835, b: 1, a: 1}
+  tint: {r: 1, g: 1, b: 1, a: 1}
+  coat:
+    pattern: 1
+    light: {r: 0.7254902, g: 0.74509805, b: 0.76862746, a: 1}
+    dark: {r: 0.3372549, g: 0.36078432, b: 0.4, a: 1}
+    accent: {r: 0.9490196, g: 0.9490196, b: 0.9490196, a: 1}
+    accent2: {r: 0.16470589, g: 0.1764706, b: 0.2, a: 1}
   sprites:
     idle:
     - m_AssetGUID: f5fcd01f2f8ab074cb992cc3ba07c856

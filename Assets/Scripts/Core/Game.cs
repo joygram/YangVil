@@ -54,12 +54,26 @@ namespace CatVillage.Core
 
         public IEnumerable<OwnedCat> Party => Data.cats.Where(c => c.inParty).Take(PartySize);
 
-        OwnedCat AddCat(CatData species, bool inParty)
+        readonly System.Random _rng = new System.Random();
+
+        OwnedCat AddCat(CatData species, bool inParty, CatGenes genes = null)
         {
-            var cat = new OwnedCat { uid = $"c{Data.nextUid++}", speciesId = species.id, inParty = inParty };
+            var cat = new OwnedCat
+            {
+                uid = $"c{Data.nextUid++}", speciesId = species.id, inParty = inParty, careUnix = Now,
+                genes = genes ?? Genetics.FromSpecies(species, _rng)
+            };
             Data.cats.Add(cat);
             if (!Data.discovered.Contains(species.id)) Data.discovered.Add(species.id);
+            var outlier = $"outlier:{cat.genes.outlier}";
+            if (cat.genes.outlier != Outlier.None && !Data.discovered.Contains(outlier)) Data.discovered.Add(outlier);
             return cat;
+        }
+
+        public string DisplayName(OwnedCat cat)
+        {
+            var o = Genetics.OutlierName(cat.genes.outlier);
+            return string.IsNullOrEmpty(o) ? Species(cat).displayName : $"{o}({Species(cat).displayName})";
         }
 
         public HouseData HouseDef(OwnedHouse h) => Config.House(h.houseId);
@@ -135,14 +149,18 @@ namespace CatVillage.Core
         {
             if (!IsReady(b)) return null;
             Data.baskets.Remove(b);
-            var cat = AddCat(Config.Cat(b.speciesId), Party.Count() < PartySize);
+            var cat = AddCat(Config.Cat(b.speciesId), Party.Count() < PartySize, b.hasGenes ? b.genes : null);
             Commit();
             return cat;
         }
 
-        public void AddBasket(CatData species, int seconds = -1)
+        public void AddBasket(CatData species, int seconds = -1, CatGenes genes = null)
         {
-            Data.baskets.Add(new Basket { speciesId = species.id, hatchAtUnix = Now + (seconds < 0 ? Config.hatchSeconds : seconds) });
+            Data.baskets.Add(new Basket
+            {
+                speciesId = species.id, hatchAtUnix = Now + (seconds < 0 ? Config.hatchSeconds : seconds),
+                hasGenes = genes != null, genes = genes ?? new CatGenes()
+            });
         }
 
         public bool BuyBasket()
@@ -158,7 +176,7 @@ namespace CatVillage.Core
         {
             if (a == b || FreeHatcherySlots <= 0 || Data.coins < Config.breedPrice) return false;
             Data.coins -= Config.breedPrice;
-            AddBasket(UnityEngine.Random.value < 0.5f ? Species(a) : Species(b), Config.breedSeconds);
+            AddBasket(_rng.Next(2) == 0 ? Species(a) : Species(b), Config.breedSeconds, Genetics.Breed(a.genes, b.genes, _rng));
             Commit();
             return true;
         }
@@ -196,9 +214,28 @@ namespace CatVillage.Core
             if (!ConsumeItem(treat)) return false;
             var house = House(cat.houseUid);
             if (house != null) Collect(house);
+            Care(cat);
             GainExp(cat, treat.value);
+            cat.fullness = Math.Min(100f, cat.fullness + CatCare.FeedAmount);
             Commit();
             return true;
+        }
+
+        public void Care(OwnedCat cat) => CatCare.Decay(cat, Now);
+
+        public CatMood Mood(OwnedCat cat)
+        {
+            Care(cat);
+            return CatCare.Mood(cat);
+        }
+
+        public void Wash(OwnedCat cat)
+        {
+            var house = House(cat.houseUid);
+            if (house != null) Collect(house);
+            Care(cat);
+            cat.cleanliness = 100f;
+            Commit();
         }
 
         public bool HatchNow(Basket b)
@@ -232,7 +269,7 @@ namespace CatVillage.Core
         public int Pending(OwnedHouse h)
         {
             var minutes = (Now - h.lastCollectUnix) / 60f;
-            var rate = CatsIn(h).Sum(c => c.level) * Config.coinsPerLevelPerMinute;
+            var rate = CatsIn(h).Sum(c => c.level * CatCare.ProductionRate(c)) * Config.coinsPerLevelPerMinute;
             return Math.Min(HouseDef(h).CoinCap(h.level), (int)(minutes * rate));
         }
 

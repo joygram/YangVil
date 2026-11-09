@@ -79,7 +79,7 @@ namespace CatVillage.World
         }
     }
 
-    public class Clickable : MonoBehaviour, IPointerClickHandler
+    public class Clickable : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         public Action OnClick;
 
@@ -88,5 +88,17 @@ namespace CatVillage.World
             if (eventData.dragging) return;
             OnClick?.Invoke();
         }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (!VillageCamera.Locked && !eventData.dragging) GameCursor.Set(CursorKind.Hand);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (!eventData.dragging) GameCursor.Set(CursorKind.Default);
+        }
+
+        void OnDisable() => GameCursor.Set(CursorKind.Default);
     }
 }

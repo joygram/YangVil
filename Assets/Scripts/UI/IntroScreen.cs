@@ -9,7 +9,7 @@ namespace CatVillage.UI
         protected override void Build()
         {
             var starter = Game.Config.starterCat;
-            BindUnit(mascot, starter.sprites, starter.tint);
+            BindUnit(mascot, starter.sprites, UnityEngine.Color.white, Core.Genetics.FromSpecies(starter, new System.Random(7)));
             start.OnClick(() => Core.SceneFlow.Instance.GoVillage());
             reset.OnClick(() => Game.ResetSave());
         }

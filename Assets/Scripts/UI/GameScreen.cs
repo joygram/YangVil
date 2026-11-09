@@ -19,10 +19,10 @@ namespace CatVillage.UI
 
         protected abstract void Build();
 
-        protected void BindUnit(UnitSprite unit, Data.SpriteSet set, Color tint)
+        protected void BindUnit(UnitSprite unit, Data.SpriteSet set, Color tint, Data.CatGenes genes = null)
         {
             unit.Prepare(tint);
-            StartCoroutine(Assets.LoadFrames(set, unit.SetFrames));
+            StartCoroutine(Assets.LoadCatFrames(set, genes, unit.SetFrames));
         }
     }
 }

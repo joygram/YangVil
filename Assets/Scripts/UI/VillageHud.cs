@@ -28,10 +28,15 @@ namespace CatVillage.UI
         public LabeledButton guideGo;
         public CatCard catCardPrefab;
         public RowCard rowCardPrefab;
+        public ShopSlot shopSlotPrefab;
+        public LabeledButton tabButtonPrefab;
+
+        enum ShopTab { Basket, Item, House }
 
         VillageWorld _world;
         Action _render;
         OwnedCat _breedFirst;
+        ShopTab _shopTab;
 
         protected override void Build()
         {
@@ -200,15 +205,22 @@ namespace CatVillage.UI
             {
                 var species = Game.Species(cat);
                 var card = Instantiate(catCardPrefab, panelContent);
-                BindUnit(card.portrait, species.sprites, species.tint);
+                BindUnit(card.portrait, species.sprites, species.tint, cat.genes);
                 var s = species.StatsAt(cat.level);
                 var home = Game.House(cat.houseUid);
                 card.info.text =
-                    $"{species.displayName} [{Affinity.Label(species.element)}] Lv{cat.level} {CatData.StageLabel(cat.level)}\n" +
+                    $"{Game.DisplayName(cat)} [{Affinity.Label(species.element)}] Lv{cat.level} {CatData.StageLabel(cat.level)}\n" +
+                    $"{Genetics.Describe(cat.genes)}\n" +
                     $"HP {s.hp} 공격 {s.atk} 방어 {s.def} 속도 {s.spd}\n" +
-                    $"EXP {cat.exp}/{Game.ExpToNext(cat)} · {(home != null ? Game.HouseDef(home).displayName : "부화소 대기")}";
+                    $"EXP {cat.exp}/{Game.ExpToNext(cat)} · {(home != null ? Game.HouseDef(home).displayName : "부화소 대기")}\n" +
+                    $"{CatCare.Label(Game.Mood(cat))} · 배 {cat.fullness:0} · 청결 {cat.cleanliness:0}";
                 var c = cat;
                 card.feed.OnClick(() => { if (!Game.Feed(c)) toast.Show("츄르가 없어요"); });
+                card.wash.OnClick(() =>
+                {
+                    Game.Wash(c);
+                    toast.Show($"{Game.Species(c).displayName} 깨끗해졌어요!");
+                });
                 card.party.Text = cat.inParty ? "파티 해제" : "파티 편성";
                 card.party.Highlight(cat.inParty);
                 card.party.OnClick(() => { if (!Game.ToggleParty(c)) toast.Show($"파티는 {Game.PartySize}마리까지예요"); });
@@ -246,20 +258,77 @@ namespace CatVillage.UI
 
         void RenderShop()
         {
-            Row($"털실 바구니 (무작위 속성)  {Game.Config.basketPrice}코인", "구매",
-                () => toast.Show(Game.BuyBasket() ? "바구니를 부화소에 넣었어요" : Game.FreeHatcherySlots <= 0 ? "부화 슬롯이 꽉 찼어요" : "코인이 부족해요"));
-            foreach (var item in Game.Config.items.Where(i => i.price > 0))
+            var tabs = new GameObject("ShopTabs", typeof(RectTransform)).GetComponent<RectTransform>();
+            tabs.SetParent(panelContent, false);
+            var row = tabs.gameObject.AddComponent<UnityEngine.UI.HorizontalLayoutGroup>();
+            row.spacing = 10;
+            row.childControlWidth = row.childControlHeight = true;
+            row.childForceExpandWidth = row.childForceExpandHeight = true;
+            tabs.gameObject.AddComponent<UnityEngine.UI.LayoutElement>().preferredHeight = 90;
+            Tab(tabs, "바구니", ShopTab.Basket);
+            Tab(tabs, "아이템", ShopTab.Item);
+            Tab(tabs, "집", ShopTab.House);
+
+            var grid = new GameObject("ShopGrid", typeof(RectTransform)).GetComponent<RectTransform>();
+            grid.SetParent(panelContent, false);
+            var layout = grid.gameObject.AddComponent<UnityEngine.UI.GridLayoutGroup>();
+            layout.cellSize = new Vector2(290, 400);
+            layout.spacing = new Vector2(16, 16);
+            layout.constraint = UnityEngine.UI.GridLayoutGroup.Constraint.FixedColumnCount;
+            layout.constraintCount = 3;
+            layout.childAlignment = TextAnchor.UpperCenter;
+
+            switch (_shopTab)
             {
-                var it = item;
-                Row($"{item.displayName} (보유 {Game.ItemCount(item)})  {item.price}코인\n{Describe(item)}", "구매",
-                    () => toast.Show(Game.BuyItem(it) ? $"{it.displayName} 구매!" : "코인이 부족해요"));
+                case ShopTab.Basket:
+                    Slot(grid, "털실 바구니", "무작위 속성 고양이", $"부화 슬롯 {Game.Data.baskets.Count}/{Game.Config.hatcherySlots}",
+                        Game.Config.basketPrice, new Color(0.95f, 0.8f, 0.6f), Game.Config.presentation.basketIcon,
+                        () => Game.BuyBasket() ? "바구니를 부화소에 넣었어요" : Game.FreeHatcherySlots <= 0 ? "부화 슬롯이 꽉 찼어요" : "코인이 부족해요");
+                    break;
+                case ShopTab.Item:
+                    foreach (var item in Game.Config.items.Where(i => i.price > 0))
+                    {
+                        var it = item;
+                        Slot(grid, item.displayName, Describe(item), $"보유 {Game.ItemCount(item)}", item.price, item.color, item.icon,
+                            () => Game.BuyItem(it) ? $"{it.displayName} 구매!" : "코인이 부족해요");
+                    }
+                    break;
+                default:
+                    foreach (var house in Game.Config.houses.Where(h => h.price > 0))
+                    {
+                        var hd = house;
+                        var count = Game.Data.houses.Count(h => h.houseId == hd.id);
+                        Slot(grid, house.displayName, $"받는 속성: {house.AcceptLabel()}", count > 0 ? $"보유 {count}" : "", house.price, house.tint, house.sprite,
+                            () => Game.BuyHouse(hd) ? $"{hd.displayName} 완성!" : Game.FreeVillageSlot() < 0 ? "빈 땅이 없어요" : "코인이 부족해요");
+                    }
+                    break;
             }
-            foreach (var house in Game.Config.houses.Where(h => h.price > 0))
+        }
+
+        void Tab(Transform parent, string label, ShopTab tab)
+        {
+            var b = Instantiate(tabButtonPrefab, parent);
+            b.Text = label;
+            b.Highlight(_shopTab == tab);
+            b.OnClick(() =>
             {
-                var hd = house;
-                Row($"{house.displayName} ({house.AcceptLabel()})  {house.price}코인", "짓기",
-                    () => toast.Show(Game.BuyHouse(hd) ? $"{hd.displayName} 완성!" : Game.FreeVillageSlot() < 0 ? "빈 땅이 없어요" : "코인이 부족해요"));
-            }
+                _shopTab = tab;
+                Refresh();
+            });
+        }
+
+        void Slot(Transform grid, string name, string detail, string owned, int price, Color color,
+            UnityEngine.AddressableAssets.AssetReferenceTexture2D icon, Func<string> buy)
+        {
+            var slot = Instantiate(shopSlotPrefab, grid);
+            slot.title.text = name;
+            slot.detail.text = detail;
+            slot.owned.text = owned;
+            slot.buy.Text = $"{price} 코인";
+            slot.buy.Interactable = Game.Data.coins >= price;
+            slot.SetPlaceholder(name, color);
+            if (PresentationSet.IsSet(icon)) StartCoroutine(Assets.LoadSprite(icon, new Vector2(0.5f, 0.5f), 100, slot.SetIcon));
+            slot.buy.OnClick(() => toast.Show(buy()));
         }
 
         void RenderBreed()
@@ -271,7 +340,7 @@ namespace CatVillage.UI
             {
                 if (cat == _breedFirst) continue;
                 var c = cat;
-                Row($"{Game.Species(cat).displayName} Lv{cat.level} [{Affinity.Label(Game.Species(cat).element)}]", "선택", () =>
+                Row($"{Game.DisplayName(cat)} Lv{cat.level} [{Affinity.Label(Game.Species(cat).element)}]\n{Genetics.Describe(cat.genes)}", "선택", () =>
                 {
                     if (_breedFirst == null)
                     {
@@ -289,13 +358,17 @@ namespace CatVillage.UI
 
         void RenderDex()
         {
-            var found = Game.Data.discovered.Count;
+            var found = Game.Config.cats.Count(s => Game.Data.discovered.Contains(s.id));
             Row($"수집 {found}/{Game.Config.cats.Count}", null, null);
             foreach (var species in Game.Config.cats)
             {
                 var known = Game.Data.discovered.Contains(species.id);
                 Row(known ? $"{species.displayName} [{Affinity.Label(species.element)}] · {species.skillName}" : "??? (미발견)", null, null);
             }
+            var outliers = new[] { Outlier.Grandpa, Outlier.Rainbow, Outlier.Ghost, Outlier.Giant };
+            Row($"특이 개체 {outliers.Count(o => Game.Data.discovered.Contains($"outlier:{o}"))}/{outliers.Length} (짝짓기로 낮은 확률 탄생)", null, null);
+            foreach (var o in outliers)
+                Row(Game.Data.discovered.Contains($"outlier:{o}") ? $"★ {Genetics.OutlierName(o)}" : "★ ??? (미발견)", null, null);
         }
 
         public static string Describe(ItemData item) => item.kind switch

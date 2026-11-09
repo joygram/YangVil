@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CatVillage.Core;
+using CatVillage.Data;
 using CatVillage.UI;
 using CatVillage.World;
 using UnityEditor;
@@ -124,6 +125,18 @@ namespace CatVillage.EditorTools
             Check("고양이 집 위치 판정", world.HouseAt(world.transform.Find("Dynamic").Find(home.uid).position) == home);
             Check("고양이 끌어놓기 판정", world.DropCat(starter, world.transform.Find("Dynamic").Find(home.uid).position) == MoveResult.Same);
             Check("빈 땅에 놓으면 이동 안 함", world.DropCat(starter, new Vector2(0, 100)) == null);
+            starter.cleanliness = 10f;
+            Check("더러우면 꼬질꼬질 상태", GameBootstrap.Game.Mood(starter) == CatMood.Dirty);
+            GameBootstrap.Game.Wash(starter);
+            Check("씻기면 상태 회복", GameBootstrap.Game.Mood(starter) != CatMood.Dirty && starter.cleanliness >= 99f);
+            var rng = new System.Random(3);
+            var child = Genetics.Breed(starter.genes, starter.genes, rng);
+            Check("짝짓기 유전자 생성", child != null && child.size >= 0.8f && child.size <= 1.5f);
+            var ghost = child.Clone();
+            Genetics.ApplyOutlier(ghost, Outlier.Ghost);
+            Check("아웃라이어 형질 적용", ghost.outlier == Outlier.Ghost && Genetics.OutlierName(ghost.outlier).Length > 0);
+            Check("유전자대로 털 칠하기", FindObjectsByType<SpriteActor>(FindObjectsSortMode.None)
+                .Any(a => a.Renderer.sprite != null && string.IsNullOrEmpty(a.Renderer.sprite.texture.name)));
 
             SceneFlow.Instance.GoBattle(GameBootstrap.Game.Config.stages[0]);
             yield return Step("전투 로드", () => FindAnyObjectByType<BattleWorld>() != null && FindAnyObjectByType<BattleHud>() != null, 30);

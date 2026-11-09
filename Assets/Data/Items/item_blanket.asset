@@ -18,3 +18,10 @@ MonoBehaviour:
   value: 0
   price: 50
   usableInBattle: 0
+  icon:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  color: {r: 0.85, g: 0.8, b: 0.7, a: 1}

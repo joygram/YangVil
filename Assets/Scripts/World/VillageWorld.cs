@@ -47,6 +47,9 @@ namespace CatVillage.World
         readonly Dictionary<string, (Transform root, SpriteRenderer yard, TextMeshPro coins)> _houses =
             new Dictionary<string, (Transform, SpriteRenderer, TextMeshPro)>();
         OwnedCat _moving;
+        readonly Dictionary<string, (OwnedCat cat, CatWanderer wanderer, Color tint, TextMeshPro bubble)> _wanderers =
+            new Dictionary<string, (OwnedCat, CatWanderer, Color, TextMeshPro)>();
+        float _nextMoodRefresh;
         float _nextCoinRefresh;
 
         public Game Game => _game;
@@ -118,6 +121,7 @@ namespace CatVillage.World
         {
             foreach (Transform child in _dynamic) Destroy(child.gameObject);
             _houses.Clear();
+            _wanderers.Clear();
 
             foreach (var house in _game.Data.houses) BuildHouse(house);
 
@@ -156,15 +160,28 @@ namespace CatVillage.World
             go.transform.SetParent(parent, false);
             var actor = go.AddComponent<SpriteActor>();
             actor.SetTint(species.tint);
-            actor.SetHeight(catHeight * (0.75f + 0.125f * CatData.GrowthStage(cat.level)));
-            go.AddComponent<CatWanderer>().Init(actor, area);
+            actor.SetHeight(catHeight * cat.genes.size * (0.75f + 0.125f * CatData.GrowthStage(cat.level)));
+            var wanderer = go.AddComponent<CatWanderer>();
+            wanderer.Init(actor, area);
+            var bubble = WorldKit.Label(go.transform, font, "", new Vector2(0, 1.25f), 2.4f, Color.white, 600);
+            wanderer.SetMood(_game.Mood(cat), species.tint, bubble);
+            _wanderers[cat.uid] = (cat, wanderer, species.tint, bubble);
             var c = cat;
             WorldKit.Clickable(go, new Vector2(1f, 1f), () => CatTapped?.Invoke(c)).transform.GetComponent<BoxCollider2D>().offset = new Vector2(0, 0.5f);
             var drag = go.AddComponent<CatDrag>();
             drag.cam = cam;
             drag.Began = () => Highlight(c);
+            drag.Hovered = p => HoverDrop(c, p);
             drag.Dropped = p => DropCat(c, p);
-            StartCoroutine(_scope.LoadFrames(species.sprites, actor.SetFrames));
+            StartCoroutine(_scope.LoadCatFrames(species.sprites, cat.genes, actor.SetFrames));
+        }
+
+        void HoverDrop(OwnedCat cat, Vector2 worldPoint)
+        {
+            Highlight(cat);
+            var house = HouseAt(worldPoint);
+            if (house == null || !_houses.TryGetValue(house.uid, out var v)) return;
+            v.yard.color = _game.CanMoveTo(cat, house) ? new Color(0.35f, 1f, 0.35f) : new Color(1f, 0.45f, 0.4f);
         }
 
         public OwnedHouse HouseAt(Vector2 worldPoint)
@@ -240,6 +257,10 @@ namespace CatVillage.World
             if (_game == null || Time.time < _nextCoinRefresh) return;
             _nextCoinRefresh = Time.time + 1f;
             foreach (var house in _game.Data.houses) RefreshCoins(house);
+            if (Time.time < _nextMoodRefresh) return;
+            _nextMoodRefresh = Time.time + 20f;
+            foreach (var (cat, wanderer, tint, bubble) in _wanderers.Values)
+                if (wanderer != null) wanderer.SetMood(_game.Mood(cat), tint, bubble);
         }
 
         public void FocusOn(Vector2 position)

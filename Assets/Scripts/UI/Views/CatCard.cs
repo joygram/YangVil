@@ -8,6 +8,7 @@ namespace CatVillage.UI
         public UnitSprite portrait;
         public TMP_Text info;
         public LabeledButton feed;
+        public LabeledButton wash;
         public LabeledButton party;
         public LabeledButton move;
     }

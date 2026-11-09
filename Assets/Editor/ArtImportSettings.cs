@@ -26,6 +26,8 @@ namespace CatVillage.EditorTools
             importer.crunchedCompression = large;
             importer.compressionQuality = 75;
 
+            importer.isReadable = !large && (assetPath.StartsWith("Assets/Art/ThirdParty/CuteKitty/") || assetPath.StartsWith("Assets/Art/Cats/"));
+
             if (assetPath.StartsWith(UiSpriteRoot))
             {
                 importer.textureType = TextureImporterType.Sprite;

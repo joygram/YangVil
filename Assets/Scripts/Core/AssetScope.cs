@@ -79,6 +79,52 @@ namespace CatVillage.Core
             done(frames);
         }
 
+        readonly Dictionary<string, Sprite> _painted = new Dictionary<string, Sprite>();
+        readonly List<Texture2D> _paintedTextures = new List<Texture2D>();
+
+        public IEnumerator LoadCatFrames(SpriteSet set, CatGenes genes, Action<FrameSet> done)
+        {
+            if (genes == null)
+            {
+                yield return LoadFrames(set, done);
+                yield break;
+            }
+            FrameSet baseFrames = null;
+            yield return LoadFrames(set, f => baseFrames = f);
+            if (Disposed || baseFrames == null) yield break;
+            done(new FrameSet
+            {
+                Fps = baseFrames.Fps,
+                Idle = PaintAll(baseFrames.Idle, genes),
+                Walk = PaintAll(baseFrames.Walk, genes),
+                Attack = PaintAll(baseFrames.Attack, genes),
+                Hurt = PaintAll(baseFrames.Hurt, genes)
+            });
+        }
+
+        Sprite[] PaintAll(Sprite[] frames, CatGenes genes)
+        {
+            var result = new Sprite[frames.Length];
+            for (var i = 0; i < frames.Length; i++)
+            {
+                var key = $"{frames[i].texture.name}:{frames[i].rect}#{genes.Key}";
+                if (!_painted.TryGetValue(key, out var s))
+                {
+                    var t = frames[i].texture.isReadable ? CoatPainter.Paint(frames[i], genes) : null;
+                    if (t == null)
+                    {
+                        result[i] = frames[i];
+                        continue;
+                    }
+                    _paintedTextures.Add(t);
+                    s = UnityEngine.Sprite.Create(t, new Rect(0, 0, t.width, t.height), new Vector2(0.5f, 0f), t.width);
+                    _painted[key] = s;
+                }
+                result[i] = s;
+            }
+            return result;
+        }
+
         public IEnumerator LoadSprite(AssetReferenceTexture2D reference, Vector2 pivot, float pixelsPerUnit, Action<Sprite> done)
         {
             if (reference == null || !reference.RuntimeKeyIsValid()) yield break;
@@ -155,6 +201,10 @@ namespace CatVillage.Core
             _sprites.Clear();
             foreach (var s in _looseSprites) UnityEngine.Object.Destroy(s);
             _looseSprites.Clear();
+            foreach (var s in _painted.Values) UnityEngine.Object.Destroy(s);
+            _painted.Clear();
+            foreach (var t in _paintedTextures) UnityEngine.Object.Destroy(t);
+            _paintedTextures.Clear();
             foreach (var go in _instances)
                 if (go != null) Addressables.ReleaseInstance(go);
             _instances.Clear();

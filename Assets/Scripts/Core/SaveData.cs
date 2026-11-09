@@ -12,6 +12,10 @@ namespace CatVillage.Core
         public int exp;
         public bool inParty;
         public string houseUid = "";
+        public float fullness = 100f;
+        public float cleanliness = 100f;
+        public long careUnix;
+        public Data.CatGenes genes = new Data.CatGenes();
     }
 
     [Serializable]
@@ -29,6 +33,8 @@ namespace CatVillage.Core
     {
         public string speciesId;
         public long hatchAtUnix;
+        public bool hasGenes;
+        public Data.CatGenes genes = new Data.CatGenes();
     }
 
     [Serializable]
@@ -48,7 +54,7 @@ namespace CatVillage.Core
     [Serializable]
     public class SaveData
     {
-        public const int CurrentVersion = 3;
+        public const int CurrentVersion = 5;
 
         public int version = CurrentVersion;
         public int coins = 250;

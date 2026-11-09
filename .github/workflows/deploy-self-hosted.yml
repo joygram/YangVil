@@ -18,8 +18,19 @@ jobs:
   deploy:
     runs-on: [self-hosted, unity]
     timeout-minutes: 60
+    env:
+      GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      CHANGE_COUNT: ${{ github.event.commits && github.event.commits.length || 1 }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 20
+
+      - shell: bash
+        run: |
+          echo "STARTED_AT=$(date +%s)" >> "$GITHUB_ENV"
+          bash scripts/tools/notify-chat.sh start
 
       - id: deploy
         shell: bash
@@ -30,17 +41,12 @@ jobs:
           [ -z "$CLOUDFLARE_API_TOKEN" ] && unset CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID
           bash scripts/deploy-web.sh
 
-      - if: always()
+      - if: success()
         shell: bash
-        env:
-          WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          STATUS: ${{ job.status }}
-          COMMIT: ${{ github.event.head_commit.message || github.sha }}
-          ACTOR: ${{ github.actor }}
-          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          [ -z "$WEBHOOK" ] && exit 0
-          if [ "$STATUS" = "success" ]; then result="✅ 검증 통과·배포 완료 → https://yangvil.deuklab.workers.dev"; else result="❌ 검증 또는 배포 실패"; fi
-          title=$(printf '%s' "$COMMIT" | head -n1)
-          text=$(printf '*YangVil WebGL* %s\n%s · %s\n%s' "$result" "$ACTOR" "$title" "$RUN_URL")
-          node -e 'process.stdout.write(JSON.stringify({text:process.argv[1]}))' "$text" | curl -sS -X POST -H 'Content-Type: application/json; charset=UTF-8' -d @- "$WEBHOOK"
+          secs=$(( $(date +%s) - STARTED_AT ))
+          ELAPSED="$((secs / 60))분 $((secs % 60))초" bash scripts/tools/notify-chat.sh done
+
+      - if: failure()
+        shell: bash
+        run: bash scripts/tools/notify-chat.sh fail

@@ -123,13 +123,26 @@ namespace CatVillage.EditorTools
                 c.growth = new Stats(12, 3, 1, 1);
                 c.skillName = spec.skill;
                 c.skillPower = 2.5f;
-                c.tint = Color.Lerp(Color.white, Affinity.Tint(spec.e), 0.55f);
+                c.tint = Color.white;
+                c.coat = Coat(spec.id);
                 c.sprites = KittySet();
                 EditorUtility.SetDirty(c);
                 result[spec.id] = c;
             }
             return result;
         }
+
+        static Color Hex(string hex) => ColorUtility.TryParseHtmlString(hex, out var c) ? c : Color.magenta;
+
+        static CoatSpec Coat(string id) => id switch
+        {
+            "cat_fire" => new CoatSpec { pattern = CoatPattern.Tabby, light = Hex("#F5B15A"), dark = Hex("#C26A1E"), accent = Hex("#FFF4E0"), accent2 = Hex("#3A2A20") },
+            "cat_water" => new CoatSpec { pattern = CoatPattern.Tabby, light = Hex("#B9BEC4"), dark = Hex("#565C66"), accent = Hex("#F2F2F2"), accent2 = Hex("#2A2D33") },
+            "cat_leaf" => new CoatSpec { pattern = CoatPattern.Calico, light = Hex("#E9A04E"), dark = Hex("#8A5A30"), accent = Hex("#FAF7F0"), accent2 = Hex("#2B2522") },
+            "cat_wind" => new CoatSpec { pattern = CoatPattern.Tuxedo, light = Hex("#4A4A50"), dark = Hex("#1E1E22"), accent = Hex("#FAFAFA"), accent2 = Hex("#26262B") },
+            "cat_sun" => new CoatSpec { pattern = CoatPattern.Solid, light = Hex("#FFF1D2"), dark = Hex("#D9B98A"), accent = Hex("#FFFFFF"), accent2 = Hex("#6B5540") },
+            _ => new CoatSpec { pattern = CoatPattern.Solid, light = Hex("#4B4752"), dark = Hex("#141317"), accent = Hex("#E8D86A"), accent2 = Hex("#0D0C10") }
+        };
 
         static EnemyBase Base(string id, string name, EnemyRole role, Stats s, Stats g, SpriteSet set, Color tint, float scale)
         {

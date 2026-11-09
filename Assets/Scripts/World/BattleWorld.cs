@@ -59,7 +59,7 @@ namespace CatVillage.World
             Stage = SceneFlow.Instance.PendingStage;
             _camHome = cam.transform.position;
 
-            var allies = _game.Party.Select(c => BattleUnit.FromCat(_game.Species(c), c.level)).ToList();
+            var allies = _game.Party.Select(c => BattleUnit.FromCat(_game.Species(c), c.level, c.genes, _game.DisplayName(c))).ToList();
             var waves = Stage.waves
                 .Select(w => w.enemies.Select(e => BattleUnit.FromEnemy(e, Stage.enemyLevel + w.levelBonus)).ToList())
                 .ToList();
@@ -141,7 +141,7 @@ namespace CatVillage.World
             sprite.SetHeight(unitHeight * u.Scale);
             sprite.Face(u.IsAlly);
             sprite.Renderer.sortingOrder = 100 - Mathf.RoundToInt(slot.y * 10);
-            StartCoroutine(_scope.LoadFrames(u.Sprites, sprite.SetFrames));
+            StartCoroutine(_scope.LoadCatFrames(u.Sprites, u.Genes, sprite.SetFrames));
 
             var top = unitHeight * u.Scale + 0.25f;
             var hp = WorldBar.Create(root, new Vector2(0, top), new Vector2(1.2f, 0.14f), u.IsAlly ? new Color(0.35f, 0.9f, 0.35f) : new Color(0.95f, 0.35f, 0.3f), 200);

@@ -66,12 +66,14 @@ namespace CatVillage.EditorTools
             var stageButton = Save(ListButton(ui, "StageButton", 130), $"{ComponentDir}/StageButton.prefab").GetComponent<LabeledButton>();
             var portrait = Save(ListButton(ui, "PortraitButton", 0), $"{ComponentDir}/PortraitButton.prefab").GetComponent<LabeledButton>();
             var itemButton = Save(ListButton(ui, "ItemButton", 0), $"{ComponentDir}/ItemButton.prefab").GetComponent<LabeledButton>();
+            var shopSlot = Save(ShopSlot(ui), $"{ComponentDir}/ShopSlot.prefab").GetComponent<ShopSlot>();
+            var tabButton = Save(ListButton(ui, "TabButton", 0), $"{ComponentDir}/TabButton.prefab").GetComponent<LabeledButton>();
             foreach (var legacy in new[] { $"{ComponentDir}/UnitSlot.prefab", $"{ComponentDir}/DamagePopup.prefab",
                          $"{ScreenDir}/VillageScreen.prefab", $"{ScreenDir}/BattleScreen.prefab" })
                 AssetDatabase.DeleteAsset(legacy);
 
             Save(Intro(ui), $"{ScreenDir}/IntroScreen.prefab");
-            Save(VillageHud(ui, catCard, rowCard), $"{ScreenDir}/VillageHud.prefab");
+            Save(VillageHud(ui, catCard, rowCard, shopSlot, tabButton), $"{ScreenDir}/VillageHud.prefab");
             Save(StageSelect(ui, stageButton), $"{ScreenDir}/StageSelectScreen.prefab");
             Save(BattleHud(ui, portrait, itemButton), $"{ScreenDir}/BattleHud.prefab");
             Save(Result(ui), $"{ScreenDir}/ResultScreen.prefab");
@@ -150,20 +152,45 @@ namespace CatVillage.EditorTools
         static RectTransform CatCard(UiFactory ui)
         {
             var card = ui.Sliced(null, "CatCard", ui.Panel);
-            card.rectTransform.sizeDelta = new Vector2(940, 270);
-            UiFactory.Height(card, 270);
+            card.rectTransform.sizeDelta = new Vector2(940, 300);
+            UiFactory.Height(card, 300);
             var c = card.gameObject.AddComponent<CatCard>();
             c.portrait = UiFactory.Unit(card.transform, 170);
             UiFactory.Place((RectTransform)c.portrait.transform, new Vector2(0, 0.5f), new Vector2(115, -5), new Vector2(170, 170));
-            c.info = ui.Text(card.transform, "치즈 [불꽃] Lv1 아기\nHP 120 공격 22 방어 10 속도 12\nEXP 0/50 · 모닥불 집", 26, Ink, TextAlignmentOptions.MidlineLeft);
-            UiFactory.Stretch(c.info.rectTransform, 220, 10, 250, 10);
-            c.feed = ui.BlueButton(card.transform, "Feed", "츄르 주기", 26);
-            UiFactory.Place((RectTransform)c.feed.transform, new Vector2(1, 0.5f), new Vector2(-125, 80), new Vector2(220, 72));
-            c.party = ui.BlueButton(card.transform, "Party", "파티 편성", 26);
-            UiFactory.Place((RectTransform)c.party.transform, new Vector2(1, 0.5f), new Vector2(-125, 0), new Vector2(220, 72));
-            c.move = ui.GreenButton(card.transform, "Move", "이동", 26);
-            UiFactory.Place((RectTransform)c.move.transform, new Vector2(1, 0.5f), new Vector2(-125, -80), new Vector2(220, 72));
+            c.info = ui.Text(card.transform, "치즈 [불꽃] Lv1 아기\nHP 120 공격 22 방어 10 속도 12\nEXP 0/50 · 모닥불 집\n기분 최고 · 배 100 · 청결 100", 24, Ink, TextAlignmentOptions.MidlineLeft);
+            UiFactory.Stretch(c.info.rectTransform, 220, 10, 330, 10);
+            c.feed = ui.BlueButton(card.transform, "Feed", "츄르", 24);
+            UiFactory.Place((RectTransform)c.feed.transform, new Vector2(1, 0.5f), new Vector2(-235, 45), new Vector2(150, 80));
+            c.wash = ui.BlueButton(card.transform, "Wash", "씻기기", 24);
+            UiFactory.Place((RectTransform)c.wash.transform, new Vector2(1, 0.5f), new Vector2(-85, 45), new Vector2(150, 80));
+            c.party = ui.BlueButton(card.transform, "Party", "파티", 24);
+            UiFactory.Place((RectTransform)c.party.transform, new Vector2(1, 0.5f), new Vector2(-235, -45), new Vector2(150, 80));
+            c.move = ui.GreenButton(card.transform, "Move", "이동", 24);
+            UiFactory.Place((RectTransform)c.move.transform, new Vector2(1, 0.5f), new Vector2(-85, -45), new Vector2(150, 80));
             return card.rectTransform;
+        }
+
+        static RectTransform ShopSlot(UiFactory ui)
+        {
+            var slot = ui.Sliced(null, "ShopSlot", ui.Panel);
+            slot.rectTransform.sizeDelta = new Vector2(290, 400);
+            var s = slot.gameObject.AddComponent<ShopSlot>();
+            var frame = ui.Sliced(slot.transform, "IconFrame", ui.Inlay);
+            UiFactory.Place(frame.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -95), new Vector2(160, 160));
+            s.icon = UiFactory.Solid(frame.transform, "Icon", Color.white);
+            UiFactory.Stretch(s.icon.rectTransform, 14, 14, 14, 14);
+            s.icon.raycastTarget = false;
+            s.iconLetter = ui.Text(frame.transform, "?", 72, Color.white);
+            UiFactory.Stretch(s.iconLetter.rectTransform);
+            s.title = ui.Text(slot.transform, "이름", 28, Ink);
+            UiFactory.Place(s.title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -200), new Vector2(270, 40));
+            s.detail = ui.Text(slot.transform, "설명", 20, Color.gray);
+            UiFactory.Place(s.detail.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -250), new Vector2(270, 56));
+            s.owned = ui.Text(slot.transform, "", 20, Ink);
+            UiFactory.Place(s.owned.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -290), new Vector2(270, 28));
+            s.buy = ui.GreenButton(slot.transform, "Buy", "100 코인", 26);
+            UiFactory.Place((RectTransform)s.buy.transform, new Vector2(0.5f, 0f), new Vector2(0, 50), new Vector2(250, 76));
+            return slot.rectTransform;
         }
 
         static RectTransform RowCard(UiFactory ui)
@@ -206,12 +233,14 @@ namespace CatVillage.EditorTools
             return root;
         }
 
-        static RectTransform VillageHud(UiFactory ui, CatCard catCard, RowCard rowCard)
+        static RectTransform VillageHud(UiFactory ui, CatCard catCard, RowCard rowCard, ShopSlot shopSlot, LabeledButton tabButton)
         {
             var root = ScreenRoot("VillageHud");
             var s = root.gameObject.AddComponent<VillageHud>();
             s.catCardPrefab = catCard;
             s.rowCardPrefab = rowCard;
+            s.shopSlotPrefab = shopSlot;
+            s.tabButtonPrefab = tabButton;
 
             var top = ui.Sliced(root, "TopBar", ui.Panel);
             UiFactory.Place(top.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -70), new Vector2(1040, 110));

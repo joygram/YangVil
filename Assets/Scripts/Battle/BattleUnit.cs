@@ -27,12 +27,15 @@ namespace CatVillage.Battle
         public bool Alive => Hp > 0;
         public bool GaugeFull => Gauge >= GaugeMax;
 
-        public static BattleUnit FromCat(CatData species, int level)
+        public CatGenes Genes;
+
+        public static BattleUnit FromCat(CatData species, int level, CatGenes genes = null, string name = null)
         {
             var s = species.StatsAt(level);
             return new BattleUnit
             {
-                Name = species.displayName,
+                Genes = genes,
+                Name = name ?? species.displayName,
                 Element = species.element,
                 IsAlly = true,
                 MaxHp = s.hp, Hp = s.hp, Atk = s.atk, Def = s.def, Spd = s.spd,
@@ -40,7 +43,7 @@ namespace CatVillage.Battle
                 SkillName = species.skillName,
                 Sprites = species.sprites,
                 Tint = species.tint,
-                Scale = 0.75f + 0.125f * CatData.GrowthStage(level)
+                Scale = (genes?.size ?? 1f) * (0.75f + 0.125f * CatData.GrowthStage(level))
             };
         }
 

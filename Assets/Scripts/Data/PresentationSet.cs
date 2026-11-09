@@ -43,6 +43,7 @@ namespace CatVillage.Data
     public class PresentationSet
     {
         public AssetReferenceTexture2D villageBackground;
+        public AssetReferenceTexture2D basketIcon;
         public AssetReferenceTexture2D battleBackgroundFallback;
         public List<BuildingArt> buildings = new List<BuildingArt>();
         public List<ElementFx> elementFx = new List<ElementFx>();
