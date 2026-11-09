@@ -136,6 +136,10 @@ namespace YangVil.EditorTools
             var petted = FindObjectsByType<CatWanderer>(FindObjectsSortMode.None).First(w => w.GetComponent<SpriteActor>().Ready);
             petted.Pet();
             Check("고양이 쓰담 반응", petted.Petting);
+            yield return null;
+            yield return null;
+            var body = petted.GetComponentInChildren<SpeechBubble>().transform.Find("BubbleBody").GetComponent<SpriteRenderer>();
+            Check("만화 말풍선 표시", body.enabled && body.size.x > 0.3f);
             var press = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
             UnityEngine.EventSystems.ExecuteEvents.Execute(petted.gameObject, press, UnityEngine.EventSystems.ExecuteEvents.pointerDownHandler);
             yield return new WaitForSecondsRealtime(0.7f);

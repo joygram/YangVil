@@ -163,7 +163,8 @@ namespace YangVil.World
             actor.SetHeight(catHeight * cat.genes.size * (0.75f + 0.125f * CatData.GrowthStage(cat.level)));
             var wanderer = go.AddComponent<CatWanderer>();
             wanderer.Init(actor, area);
-            var bubble = WorldKit.Label(go.transform, font, "", new Vector2(0, 1.25f), 2.4f, Color.white, 600);
+            var bubble = WorldKit.Label(go.transform, font, "", new Vector2(0, 1.35f), 2.4f, Color.white, 600);
+            bubble.gameObject.AddComponent<SpeechBubble>();
             wanderer.SetMood(_game.Mood(cat), species.tint, bubble);
             _wanderers[cat.uid] = (cat, wanderer, species.tint, bubble);
             var c = cat;

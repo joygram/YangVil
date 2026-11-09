@@ -16,6 +16,7 @@ namespace YangVil.World
         bool _walking;
         CatMood _mood = CatMood.Normal;
         TextMeshPro _bubble;
+        SpeechBubble _speech;
         float _nextPuff;
         float _phase;
 
@@ -34,6 +35,7 @@ namespace YangVil.World
         {
             _mood = mood;
             _bubble = bubble;
+            _speech = bubble != null ? bubble.GetComponent<SpeechBubble>() : null;
             var dirty = mood == CatMood.Dirty || mood == CatMood.Weak;
             _actor.SetTint(dirty ? Color.Lerp(baseTint, new Color(0.45f, 0.4f, 0.35f), 0.45f) : baseTint);
             if (_bubble != null && _sayUntil <= 0)
@@ -73,8 +75,8 @@ namespace YangVil.World
         public void Say(string text, float seconds = 2.5f)
         {
             if (_bubble == null || string.IsNullOrEmpty(text)) return;
+            if (_speech != null) _speech.Show(true);
             _bubble.text = text;
-            _bubble.color = Color.white;
             _sayUntil = Time.time + seconds;
         }
 
@@ -96,6 +98,7 @@ namespace YangVil.World
             if (_sayUntil <= 0 || Time.time < _sayUntil) return;
             _sayUntil = 0;
             if (_bubble == null) return;
+            if (_speech != null) _speech.Show(false);
             _bubble.text = _mood == CatMood.Normal ? "" : CatCare.Label(_mood);
             _bubble.color = _mood == CatMood.Happy ? new Color(1f, 0.85f, 0.3f) : new Color(0.85f, 0.85f, 0.9f);
         }
