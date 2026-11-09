@@ -129,10 +129,18 @@ namespace YangVil.EditorTools
             Check("고양이 끌어놓기 판정", world.DropCat(starter, world.transform.Find("Dynamic").Find(home.uid).position) == MoveResult.Same);
             Check("빈 땅에 놓으면 이동 안 함", world.DropCat(starter, new Vector2(0, 100)) == null);
             var hud = FindAnyObjectByType<VillageHud>();
+            hud.guideToggle.button.onClick.Invoke();
+            Check("안내 접기", !hud.guideLabel.transform.parent.gameObject.activeSelf);
+            hud.guideToggle.button.onClick.Invoke();
+            Check("안내 다시 표시", hud.guideLabel.transform.parent.gameObject.activeSelf);
             world.BeginMove(starter);
             hud.hatchery.button.onClick.Invoke();
             Check("이사 중에도 버튼 동작", hud.panel.activeSelf && !world.Moving);
             hud.panelClose.button.onClick.Invoke();
+            yield return new WaitForSecondsRealtime(0.5f);
+            hud.toast.gameObject.SetActive(false);
+            VillageReviewCapture.Save(world.cam, "village-first", overview: true);
+            VillageReviewCapture.Save(world.cam, "village-narrow", 450, 960, true);
             var petted = FindObjectsByType<CatWanderer>(FindObjectsSortMode.None).First(w => w.GetComponent<SpriteActor>().Ready);
             petted.Pet();
             Check("고양이 쓰담 반응", petted.Petting);
@@ -160,7 +168,26 @@ namespace YangVil.EditorTools
                 .Any(a => a.Renderer.sprite != null && string.IsNullOrEmpty(a.Renderer.sprite.texture.name)));
             CheckCatLife(GameBootstrap.Game, starter);
 
-            SceneFlow.Instance.GoBattle(GameBootstrap.Game.Config.stages[0]);
+            hud.adventure.button.onClick.Invoke();
+            yield return Step("여정 지도 진입", () => FindAnyObjectByType<StageSelectScreen>() != null, 30);
+            yield return null;
+            var map = FindAnyObjectByType<StageSelectScreen>();
+            Check("지도 거점 수", map.NodeCount == GameBootstrap.Game.Config.stages.Count);
+            Check("지도 세로 스크롤", map.mapScroll.content == map.listContent && map.listContent.rect.height > map.mapScroll.viewport.rect.height);
+            map.SelectStage(1);
+            Check("잠긴 거점 안내", !map.depart.Interactable && map.detailBody.text.Contains("앞선 거점"));
+            VillageReviewCapture.Save(world.cam, "journey-locked");
+            map.SelectStage(0);
+            Check("출발 거점 선택", map.depart.Interactable && map.SelectedIndex == 0);
+            VillageReviewCapture.Save(world.cam, "journey-first");
+            VillageReviewCapture.Save(world.cam, "journey-narrow", 450, 960);
+            var party = GameBootstrap.Game.Data.cats.Where(c => c.inParty).ToArray();
+            foreach (var c in party) c.inParty = false;
+            map.SelectStage(0);
+            Check("파티 없으면 출발 차단", !map.depart.Interactable);
+            foreach (var c in party) c.inParty = true;
+            map.SelectStage(0);
+            map.depart.button.onClick.Invoke();
             yield return Step("전투 로드", () => FindAnyObjectByType<BattleWorld>() != null && FindAnyObjectByType<BattleHud>() != null, 30);
             var battle = FindAnyObjectByType<BattleWorld>();
             yield return Step("전투 상태", () => battle.State != null, 10);
@@ -176,10 +203,53 @@ namespace YangVil.EditorTools
             CheckExpedition(GameBootstrap.Game);
             result.stages.button.onClick.Invoke();
             yield return Step("결과→모험 목록", () => FindAnyObjectByType<StageSelectScreen>() != null && FindAnyObjectByType<VillageWorld>() != null, 30);
+            yield return null;
+            map = FindAnyObjectByType<StageSelectScreen>();
+            map.SelectStage(1);
+            Check("승리 후 다음 거점 해금", map.depart.Interactable);
+            VillageReviewCapture.Save(FindAnyObjectByType<VillageWorld>().cam, "journey-progress");
+            if (VillageReviewCapture.Enabled)
+            {
+                var records = GameBootstrap.Game.Data.stages;
+                for (var i = 0; i < GameBootstrap.Game.Config.stages.Count - 1; i++)
+                {
+                    var id = GameBootstrap.Game.Config.stages[i].id;
+                    var record = records.Find(r => r.stageId == id);
+                    if (record == null) { record = new StageRecord { stageId = id }; records.Add(record); }
+                    record.stars = 3;
+                }
+                FindAnyObjectByType<ScreenManager>().Show<StageSelectScreen>();
+                yield return new WaitForSecondsRealtime(2);
+                map = FindAnyObjectByType<StageSelectScreen>();
+                map.SelectStage(GameBootstrap.Game.Config.stages.Count - 1);
+                map.mapScroll.verticalNormalizedPosition = 1;
+                Check("보스 거점 해금", map.depart.Interactable && map.detailTitle.text.Contains("보스"));
+                VillageReviewCapture.Save(FindAnyObjectByType<VillageWorld>().cam, "journey-boss");
+                records.Add(new StageRecord { stageId = GameBootstrap.Game.Config.stages.Last().id, stars = 3 });
+                FindAnyObjectByType<ScreenManager>().Show<StageSelectScreen>();
+                yield return new WaitForSecondsRealtime(2);
+                map = FindAnyObjectByType<StageSelectScreen>();
+                map.mapScroll.verticalNormalizedPosition = 1;
+                VillageReviewCapture.Save(FindAnyObjectByType<VillageWorld>().cam, "journey-complete");
+            }
 
             SceneFlow.Instance.GoVillage();
             yield return Step("마을 복귀", () => FindAnyObjectByType<VillageWorld>() != null && FindAnyObjectByType<VillageHud>() != null, 30);
             yield return new WaitForSecondsRealtime(2f);
+            if (VillageReviewCapture.Enabled)
+            {
+                var game = GameBootstrap.Game;
+                game.Data.coins = 100000;
+                while (game.FreeVillageSlot() >= 0) game.BuyHouse(game.Config.houses[game.Data.houses.Count % game.Config.houses.Count]);
+                yield return new WaitForSecondsRealtime(2);
+                world = FindAnyObjectByType<VillageWorld>();
+                Check("6집 슬롯 위치 판정", game.Data.houses.All(h => world.HouseAt(world.layout.HousePosition(h.slot)) == h));
+                world.cam.transform.position = new Vector3(0, -1, -10);
+                world.cam.orthographicSize = 11;
+                VillageReviewCapture.Save(world.cam, "village-six-houses");
+                world.cam.orthographicSize = 5;
+                VillageReviewCapture.Save(world.cam, "village-zoom");
+            }
             Finish();
         }
 

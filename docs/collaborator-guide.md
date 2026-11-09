@@ -29,9 +29,17 @@
 - 배치·크기·색·스프라이트·폰트 크기는 자유롭게 변경
 - 반복 항목(카드·버튼)은 Components 프리팹 → 화면이 런타임에 복제
 - 버튼은 LabeledButton 컴포넌트 (Button + TMP 라벨 + 강조 스프라이트)
-- 기준 해상도 1080×1920 세로, Canvas Scaler = Scale With Screen Size, Match Height
+- 기준 해상도 1080×1920 세로, Canvas Scaler = Scale With Screen Size, Match Width
 - 앵커: 상단 바는 위쪽, 하단 버튼은 아래쪽, 목록은 Stretch → 창 크기 바뀌어도 유지
 - 목록은 ScrollRect + VerticalLayoutGroup + ContentSizeFitter
+
+## 마을·모험 지도 편집
+
+- 시각 정본: [마을·모험 지도 설계](public/architecture/village-art-direction.md)
+- Assets/Data/VillageLayout.asset: 건물·집 슬롯·길·카메라·배회 영역 편집
+- Assets/Prefabs/World/VillageScenery.prefab: 수목·연못·화단 편집, 기존 환경 프리팹은 빌더가 보존
+- Assets/Art/UI/Village: 기본 그림 교체, 기존 PNG는 빌더가 보존
+- VillageVisualBuilder.Build: 마을 HUD·스테이지 지도만 갱신, 전체 BuildContent 대신 대상 빌더 사용
 
 ## 스프라이트 9-slice
 - UI 이미지: Texture Type = Sprite (2D and UI), Filter = Point(픽셀아트)

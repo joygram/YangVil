@@ -27,6 +27,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Speech
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39b82444b3ed57c4dac05edc0346aaa0
+    m_Address: Assets/Prefabs/World/VillageScenery.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - World
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 979bbe879c9c76d4799e301dbda9d457, type: 2}
   m_SchemaSet:

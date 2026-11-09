@@ -110,11 +110,11 @@ namespace YangVil.EditorTools
             return new AssetReferenceTexture2D(guid);
         }
 
-        public static AssetReferenceGameObject Prefab(GameObject prefab)
+        public static AssetReferenceGameObject Prefab(GameObject prefab, string groupName = UiGroup)
         {
             var settings = AddressableAssetSettingsDefaultObject.Settings;
             var guid = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(prefab));
-            Add(settings, settings.FindGroup(UiGroup), guid);
+            Add(settings, settings.FindGroup(groupName), guid);
             return new AssetReferenceGameObject(guid);
         }
 

@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd835b96421ca9649b19a08646095ece, type: 3}
+  m_Name: VillageLayout
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.World.VillageLayout
+  sceneryPrefab:
+    m_AssetGUID: 39b82444b3ed57c4dac05edc0346aaa0
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  bounds:
+    serializedVersion: 2
+    x: -6.2
+    y: -12.5
+    width: 12.4
+    height: 23
+  cameraStart: {x: 0, y: 2.3}
+  cameraSize: 7.4
+  gardenSize: {x: 3.5, y: 3.2}
+  waitingArea:
+    serializedVersion: 2
+    x: -3.5
+    y: 3.2
+    width: 2.8
+    height: 0.9
+  plaza: {x: 0, y: 2.1}
+  houseSlots:
+  - {x: -2.6, y: -0.7}
+  - {x: 2.6, y: -2.5}
+  - {x: -2.8, y: -4.8}
+  - {x: 2.7, y: -6.5}
+  - {x: -2.6, y: -8.6}
+  - {x: 2.6, y: -10.2}
+  path:
+  - {x: -1.8, y: 6}
+  - {x: 0, y: 3}
+  - {x: 0.6, y: 1}
+  - {x: -0.3, y: -2}
+  - {x: 0.6, y: -5}
+  - {x: -0.2, y: -8}
+  - {x: 0, y: -11.4}
+  buildings:
+  - id: hatchery
+    label: "\uBC14\uAD6C\uB2C8 \uBD80\uD654\uC18C"
+    position: {x: -2.2, y: 5.5}
+    size: {x: 3.2, y: 3.2}
+    motif: 6
+  - id: dex
+    label: "\uACE0\uC591\uC774 \uB3C4\uC11C\uAD00"
+    position: {x: 2.1, y: 6.3}
+    size: {x: 2.7, y: 2.7}
+    motif: 10
+  - id: shop
+    label: "\uC0DD\uC120 \uC7A1\uD654\uC810"
+    position: {x: -3.4, y: 2.2}
+    size: {x: 2.6, y: 2.6}
+    motif: 7
+  - id: breed
+    label: "\uC778\uC5F0\uC758 \uC815\uC6D0"
+    position: {x: 3.3, y: 2.6}
+    size: {x: 2.5, y: 3.1}
+    motif: 8
+  - id: gate
+    label: "\uC232\uAE38 \uBAA8\uD5D8"
+    position: {x: 0, y: -11.4}
+    size: {x: 3.3, y: 2.9}
+    motif: 9

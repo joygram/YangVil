@@ -26,6 +26,7 @@ namespace YangVil.UI
         public Toast toast;
         public TMP_Text guideLabel;
         public LabeledButton guideGo;
+        public LabeledButton guideToggle;
         public CatCard catCardPrefab;
         public RowCard rowCardPrefab;
         public ShopSlot shopSlotPrefab;
@@ -52,6 +53,7 @@ namespace YangVil.UI
             adventure.OnClick(() => OnBuilding(VillageWorld.Gate));
             panelClose.OnClick(Close);
             guideGo.OnClick(FollowGuide);
+            guideToggle.OnClick(() => guideLabel.transform.parent.gameObject.SetActive(!guideLabel.transform.parent.gameObject.activeSelf));
             moveCancel.OnClick(CancelMove);
             panel.SetActive(false);
             moveBanner.SetActive(false);

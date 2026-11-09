@@ -28,7 +28,14 @@ namespace YangVil.EditorTools
 
             importer.isReadable = !large && (assetPath.StartsWith("Assets/Art/ThirdParty/CuteKitty/") || assetPath.StartsWith("Assets/Art/Cats/"));
 
-            if (assetPath.StartsWith(UiSpriteRoot))
+            if (assetPath.StartsWith(VillageVisualBuilder.ArtFolder + "/"))
+            {
+                importer.textureType = TextureImporterType.Sprite;
+                importer.spriteImportMode = SpriteImportMode.Single;
+                importer.spritePixelsPerUnit = 100;
+                importer.spriteBorder = assetPath.EndsWith("/panel.png") ? Vector4.one * 24 : Vector4.zero;
+            }
+            else if (assetPath.StartsWith(UiSpriteRoot))
             {
                 importer.textureType = TextureImporterType.Sprite;
                 importer.spriteImportMode = SpriteImportMode.Single;

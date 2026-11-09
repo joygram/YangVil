@@ -47,6 +47,7 @@ namespace YangVil.EditorTools
             var world = new GameObject("VillageWorld").AddComponent<VillageWorld>();
             world.cam = cam;
             world.font = UiPrefabBuilder.Font;
+            world.layout = VillageVisualBuilder.EnsureLayout();
             EditorSceneManager.SaveScene(scene, VillagePath);
         }
 

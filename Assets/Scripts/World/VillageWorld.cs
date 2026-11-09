@@ -18,28 +18,13 @@ namespace YangVil.World
 
         public Camera cam;
         public TMP_FontAsset font;
-        static readonly Rect mapBounds = new Rect(-4.6f, -12.5f, 9.2f, 21.5f);
-        static readonly Vector2 houseSize = new Vector2(2.7f, 2.8f);
+        public VillageLayout layout;
+        Vector2 houseSize => layout.gardenSize;
         const float catHeight = 1f;
-        static readonly Vector2[] houseSlots =
-        {
-            new Vector2(-2.9f, -1.6f), new Vector2(2.9f, -1.6f),
-            new Vector2(-2.9f, -5.2f), new Vector2(2.9f, -5.2f),
-            new Vector2(-2.9f, -8.8f), new Vector2(2.9f, -8.8f)
-        };
 
         public event Action<string> BuildingTapped;
         public event Action<OwnedHouse> HouseTapped;
         public event Action<OwnedCat> CatTapped;
-
-        static readonly (string id, string label, Vector2 pos, Vector2 size, Color color)[] Buildings =
-        {
-            (Hatchery, "부화소", new Vector2(-1.6f, 6.6f), new Vector2(3.0f, 2.2f), new Color(0.98f, 0.85f, 0.6f)),
-            (Dex, "도감", new Vector2(2.6f, 6.6f), new Vector2(2.2f, 1.8f), new Color(0.85f, 0.8f, 1f)),
-            (Shop, "상점", new Vector2(-2.6f, 2.6f), new Vector2(2.4f, 2.0f), new Color(0.75f, 0.85f, 1f)),
-            (BreedTower, "짝짓기 탑", new Vector2(2.6f, 2.6f), new Vector2(2.2f, 2.4f), new Color(1f, 0.75f, 0.85f)),
-            (Gate, "모험 게이트", new Vector2(0f, -11.2f), new Vector2(3.6f, 1.6f), new Color(0.6f, 0.5f, 0.4f))
-        };
 
         Game _game;
         AssetScope _scope;
@@ -64,7 +49,7 @@ namespace YangVil.World
             _dynamic.SetParent(transform, false);
             Rebuild();
             _game.Changed += Rebuild;
-            AudioHub.Instance?.PlayBgm(_game.Config.presentation.bgmVillage);
+            if (AudioHub.Instance != null) AudioHub.Instance.PlayBgm(_game.Config.presentation.bgmVillage);
         }
 
         void OnDestroy()
@@ -77,11 +62,13 @@ namespace YangVil.World
         void BuildStatic()
         {
             var art = _game.Config.presentation;
-            var ground = WorldKit.Box(transform, "Ground", mapBounds.center, mapBounds.size, new Color(0.56f, 0.78f, 0.45f), -100);
+            var ground = WorldKit.Box(transform, "Ground", layout.bounds.center, layout.bounds.size, VillageIllustration.Grass, -100);
             ground.gameObject.AddComponent<BoxCollider2D>().size = Vector2.one;
             var camRig = ground.gameObject.AddComponent<VillageCamera>();
             camRig.cam = cam;
-            camRig.bounds = mapBounds;
+            camRig.bounds = layout.bounds;
+            cam.transform.position = new Vector3(layout.cameraStart.x, layout.cameraStart.y, -10);
+            cam.orthographicSize = layout.OverviewSize(cam.aspect);
             StartCoroutine(_scope.LoadSprite(art.villageBackground, new Vector2(0.5f, 0.5f), 100, s => FitBackground(ground, s)));
 
             var speech = art.speech;
@@ -89,19 +76,94 @@ namespace YangVil.World
                 s => SpeechBubble.UseArt(speech, s, null)));
             StartCoroutine(_scope.LoadSprite(speech.tail, new Vector2(0.5f, 1f), speech.pixelsPerUnit, s => SpeechBubble.UseArt(speech, null, s)));
 
-            WorldKit.Box(transform, "Road", new Vector2(0, -2.5f), new Vector2(1.2f, 16f), new Color(0.85f, 0.75f, 0.55f), -90);
-
-            foreach (var b in Buildings)
+            BuildGroundLayout();
+            if (PresentationSet.IsSet(layout.sceneryPrefab)) StartCoroutine(_scope.Instantiate(layout.sceneryPrefab, transform, _ => { }));
+            else BuildLandscape();
+            foreach (var b in layout.buildings)
             {
                 var root = new GameObject(b.id).transform;
                 root.SetParent(transform, false);
-                root.localPosition = b.pos;
-                var body = WorldKit.Box(root, "Body", Vector2.zero, b.size, b.color, 10);
-                WorldKit.Label(root, font, b.label, new Vector2(0, -b.size.y / 2 - 0.35f), 4, Color.white, 50);
+                root.localPosition = b.position;
+                var body = Picture(root, "Body", b.motif, Vector2.zero, b.size, 10);
+                Nameplate(root, b.label, new Vector2(0, -b.size.y * 0.34f), 2.1f);
                 var id = b.id;
                 WorldKit.Clickable(root.gameObject, b.size, () => BuildingTapped?.Invoke(id));
                 StartCoroutine(_scope.LoadSprite(art.Building(b.id), new Vector2(0.5f, 0.5f), 100, s => Skin(body, s, b.size)));
             }
+        }
+
+        public static SpriteRenderer Picture(Transform parent, string name, VillageMotif motif, Vector2 position, Vector2 size, int order, Color? tint = null)
+        {
+            var r = WorldKit.Box(parent, name, position, size, tint ?? Color.white, order);
+            r.sprite = VillageIllustration.Get(motif);
+            r.transform.localScale = new Vector3(size.x / r.sprite.bounds.size.x, size.y / r.sprite.bounds.size.y, 1);
+            return r;
+        }
+
+        void Nameplate(Transform parent, string title, Vector2 pos, float width)
+        {
+            Picture(parent, "Nameplate", VillageMotif.Panel, pos, new Vector2(width, 0.38f), 48);
+            var text = WorldKit.Label(parent, font, title, pos, 2.25f, VillageIllustration.Ink, 50);
+            text.outlineWidth = 0;
+        }
+
+        void Path(Vector2 a, Vector2 b, float width)
+        {
+            var count = Mathf.CeilToInt(Vector2.Distance(a, b) / 0.22f);
+            for (var i = 0; i <= count; i++)
+            {
+                var at = Vector2.Lerp(a, b, i / (float)Mathf.Max(1, count));
+                Picture(transform, "PathEdge", VillageMotif.Disc, at + Vector2.down * 0.05f, new Vector2(width + 0.12f, width * 0.69f), -91, VillageIllustration.Hex(0xa9b781));
+                Picture(transform, "SandPath", VillageMotif.Disc, at, new Vector2(width, width * 0.65f), -90, VillageIllustration.Hex(0xead8b0));
+            }
+        }
+
+        void BuildGroundLayout()
+        {
+            for (var i = 1; i < layout.path.Length; i++) Path(layout.path[i - 1], layout.path[i], 1.25f);
+            foreach (var b in layout.buildings) Path(b.position + Vector2.down * b.size.y * 0.3f, NearestPath(b.position), 0.72f);
+            foreach (var spot in layout.houseSlots) Path(spot + Vector2.down * 0.75f, NearestPath(spot), 0.72f);
+            Picture(transform, "PlazaRim", VillageMotif.Disc, layout.plaza, new Vector2(3.1f, 2.15f), -89, VillageIllustration.Hex(0xc4b68f));
+            Picture(transform, "Plaza", VillageMotif.Disc, layout.plaza + Vector2.up * 0.06f, new Vector2(2.95f, 2.0f), -88, VillageIllustration.Cream);
+            Picture(transform, "YarnLandmark", VillageMotif.Yarn, layout.plaza + Vector2.up * 0.2f, Vector2.one * 1.35f, -60);
+            foreach (var pos in layout.houseSlots)
+                Picture(transform, "UnbuiltMeadow", VillageMotif.Disc, pos, houseSize, -85, VillageIllustration.Hex(0xc3d59b));
+        }
+
+        public void BuildLandscape()
+        {
+            Picture(transform, "Pond", VillageMotif.Pond, new Vector2(3.7f, -0.4f), new Vector2(2.6f, 1.7f), -78);
+            for (var i = 0; i < 13; i++)
+            {
+                var y = layout.bounds.yMin + 0.7f + i * 1.8f;
+                foreach (var side in new[] { -1f, 1f })
+                {
+                    var x = side * (5.35f + 0.3f * Mathf.Sin(i * 2.7f));
+                    Picture(transform, "BorderTree", VillageMotif.Tree, new Vector2(x, y), Vector2.one * (2.2f + 0.3f * Mathf.Cos(i)), -65);
+                    if (i % 2 == 0) Picture(transform, "BorderFlowers", VillageMotif.Flowers, new Vector2(x - side * 0.7f, y - 0.7f), Vector2.one * 0.85f, -64);
+                }
+            }
+            for (var i = 0; i < 42; i++)
+            {
+                var x = Mathf.Sin(i * 7.13f) * 4.8f;
+                var y = layout.bounds.yMin + 1 + Mathf.Repeat(i * 3.17f, layout.bounds.height - 2);
+                Picture(transform, "MeadowFlowers", VillageMotif.Flowers, new Vector2(x, y), Vector2.one * 0.38f, -94);
+            }
+        }
+
+        Vector2 NearestPath(Vector2 position)
+        {
+            var best = layout.path[0];
+            var distance = float.MaxValue;
+            for (var i = 1; i < layout.path.Length; i++)
+            {
+                var a = layout.path[i - 1];
+                var d = layout.path[i] - a;
+                var point = a + d * Mathf.Clamp01(Vector2.Dot(position - a, d) / Mathf.Max(0.001f, d.sqrMagnitude));
+                if ((position - point).sqrMagnitude >= distance) continue;
+                best = point; distance = (position - point).sqrMagnitude;
+            }
+            return best;
         }
 
         static void FitBackground(SpriteRenderer ground, Sprite s)
@@ -132,7 +194,7 @@ namespace YangVil.World
             foreach (var house in _game.Data.houses) BuildHouse(house);
 
             var waiting = _game.Waiting.Where(c => !_game.Away(c)).ToList();
-            var area = new Rect(-4.2f, 3.9f, 3.8f, 1.1f);
+            var area = layout.waitingArea;
             foreach (var cat in waiting) SpawnCat(cat, area, _dynamic);
 
             if (_moving != null) Highlight(_moving);
@@ -143,16 +205,19 @@ namespace YangVil.World
             var def = _game.HouseDef(house);
             var root = new GameObject(house.uid).transform;
             root.SetParent(_dynamic, false);
-            root.localPosition = houseSlots[Mathf.Clamp(house.slot, 0, houseSlots.Length - 1)];
+            root.localPosition = layout.HousePosition(house.slot);
 
-            var yard = WorldKit.Box(root, "Yard", Vector2.zero, houseSize, Color.Lerp(def.tint, Color.white, 0.55f), -50);
-            var hut = WorldKit.Box(root, "Hut", new Vector2(0, houseSize.y / 2 - 0.5f), new Vector2(1.6f, 1.1f), def.tint, 5);
-            StartCoroutine(_scope.LoadSprite(def.sprite, new Vector2(0.5f, 0.5f), 100, s => Skin(hut, s, new Vector2(1.8f, 1.4f))));
-            WorldKit.Label(root, font, $"{def.displayName} Lv{house.level}", new Vector2(0, -houseSize.y / 2 - 0.3f), 3.2f, Color.white, 50);
-            var coins = WorldKit.Label(root, font, "", new Vector2(0, houseSize.y / 2 + 0.4f), 3.6f, new Color(1f, 0.9f, 0.3f), 60);
-            WorldKit.Clickable(yard.gameObject, Vector2.one, () => OnHouseTapped(house));
+            Picture(root, "GardenBorder", VillageMotif.Disc, Vector2.down * 0.07f, houseSize + Vector2.one * 0.14f, -52, VillageIllustration.Hex(0x91a77a));
+            var yard = Picture(root, "Yard", VillageMotif.Disc, Vector2.zero, houseSize, -50, GardenTint(def.tint));
+            var hut = Picture(root, "Hut", VillageMotif.House, new Vector2(0, houseSize.y / 2 - 0.45f), new Vector2(2.25f, 2.25f), 5, Color.Lerp(def.tint, Color.white, 0.8f));
+            StartCoroutine(_scope.LoadSprite(def.sprite, new Vector2(0.5f, 0.5f), 100, s => Skin(hut, s, new Vector2(2.25f, 2.25f))));
+            Nameplate(root, $"{def.displayName} Lv{house.level}", new Vector2(0, -houseSize.y / 2 + 0.14f), 2.5f);
+            Picture(root, "FoodBowl", VillageMotif.Bowl, new Vector2(1.05f, -0.55f), Vector2.one * 0.52f, -2);
+            Picture(root, "FlowerBed", VillageMotif.Flowers, new Vector2(-1.2f, 0.5f), Vector2.one * 0.85f, -3);
+            var coins = WorldKit.Label(root, font, "", new Vector2(0.85f, houseSize.y / 2 + 0.45f), 2.7f, VillageIllustration.Cream, 60);
+            WorldKit.Clickable(root.gameObject, houseSize, () => OnHouseTapped(house));
 
-            var area = new Rect(-houseSize.x / 2 + 0.4f, -houseSize.y / 2 + 0.3f, houseSize.x - 0.8f, houseSize.y - 1.4f);
+            var area = layout.WanderArea;
             foreach (var cat in _game.CatsIn(house).Where(c => !_game.Away(c))) SpawnCat(cat, area, root);
             _houses[house.uid] = (root, yard, coins);
             RefreshCoins(house);
@@ -165,6 +230,7 @@ namespace YangVil.World
             var go = new GameObject(cat.uid);
             go.transform.SetParent(parent, false);
             var actor = go.AddComponent<SpriteActor>();
+            actor.Renderer.sortingOrder = 20;
             actor.SetTint(species.tint);
             actor.SetHeight(catHeight * cat.genes.size * (0.75f + 0.125f * CatData.GrowthStage(cat.level)));
             var wanderer = go.AddComponent<CatWanderer>();
@@ -336,23 +402,31 @@ namespace YangVil.World
             if (_game == null) return;
             foreach (var house in _game.Data.houses)
                 if (_houses.TryGetValue(house.uid, out var v))
-                    v.yard.color = Color.Lerp(_game.HouseDef(house).tint, Color.white, 0.55f);
+                {
+                    v.yard.color = GardenTint(_game.HouseDef(house).tint);
+                    RefreshCoins(house);
+                }
         }
 
         public bool Moving => _moving != null;
+
+        static Color GardenTint(Color tint) => Color.Lerp(VillageIllustration.Grass, tint, 0.15f);
 
         void Highlight(OwnedCat cat)
         {
             foreach (var house in _game.Data.houses)
             {
                 if (!_houses.TryGetValue(house.uid, out var v)) continue;
-                v.yard.color = _game.CanMoveTo(cat, house) ? new Color(0.6f, 1f, 0.55f) : new Color(0.5f, 0.5f, 0.5f);
+                var allowed = _game.CanMoveTo(cat, house);
+                v.yard.color = allowed ? new Color(0.78f, 0.9f, 0.55f) : new Color(0.65f, 0.64f, 0.57f);
+                v.coins.text = allowed ? "↓ 이 집으로" : "× 이동 불가";
             }
         }
 
         void RefreshCoins(OwnedHouse house)
         {
             if (!_houses.TryGetValue(house.uid, out var v)) return;
+            if (_moving != null) return;
             var n = _game.Pending(house);
             v.coins.text = n > 0 ? $"● {n}" : "";
         }

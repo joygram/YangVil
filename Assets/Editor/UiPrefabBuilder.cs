@@ -290,6 +290,7 @@ namespace YangVil.EditorTools
             s.guideGo = ui.GreenButton(guide.transform, "GuideGo", "가기 ▶", 30);
             UiFactory.Place((RectTransform)s.guideGo.transform, new Vector2(1f, 0.5f), new Vector2(-95, 0), new Vector2(160, 84));
             guide.transform.SetSiblingIndex(1);
+            VillageVisualBuilder.StyleHud(root);
             return root;
         }
 
@@ -308,6 +309,7 @@ namespace YangVil.EditorTools
             s.partyWarning = warn.gameObject;
             s.back = ui.BlueButton(root, "Back", "마을로", 40);
             UiFactory.Place((RectTransform)s.back.transform, new Vector2(0.5f, 0f), new Vector2(0, 110), new Vector2(600, 140));
+            VillageVisualBuilder.StyleMap(root);
             return root;
         }
 
