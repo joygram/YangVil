@@ -4,12 +4,12 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace CatVillage.EditorTools
+namespace YangVil.EditorTools
 {
     [InitializeOnLoad]
     public static class GameViewPortrait
     {
-        const string Label = "CatVillage 세로";
+        const string Label = "YangVil 세로";
         const int Width = 1080;
         const int Height = 1920;
 
@@ -18,7 +18,7 @@ namespace CatVillage.EditorTools
             if (!Application.isBatchMode) EditorApplication.delayCall += Apply;
         }
 
-        [MenuItem("CatVillage/Game View 1080x1920")]
+        [MenuItem("YangVil/Game View 1080x1920")]
         public static void Apply()
         {
             try

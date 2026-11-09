@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CatVillage.World
+namespace YangVil.World
 {
     public enum CursorKind { Default, Hand, Grab }
 

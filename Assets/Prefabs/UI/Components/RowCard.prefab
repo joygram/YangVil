@@ -386,7 +386,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf1d985510972574b9fb238feaed64b5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.RowCard
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.RowCard
   label: {fileID: 5167550393353030385}
   action: {fileID: 7074761975780794319}
 --- !u!1 &6860049155232755986
@@ -522,7 +522,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 5420755931773846238}
   label: {fileID: 2351541989676459247}
   background: {fileID: 641954741391758169}

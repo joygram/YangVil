@@ -146,7 +146,7 @@ register() {
   as_user ./config.sh --unattended --url "https://github.com/$REPO" --token "$token" --name "$(hostname)-unity" --labels unity,linux --replace || return 1
   local editor_root
   editor_root="$(dirname "$(dirname "$(dirname "$UNITY_EXE")")")"
-  printf 'UNITY_EDITOR_ROOT=%s\nUNITY_EXTRA_ARGS=-nographics\nHOME=%s\nCATVILLAGE_CHECK_DIR=%s\n' "$editor_root" "$TARGET_HOME" "$TARGET_HOME/CatVillage-check" | as_user tee .env >/dev/null
+  printf 'UNITY_EDITOR_ROOT=%s\nUNITY_EXTRA_ARGS=-nographics\nHOME=%s\nYANGVIL_CHECK_DIR=%s\n' "$editor_root" "$TARGET_HOME" "$TARGET_HOME/YangVil-check" | as_user tee .env >/dev/null
   [ -n "${NODE_BIN:-}" ] || ensure_node || return 1
   printf '%s:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n' "$NODE_BIN" | as_user tee .path >/dev/null
   echo "  러너 PATH에 nvm Node 추가: $NODE_BIN"

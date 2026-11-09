@@ -5,7 +5,7 @@ using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
-namespace CatVillage.EditorTools
+namespace YangVil.EditorTools
 {
     public static class BuildTool
     {
@@ -15,14 +15,14 @@ namespace CatVillage.EditorTools
 
         public static void BuildWindows()
         {
-            Build(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64, Path.Combine(BuildRoot, "Windows", "CatVillage.exe"));
+            Build(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64, Path.Combine(BuildRoot, "Windows", "YangVil.exe"));
         }
 
         public static void BuildWebGL() => TryBuildWebGL();
 
         public static bool TryBuildWebGL()
         {
-            PlayerSettings.WebGL.template = "PROJECT:CatVillage";
+            PlayerSettings.WebGL.template = "PROJECT:YangVil";
             PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
             PlayerSettings.WebGL.decompressionFallback = false;
             PlayerSettings.WebGL.dataCaching = true;

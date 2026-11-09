@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
-    [CreateAssetMenu(menuName = "CatVillage/Cat")]
+    [CreateAssetMenu(menuName = "YangVil/Cat")]
     public class CatData : ScriptableObject
     {
         public string id;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
     public enum Element { Fire, Water, Leaf, Wind, Sun, Moon }
 

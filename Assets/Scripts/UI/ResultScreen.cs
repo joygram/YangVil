@@ -1,8 +1,8 @@
-using CatVillage.Core;
-using CatVillage.Data;
+using YangVil.Core;
+using YangVil.Data;
 using TMPro;
 
-namespace CatVillage.UI
+namespace YangVil.UI
 {
     public class ResultScreen : GameScreen
     {

@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
-    [CreateAssetMenu(menuName = "CatVillage/Game Config")]
+    [CreateAssetMenu(menuName = "YangVil/Game Config")]
     public class GameConfig : ScriptableObject
     {
         public const string ResourcePath = "GameConfig";

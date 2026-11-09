@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CatVillage.Data;
+using YangVil.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CatVillage.EditorTools
+namespace YangVil.EditorTools
 {
     public static class GameDataBuilder
     {
@@ -15,7 +15,7 @@ namespace CatVillage.EditorTools
         const string Kitty = "Assets/Art/ThirdParty/CuteKitty";
         const string Dog = "Assets/Art/ThirdParty/Dog/dog_brown_sheet.png";
 
-        [MenuItem("CatVillage/Build Game Data")]
+        [MenuItem("YangVil/Build Game Data")]
         public static void Build()
         {
             foreach (var dir in new[] { "Cats", "Enemies", "Stages", "Items", "Houses" })

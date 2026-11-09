@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 631ef3a78f4c10046b7487c56754d3a1, type: 3}
   m_Name: base_crow
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.EnemyBase
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.Data.EnemyBase
   id: crow
   displayName: "\uAE4C\uB9C8\uADC0"
   role: 1

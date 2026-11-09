@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace CatVillage.UI
+namespace YangVil.UI
 {
     public class Toast : MonoBehaviour
     {

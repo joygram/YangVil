@@ -1,8 +1,8 @@
 using System;
-using CatVillage.Data;
+using YangVil.Data;
 using UnityEngine;
 
-namespace CatVillage.UI
+namespace YangVil.UI
 {
     public static class Ui
     {

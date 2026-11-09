@@ -1,7 +1,7 @@
-using CatVillage.Data;
+using YangVil.Data;
 using UnityEngine;
 
-namespace CatVillage.Core
+namespace YangVil.Core
 {
     public static class CoatPainter
     {

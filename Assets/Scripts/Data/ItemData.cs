@@ -1,10 +1,10 @@
 using UnityEngine;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
     public enum ItemKind { Heal, Revive, GaugeFill, Exp, HatchNow }
 
-    [CreateAssetMenu(menuName = "CatVillage/Item")]
+    [CreateAssetMenu(menuName = "YangVil/Item")]
     public class ItemData : ScriptableObject
     {
         public string id;

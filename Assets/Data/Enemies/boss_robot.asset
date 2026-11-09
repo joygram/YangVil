@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad3285255958e9b4b86b09dc4107365c, type: 3}
   m_Name: boss_robot
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.EnemyVariant
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.Data.EnemyVariant
   id: boss_robot
   enemyBase: {fileID: 11400000, guid: c7ca9ffb0ecbbb64e910d1c86d77b35d, type: 2}
   element: 1

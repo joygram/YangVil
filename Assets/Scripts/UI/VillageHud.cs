@@ -1,12 +1,12 @@
 using System;
 using System.Linq;
-using CatVillage.Core;
-using CatVillage.Data;
-using CatVillage.World;
+using YangVil.Core;
+using YangVil.Data;
+using YangVil.World;
 using TMPro;
 using UnityEngine;
 
-namespace CatVillage.UI
+namespace YangVil.UI
 {
     public class VillageHud : GameScreen
     {

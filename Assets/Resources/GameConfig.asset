@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb144f67d6f7f184d82bd7ea864b76e1, type: 3}
   m_Name: GameConfig
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.GameConfig
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.Data.GameConfig
   cats:
   - {fileID: 11400000, guid: 36ceacb509fbbc84599e87831be2b2ae, type: 2}
   - {fileID: 11400000, guid: 3fb33220e9a33d84a87a6e9fa34a96e6, type: 2}

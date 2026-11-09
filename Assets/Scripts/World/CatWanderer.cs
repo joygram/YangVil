@@ -1,8 +1,8 @@
-using CatVillage.Core;
+using YangVil.Core;
 using TMPro;
 using UnityEngine;
 
-namespace CatVillage.World
+namespace YangVil.World
 {
     public class CatWanderer : MonoBehaviour
     {

@@ -1,11 +1,11 @@
-# CatVillage 에이전트 규칙 (Codex)
+# YangVil 에이전트 규칙 (Codex)
 
 - 기획 정본: docs/game-design.md, 협업자 가이드: docs/collaborator-guide.md
 - Unity 6 LTS, 2D URP, uGUI + TextMeshPro, DOTween
 - 에디터 작업은 Assets/Editor/ 아래 static 메서드로 작성 → Unity CLI로 실행
 - CLI: `"$UNITY_EXE" -batchmode -quit -projectPath . -executeMethod <클래스.메서드> -logFile -`
 - CLI 실행 전 열린 Unity 에디터 없는지 확인, 종료 코드 0 아니면 로그 읽고 수정
-- 네임스페이스: CatVillage.*, 에디터 도구는 CatVillage.EditorTools
+- 네임스페이스: YangVil.*, 에디터 도구는 YangVil.EditorTools
 - 에셋 위치: Assets/Art/{Cats,UI,FX}/, 파일명 소문자·언더바
 - 스프라이트: 원본 16·32·64·128px 자유, 표시 크기는 프리팹이 결정, Filter Point
 - UI: 화면별 프리팹(Assets/Prefabs/UI), 9-slice 스프라이트, TextMeshPro, public 필드 연결 유지
@@ -23,7 +23,7 @@
 
 ## 동시 작업
 - 같은 프로젝트 폴더는 Unity 1개만 열림 (Temp/UnityLockfile)
-- CLI 점검·빌드는 점검 폴더 `../CatVillage-check` 하나에서만 (git 저장소 아님, 트리를 풀어 씀)
+- CLI 점검·빌드는 점검 폴더 `../YangVil-check` 하나에서만 (git 저장소 아님, 트리를 풀어 씀)
 - 점검 폴더 Library 캐시(약 2.4GB)는 최초 1회 생성 후 재사용 → 지우지 않음
 - 빌더 콘텐츠 재생성: `bash scripts/tools/regen-content.sh <ExecuteMethod> <가져올 경로>…` (스테이징 트리 기준, 점검 폴더에서 생성 후 원본으로 복사)
 
@@ -36,14 +36,14 @@
 - 화면(GameScreen)은 Addressables 비동기 생성 → `Update`가 `Init`보다 먼저 돌 수 있음 → `if (Screens == null) return;`
 - 웹 빌드는 증분: Library·Addressables 캐시 재사용, 전체 재빌드는 `-cleanBuild` 인자 줄 때만
 - 빌드보다 플레이 확인이 먼저: 헤드리스 Play 점검 통과 → 그다음 웹 빌드
-- Play 점검: `"$UNITY_EXE" -batchmode -projectPath <클론> -executeMethod CatVillage.EditorTools.PlaySmokeCheck.Run -logFile -`
+- Play 점검: `"$UNITY_EXE" -batchmode -projectPath <클론> -executeMethod YangVil.EditorTools.PlaySmokeCheck.Run -logFile -`
 - Play 점검 = 창 없음, `-quit` 붙이지 않음, 마을→전투→결과→마을 자동 진행, 오류 1건이라도 있으면 종료 코드 1
 - 🚫 컴파일 0건 + Play 점검 `결과 오류 0건` 둘 다 확인 전 커밋·푸시 금지
 - 새 화면·기능 추가 시 PlaySmokeCheck에 단계 추가
 
 ## 자동 검증·배포
 - 최초 1회: `git config core.hooksPath .githooks` → 커밋마다 pre-commit 훅 동작
-- 훅: 스테이징 내용을 `../CatVillage-check`에 풀어 컴파일 + 헤드리스 Play 점검 → 실패 시 커밋 거부
+- 훅: 스테이징 내용을 `../YangVil-check`에 풀어 컴파일 + 헤드리스 Play 점검 → 실패 시 커밋 거부
 - Assets·Packages·ProjectSettings 변경 없는 커밋(문서 등)은 점검 생략
 - 🚫 `--no-verify`·`SKIP_UNITY_CHECK=1` 사용 금지 (사용자가 지시한 경우만)
 - 웹 배포: `bash scripts/deploy-web.sh` → HEAD 검증 통과 시에만 WebGL 빌드 → Cloudflare 배포
@@ -57,7 +57,7 @@
 - 러너 조건: ProjectVersion 버전 + WebGL 모듈 활성화, bash, Node, 시크릿 CLOUDFLARE_API_TOKEN·CLOUDFLARE_ACCOUNT_ID
 - 러너 장비의 저장소 폴더는 스크립트 실행용 → Unity로 열지 않음, 갱신은 `git pull` 대신 `git sync`
 - 리눅스 러너: `setup-linux-runner.sh install` → 원격 데스크톱에서 unityhub 로그인·Personal 추가, `npx wrangler login` → `setup-linux-runner.sh ci`
-- 러너 .env: UNITY_EXE·UNITY_EXTRA_ARGS=-nographics·HOME·CATVILLAGE_CHECK_DIR(~/CatVillage-check, Library 캐시 유지)
+- 러너 .env: UNITY_EXE·UNITY_EXTRA_ARGS=-nographics·HOME·YANGVIL_CHECK_DIR(~/YangVil-check, Library 캐시 유지)
 - 🚫 공개 저장소 → 셀프 호스티드 워크플로에 `pull_request`·`pull_request_target` 트리거 금지 (외부 코드가 장비에서 실행됨)
 - 🚫 장비 이름·IP·계정·포트·접속 경로를 저장소에 기록 금지 → 장비 설정 스크립트는 저장소 밖에서 관리
 - 어느 씬에서 Play 해도 Intro(빌드 0번)부터 시작됨

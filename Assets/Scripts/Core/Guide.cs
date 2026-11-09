@@ -1,7 +1,7 @@
 using System.Linq;
-using CatVillage.Data;
+using YangVil.Data;
 
-namespace CatVillage.Core
+namespace YangVil.Core
 {
     public enum GuideTarget { None, Hatchery, Shop, ShopHouse, Collect, Party, Adventure }
 

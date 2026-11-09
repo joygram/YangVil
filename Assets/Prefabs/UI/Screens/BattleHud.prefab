@@ -270,7 +270,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 6553493150296159665}
   label: {fileID: 6837922229848591136}
   background: {fileID: 8225068180087551726}
@@ -329,7 +329,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebbc68715aafc94458ee4afb8c0f85e3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.BattleHud
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.BattleHud
   title: {fileID: 8760393137768510332}
   status: {fileID: 2669164706581161734}
   portraitRow: {fileID: 605927903403151093}
@@ -611,7 +611,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 8095109441379684197}
   label: {fileID: 2495894841386300681}
   background: {fileID: 2751817904419656468}
@@ -1563,7 +1563,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 6378943407420423808}
   label: {fileID: 2408746407004000250}
   background: {fileID: 7110108524348998330}

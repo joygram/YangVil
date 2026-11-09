@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CatVillage.World
+namespace YangVil.World
 {
     public static class WorldKit
     {

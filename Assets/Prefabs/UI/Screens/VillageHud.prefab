@@ -190,7 +190,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae31b829c94af4b4a94abf957964e703, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.VillageHud
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.VillageHud
   wallet: {fileID: 8163761070411551174}
   hatchery: {fileID: 5830452206108797240}
   shop: {fileID: 5533723133358252179}
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 5755173432578602836}
   label: {fileID: 999893799422779433}
   background: {fileID: 2506615397807845975}
@@ -698,7 +698,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 4615861670689138435}
   label: {fileID: 6855607209667108165}
   background: {fileID: 3829598249474193998}
@@ -1111,7 +1111,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 7949857584533730021}
   label: {fileID: 6685624284017451490}
   background: {fileID: 4437624060763712142}
@@ -1387,7 +1387,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 8360165416908722696}
   label: {fileID: 142881828520357315}
   background: {fileID: 2280391736960909882}
@@ -1526,7 +1526,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 6306456219918305168}
   label: {fileID: 5168892778526640735}
   background: {fileID: 4944314238092197041}
@@ -1787,7 +1787,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 1326745976532680999}
   label: {fileID: 4692464012305985377}
   background: {fileID: 4001798803399200513}
@@ -2172,7 +2172,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4979eb6dc8eb8ce4b8a48187bc92069a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.Toast
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.Toast
   label: {fileID: 7714385798638322082}
   duration: 1.6
 --- !u!1 &6198814511325093339
@@ -3283,7 +3283,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 8886910547107844380}
   label: {fileID: 7397336943871932602}
   background: {fileID: 1545922193891800629}
@@ -3626,7 +3626,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 1803818009161633239}
   label: {fileID: 9122158704589441342}
   background: {fileID: 6409975242766341124}

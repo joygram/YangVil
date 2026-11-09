@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbd4a60f77dffa4489c5d6959f7cd0a1, type: 3}
   m_Name: stage_1_5
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.StageData
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.Data.StageData
   id: stage_1_5
   displayName: "1-5 \uACF5\uC0AC\uC7A5"
   waves:

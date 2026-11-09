@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
     public enum CoatPattern { Solid, Tabby, Tuxedo, Calico }
 

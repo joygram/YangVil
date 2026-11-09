@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CatVillage.UI
+namespace YangVil.UI
 {
     public class UnitSprite : MonoBehaviour
     {

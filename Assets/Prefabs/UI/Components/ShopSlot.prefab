@@ -407,7 +407,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 823502421152073566}
   label: {fileID: 4125866436066042500}
   background: {fileID: 7111982934139741082}
@@ -642,7 +642,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f1b3d5e7a9c4b1d8e2f4a6c8e0b2d35, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.ShopSlot
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.ShopSlot
   icon: {fileID: 7459838858337958683}
   iconLetter: {fileID: 3336384152354986007}
   title: {fileID: 6768093193456784245}

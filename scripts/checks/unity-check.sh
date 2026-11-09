@@ -3,7 +3,7 @@ set -u
 
 MODE="${1:-index}"
 ROOT="$(git rev-parse --show-toplevel)"
-CHECK_DIR="${CATVILLAGE_CHECK_DIR:-$(dirname "$ROOT")/CatVillage-check}"
+CHECK_DIR="${YANGVIL_CHECK_DIR:-$(dirname "$ROOT")/YangVil-check}"
 source "$(dirname "$0")/unity-path.sh"
 EXTRA=${UNITY_EXTRA_ARGS:-}
 
@@ -36,8 +36,8 @@ if [ $code -ne 0 ] || [ -n "$errors" ]; then
 fi
 echo "[unity-check] ✔ 컴파일 0건"
 
-METHOD="CatVillage.EditorTools.PlaySmokeCheck.Run"
-[ "${CATVILLAGE_BUILD_WEBGL:-0}" = "1" ] && METHOD="CatVillage.EditorTools.PlaySmokeCheck.RunThenBuildWebGL"
+METHOD="YangVil.EditorTools.PlaySmokeCheck.Run"
+[ "${YANGVIL_BUILD_WEBGL:-0}" = "1" ] && METHOD="YangVil.EditorTools.PlaySmokeCheck.RunThenBuildWebGL"
 
 echo "[unity-check] 2/2 헤드리스 Play 점검 ($METHOD)"
 smoke="$("$UNITY" -batchmode $EXTRA -projectPath "$CHECK_DIR" -buildTarget WebGL -executeMethod "$METHOD" -logFile - 2>&1)"

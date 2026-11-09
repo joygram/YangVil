@@ -270,7 +270,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 7195278615331229390}
   label: {fileID: 7496311303985390581}
   background: {fileID: 8714888203926781482}

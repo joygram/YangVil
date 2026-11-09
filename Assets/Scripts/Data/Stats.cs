@@ -1,6 +1,6 @@
 using System;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
     [Serializable]
     public struct Stats

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
     [Serializable]
     public class SpriteSet

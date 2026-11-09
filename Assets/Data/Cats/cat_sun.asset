@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0365438f62ce1eb4eb14411795b6dd2e, type: 3}
   m_Name: cat_sun
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.CatData
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.Data.CatData
   id: cat_sun
   displayName: "\uD06C\uB9BC"
   element: 4

@@ -1,7 +1,7 @@
 using System.IO;
 using System.Linq;
-using CatVillage.Data;
-using CatVillage.UI;
+using YangVil.Data;
+using YangVil.UI;
 using TMPro;
 using UnityEditor;
 using UnityEditor.U2D;
@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.TextCore.LowLevel;
 using UnityEngine.UI;
 
-namespace CatVillage.EditorTools
+namespace YangVil.EditorTools
 {
     public static class UiPrefabBuilder
     {
@@ -24,7 +24,7 @@ namespace CatVillage.EditorTools
         static readonly Color Paper = new Color(0.98f, 0.94f, 0.86f);
         static readonly Color Ink = new Color(0.22f, 0.16f, 0.12f);
 
-        [MenuItem("CatVillage/Import TMP Essentials")]
+        [MenuItem("YangVil/Import TMP Essentials")]
         public static void ImportTmpEssentials()
         {
             if (AssetDatabase.IsValidFolder("Assets/TextMesh Pro"))
@@ -50,7 +50,7 @@ namespace CatVillage.EditorTools
             if (Application.isBatchMode) EditorApplication.Exit(code);
         }
 
-        [MenuItem("CatVillage/Build UI Prefabs")]
+        [MenuItem("YangVil/Build UI Prefabs")]
         public static void Build()
         {
             Directory.CreateDirectory(ComponentDir);
@@ -82,7 +82,7 @@ namespace CatVillage.EditorTools
 
         public static TMP_FontAsset Font => AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontAssetPath);
 
-        [MenuItem("CatVillage/Register Screen Prefabs")]
+        [MenuItem("YangVil/Register Screen Prefabs")]
         public static void RegisterScreens()
         {
             AddressablesSetup.Run();

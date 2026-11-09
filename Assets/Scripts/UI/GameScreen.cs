@@ -1,7 +1,7 @@
-using CatVillage.Core;
+using YangVil.Core;
 using UnityEngine;
 
-namespace CatVillage.UI
+namespace YangVil.UI
 {
     public abstract class GameScreen : MonoBehaviour
     {

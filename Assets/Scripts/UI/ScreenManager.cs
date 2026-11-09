@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
-using CatVillage.Core;
+using YangVil.Core;
 using UnityEngine;
 
-namespace CatVillage.UI
+namespace YangVil.UI
 {
     public class ScreenManager : MonoBehaviour
     {

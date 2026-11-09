@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
-using CatVillage.Data;
-using CatVillage.UI;
+using YangVil.Data;
+using YangVil.UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace CatVillage.Core
+namespace YangVil.Core
 {
     public class SceneFlow : MonoBehaviour
     {

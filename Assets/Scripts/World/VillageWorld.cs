@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CatVillage.Core;
-using CatVillage.Data;
+using YangVil.Core;
+using YangVil.Data;
 using TMPro;
 using UnityEngine;
 
-namespace CatVillage.World
+namespace YangVil.World
 {
     public class VillageWorld : MonoBehaviour
     {

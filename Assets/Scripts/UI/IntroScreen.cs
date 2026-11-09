@@ -1,4 +1,4 @@
-namespace CatVillage.UI
+namespace YangVil.UI
 {
     public class IntroScreen : GameScreen
     {

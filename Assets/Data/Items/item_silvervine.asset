@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd9c4f1cad9895344b2f29021dab16ba, type: 3}
   m_Name: item_silvervine
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.ItemData
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.Data.ItemData
   id: item_silvervine
   displayName: "\uAC1C\uB2E4\uB798 \uC78E"
   kind: 1

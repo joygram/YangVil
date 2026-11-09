@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CatVillage.Core
+namespace YangVil.Core
 {
     [Serializable]
     public class OwnedCat

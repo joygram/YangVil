@@ -247,7 +247,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d27cb01103eac045a8b1b6a39173fdd, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.World.VillageWorld
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.World.VillageWorld
   cam: {fileID: 1256134563}
   font: {fileID: 11400000, guid: c16dd51d71ed07940859b93aa621f61b, type: 2}
   mapBounds:

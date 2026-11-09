@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using CatVillage.Data;
+using YangVil.Data;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace CatVillage.Core
+namespace YangVil.Core
 {
     public class AssetScope : IDisposable
     {

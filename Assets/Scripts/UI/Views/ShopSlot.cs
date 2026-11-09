@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CatVillage.UI
+namespace YangVil.UI
 {
     public class ShopSlot : MonoBehaviour
     {

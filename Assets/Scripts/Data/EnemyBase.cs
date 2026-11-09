@@ -1,10 +1,10 @@
 using UnityEngine;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
     public enum EnemyRole { Swarm, Ranged, Tank }
 
-    [CreateAssetMenu(menuName = "CatVillage/Enemy Base")]
+    [CreateAssetMenu(menuName = "YangVil/Enemy Base")]
     public class EnemyBase : ScriptableObject
     {
         public string id;

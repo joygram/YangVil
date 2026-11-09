@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78c1c9ace792fdf499b00eff0b6255c8, type: 3}
   m_Name: house_fire
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.HouseData
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.Data.HouseData
   id: house_fire
   displayName: "\uBAA8\uB2E5\uBD88 \uC9D1"
   accepts: 00000000

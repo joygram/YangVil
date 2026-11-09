@@ -2,13 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CatVillage.Battle;
-using CatVillage.Core;
-using CatVillage.Data;
+using YangVil.Battle;
+using YangVil.Core;
+using YangVil.Data;
 using TMPro;
 using UnityEngine;
 
-namespace CatVillage.World
+namespace YangVil.World
 {
     public class BattleWorld : MonoBehaviour
     {

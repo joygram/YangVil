@@ -9,7 +9,7 @@ SHORT="${SHA:0:7}"
 URL="https://yangvil.deuklab.workers.dev"
 RUN="${RUN_URL:-}"
 CHANGES="$(git log --format='• %s' -n "${CHANGE_COUNT:-5}" "$SHA" 2>/dev/null)"
-INFO="${CATVILLAGE_CHECK_DIR:-$(dirname "$(git rev-parse --show-toplevel)")/CatVillage-check}/Builds/WebGL/version.json"
+INFO="${YANGVIL_CHECK_DIR:-$(dirname "$(git rev-parse --show-toplevel)")/YangVil-check}/Builds/WebGL/version.json"
 VERSION=""
 [ -f "$INFO" ] && VERSION="v$(node -p "require(process.argv[1]).version" "$INFO" 2>/dev/null)"
 

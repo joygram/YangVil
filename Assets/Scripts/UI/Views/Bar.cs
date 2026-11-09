@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CatVillage.UI
+namespace YangVil.UI
 {
     public class Bar : MonoBehaviour
     {

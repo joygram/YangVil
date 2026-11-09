@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CatVillage.Data;
+using YangVil.Data;
 
-namespace CatVillage.Core
+namespace YangVil.Core
 {
     public enum MoveResult { Moved, WrongElement, Full, Same }
 

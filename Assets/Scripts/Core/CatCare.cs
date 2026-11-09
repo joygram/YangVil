@@ -1,6 +1,6 @@
 using System;
 
-namespace CatVillage.Core
+namespace YangVil.Core
 {
     public enum CatMood { Happy, Normal, Hungry, Dirty, Weak }
 

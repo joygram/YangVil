@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
     [Serializable]
     public class AssetReferenceAudioClip : AssetReferenceT<AudioClip>

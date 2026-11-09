@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
-using CatVillage.Core;
+using YangVil.Core;
 using UnityEngine;
 
-namespace CatVillage.World
+namespace YangVil.World
 {
     public enum ActorPose { Idle, Walk, Attack, Hurt }
 

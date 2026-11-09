@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CatVillage.Core
+namespace YangVil.Core
 {
     public class AudioHub : MonoBehaviour
     {

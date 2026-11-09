@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
-    [CreateAssetMenu(menuName = "CatVillage/House")]
+    [CreateAssetMenu(menuName = "YangVil/House")]
     public class HouseData : ScriptableObject
     {
         public string id;

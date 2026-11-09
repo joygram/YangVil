@@ -3,7 +3,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 
-namespace CatVillage.EditorTools
+namespace YangVil.EditorTools
 {
     [InitializeOnLoad]
     public static class DynamicFontReset
@@ -16,7 +16,7 @@ namespace CatVillage.EditorTools
             };
         }
 
-        [MenuItem("CatVillage/Reset Dynamic Fonts")]
+        [MenuItem("YangVil/Reset Dynamic Fonts")]
         public static void ResetAll()
         {
             var count = 0;

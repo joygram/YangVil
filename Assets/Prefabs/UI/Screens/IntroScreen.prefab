@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 3066001274189939612}
   label: {fileID: 2146380439002611163}
   background: {fileID: 4589090323248506963}
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2bc2c80f485ed804d8acb1149ff63dae, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.IntroScreen
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.IntroScreen
   mascot: {fileID: 3799147412760647956}
   start: {fileID: 2972539153536119105}
   reset: {fileID: 6835325448030365119}
@@ -680,7 +680,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 7171760638404000001}
   label: {fileID: 92210642782798688}
   background: {fileID: 5313788985785482110}
@@ -910,7 +910,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbfac13aaddf09b41976ec87f3a653b5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.UnitSprite
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.UnitSprite
   fps: 6
 --- !u!1 &8984653314751588261
 GameObject:

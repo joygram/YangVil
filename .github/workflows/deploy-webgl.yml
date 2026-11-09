@@ -58,7 +58,7 @@ jobs:
         with:
           targetPlatform: WebGL
           unityVersion: auto
-          buildMethod: CatVillage.EditorTools.BuildTool.BuildWebGL
+          buildMethod: YangVil.EditorTools.BuildTool.BuildWebGL
 
       - if: steps.secrets.outputs.ready == 'true'
         uses: cloudflare/wrangler-action@v3

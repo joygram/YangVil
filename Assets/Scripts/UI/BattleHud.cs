@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CatVillage.Battle;
-using CatVillage.Core;
-using CatVillage.Data;
-using CatVillage.World;
+using YangVil.Battle;
+using YangVil.Core;
+using YangVil.Data;
+using YangVil.World;
 using TMPro;
 using UnityEngine;
 
-namespace CatVillage.UI
+namespace YangVil.UI
 {
     public class BattleHud : GameScreen
     {

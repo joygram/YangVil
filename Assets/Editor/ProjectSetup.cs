@@ -1,7 +1,7 @@
 using System.IO;
-using CatVillage.Core;
-using CatVillage.Data;
-using CatVillage.UI;
+using YangVil.Core;
+using YangVil.Data;
+using YangVil.UI;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -11,7 +11,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
-namespace CatVillage.EditorTools
+namespace YangVil.EditorTools
 {
     public static class ProjectSetup
     {
@@ -36,7 +36,7 @@ namespace CatVillage.EditorTools
             Debug.Log("ProjectSetup: 완료");
         }
 
-        [MenuItem("CatVillage/Build All Content")]
+        [MenuItem("YangVil/Build All Content")]
         public static void BuildContent()
         {
             GameDataBuilder.Build();
@@ -75,7 +75,7 @@ namespace CatVillage.EditorTools
 
         static void SetupPlayer()
         {
-            PlayerSettings.companyName = "CatVillage";
+            PlayerSettings.companyName = "YangVil";
             PlayerSettings.productName = "YangVil";
             PlayerSettings.defaultScreenWidth = 540;
             PlayerSettings.defaultScreenHeight = 960;
@@ -86,7 +86,7 @@ namespace CatVillage.EditorTools
             PlayerSettings.runInBackground = true;
         }
 
-        [MenuItem("CatVillage/Build Intro Scene")]
+        [MenuItem("YangVil/Build Intro Scene")]
         public static void BuildIntroScene()
         {
             if (File.Exists(LegacyBootScenePath)) AssetDatabase.DeleteAsset(LegacyBootScenePath);

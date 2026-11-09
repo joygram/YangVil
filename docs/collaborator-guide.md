@@ -10,7 +10,7 @@
 - VS Code 확장: C# Dev Kit, Unity, Codex
 - Unity → Preferences → External Tools → Editor = VS Code
 - 스크립트가 Unity 경로를 버전으로 자동 탐색 (다른 위치면 환경변수 UNITY_EDITOR_ROOT = Editor 상위 폴더)
-- 첫 실행: Unity Hub에서 CatVillage 폴더 열기 → Assets/Scenes/Intro.unity 열고 Play
+- 첫 실행: Unity Hub에서 YangVil 폴더 열기 → Assets/Scenes/Intro.unity 열고 Play
 
 ## 프로젝트 구조
 | 위치 | 내용 |
@@ -101,16 +101,16 @@
 
 | 용도 | -executeMethod 값 |
 |---|---|
-| URP·플레이어 설정 | `CatVillage.EditorTools.ProjectSetup.Run` |
-| 데이터·프리팹·씬 재생성 | `CatVillage.EditorTools.ProjectSetup.BuildContent` |
-| 데이터만 | `CatVillage.EditorTools.GameDataBuilder.Build` |
-| 헤드리스 Play 점검 (`-quit` 없이) | `CatVillage.EditorTools.PlaySmokeCheck.Run` |
-| 화면 프리팹 등록 | `CatVillage.EditorTools.UiPrefabBuilder.RegisterScreens` |
-| Addressables 그룹 정리 | `CatVillage.EditorTools.AddressablesSetup.Run` |
-| 웹앱 빌드 (평소 확인용) | `CatVillage.EditorTools.BuildTool.BuildWebGL` |
-| PC 빌드 (배포 때만) | `CatVillage.EditorTools.BuildTool.BuildWindows` |
+| URP·플레이어 설정 | `YangVil.EditorTools.ProjectSetup.Run` |
+| 데이터·프리팹·씬 재생성 | `YangVil.EditorTools.ProjectSetup.BuildContent` |
+| 데이터만 | `YangVil.EditorTools.GameDataBuilder.Build` |
+| 헤드리스 Play 점검 (`-quit` 없이) | `YangVil.EditorTools.PlaySmokeCheck.Run` |
+| 화면 프리팹 등록 | `YangVil.EditorTools.UiPrefabBuilder.RegisterScreens` |
+| Addressables 그룹 정리 | `YangVil.EditorTools.AddressablesSetup.Run` |
+| 웹앱 빌드 (평소 확인용) | `YangVil.EditorTools.BuildTool.BuildWebGL` |
+| PC 빌드 (배포 때만) | `YangVil.EditorTools.BuildTool.BuildWindows` |
 - 평소 확인은 에디터 Play 또는 WebGL 빌드 → PC 빌드는 배포 시점에만
-- TMP 리소스 가져오기만 `-quit` 없이: `-executeMethod CatVillage.EditorTools.UiPrefabBuilder.ImportTmpEssentials`
+- TMP 리소스 가져오기만 `-quit` 없이: `-executeMethod YangVil.EditorTools.UiPrefabBuilder.ImportTmpEssentials`
 - ⚠ BuildContent·UiPrefabBuilder는 프리팹을 새로 만듦 → 디자이너가 손본 프리팹을 덮어씀
 - 프리팹 손보기 시작한 뒤에는 BuildContent 금지, 데이터만 GameDataBuilder.Build
 - 웹앱 로컬 확인: Builds/WebGL에서 `npx serve` → 브라우저로 열기

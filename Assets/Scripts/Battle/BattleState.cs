@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using CatVillage.Data;
+using YangVil.Data;
 using UnityEngine;
 
-namespace CatVillage.Battle
+namespace YangVil.Battle
 {
     public enum BattleOutcome { Ongoing, Victory, Defeat }
 

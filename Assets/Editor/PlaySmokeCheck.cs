@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CatVillage.Core;
-using CatVillage.Data;
-using CatVillage.UI;
-using CatVillage.World;
+using YangVil.Core;
+using YangVil.Data;
+using YangVil.UI;
+using YangVil.World;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-namespace CatVillage.EditorTools
+namespace YangVil.EditorTools
 {
     public static class PlaySmokeCheck
     {
-        const string ActiveKey = "CatVillage.PlaySmoke.Active";
-        const string BuildAfterKey = "CatVillage.PlaySmoke.BuildAfter";
-        const string PendingBuildKey = "CatVillage.PlaySmoke.PendingBuild";
+        const string ActiveKey = "YangVil.PlaySmoke.Active";
+        const string BuildAfterKey = "YangVil.PlaySmoke.BuildAfter";
+        const string PendingBuildKey = "YangVil.PlaySmoke.PendingBuild";
         const string SaveDir = "Library/PlaySmokeSave";
 
         public static void RunThenBuildWebGL()
@@ -104,7 +104,7 @@ namespace CatVillage.EditorTools
 
         static bool IsEditorInternal(string stack)
         {
-            return !string.IsNullOrEmpty(stack) && stack.Contains("UnityEditor.") && !stack.Contains("CatVillage.");
+            return !string.IsNullOrEmpty(stack) && stack.Contains("UnityEditor.") && !stack.Contains("YangVil.");
         }
 
         IEnumerator Start()

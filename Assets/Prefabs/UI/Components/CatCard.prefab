@@ -407,7 +407,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 4597367938423883967}
   label: {fileID: 4172586105743977595}
   background: {fileID: 1727158750398573059}
@@ -666,7 +666,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47c893cecb206f34eb417041fe079e38, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.CatCard
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.CatCard
   portrait: {fileID: 8723317797522631950}
   info: {fileID: 3517533949297907199}
   feed: {fileID: 6981839691921875672}
@@ -806,7 +806,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 3759124991875059425}
   label: {fileID: 4660854388846468512}
   background: {fileID: 3282417853975898311}
@@ -899,7 +899,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbfac13aaddf09b41976ec87f3a653b5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.UnitSprite
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.UnitSprite
   fps: 6
 --- !u!1 &7315182228294109374
 GameObject:
@@ -1308,7 +1308,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 3111704326366678152}
   label: {fileID: 8400841936216662905}
   background: {fileID: 125025096949549142}
@@ -1447,7 +1447,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 3706039374683518190}
   label: {fileID: 5897654433466892656}
   background: {fileID: 2851885019089421408}

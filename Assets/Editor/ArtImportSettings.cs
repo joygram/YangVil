@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace CatVillage.EditorTools
+namespace YangVil.EditorTools
 {
     public class ArtImportSettings : AssetPostprocessor
     {

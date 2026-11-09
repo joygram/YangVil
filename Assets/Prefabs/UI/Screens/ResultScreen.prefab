@@ -348,7 +348,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 8062419736978770123}
   label: {fileID: 6134565976882098368}
   background: {fileID: 1636892651536040008}
@@ -699,7 +699,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 1387092126402989335}
   label: {fileID: 8474034468910635325}
   background: {fileID: 6531954963489100087}
@@ -895,7 +895,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac8d7ebbd694934459b7b63a869e0086, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.ResultScreen
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.ResultScreen
   title: {fileID: 7633487766072991793}
   body: {fileID: 1023258583559626900}
   hint: {fileID: 1208830429640295545}
@@ -1175,7 +1175,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 433016857416366100}
   label: {fileID: 6407425991851542560}
   background: {fileID: 5075208571172745070}
@@ -1725,7 +1725,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 829355896897701140}
   label: {fileID: 8051167226918598300}
   background: {fileID: 6405286307447565066}

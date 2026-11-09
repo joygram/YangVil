@@ -1,8 +1,8 @@
-using CatVillage.Data;
-using CatVillage.UI;
+using YangVil.Data;
+using YangVil.UI;
 using UnityEngine;
 
-namespace CatVillage.Core
+namespace YangVil.Core
 {
     public class GameBootstrap : MonoBehaviour
     {

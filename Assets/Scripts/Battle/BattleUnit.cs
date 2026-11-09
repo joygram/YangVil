@@ -1,7 +1,7 @@
-using CatVillage.Data;
+using YangVil.Data;
 using UnityEngine;
 
-namespace CatVillage.Battle
+namespace YangVil.Battle
 {
     public class BattleUnit
     {

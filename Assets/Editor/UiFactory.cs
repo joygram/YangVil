@@ -1,10 +1,10 @@
-using CatVillage.UI;
+using YangVil.UI;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CatVillage.EditorTools
+namespace YangVil.EditorTools
 {
     public class UiFactory
     {

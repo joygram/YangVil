@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CatVillage.Core
+namespace YangVil.Core
 {
     public class FrameSet
     {

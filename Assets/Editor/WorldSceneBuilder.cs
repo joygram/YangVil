@@ -1,11 +1,11 @@
-using CatVillage.Data;
-using CatVillage.World;
+using YangVil.Data;
+using YangVil.World;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CatVillage.EditorTools
+namespace YangVil.EditorTools
 {
     public static class WorldSceneBuilder
     {
@@ -13,7 +13,7 @@ namespace CatVillage.EditorTools
         public const string BattlePath = "Assets/Scenes/Battle.unity";
         const string ConfigPath = "Assets/Resources/GameConfig.asset";
 
-        [MenuItem("CatVillage/Build World Scenes")]
+        [MenuItem("YangVil/Build World Scenes")]
         public static void Build()
         {
             BuildVillage();

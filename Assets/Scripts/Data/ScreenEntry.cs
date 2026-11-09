@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.AddressableAssets;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
     [Serializable]
     public class ScreenEntry

@@ -6,7 +6,7 @@ using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CatVillage.EditorTools
+namespace YangVil.EditorTools
 {
     public static class AddressablesSetup
     {
@@ -29,7 +29,7 @@ namespace CatVillage.EditorTools
 
         public const string AudioFolder = "Assets/Audio";
 
-        [MenuItem("CatVillage/Setup Addressables")]
+        [MenuItem("YangVil/Setup Addressables")]
         public static AddressableAssetSettings Run()
         {
             var settings = AddressableAssetSettingsDefaultObject.GetSettings(true);
@@ -118,10 +118,10 @@ namespace CatVillage.EditorTools
             return new AssetReferenceGameObject(guid);
         }
 
-        [MenuItem("CatVillage/Build Addressables")]
+        [MenuItem("YangVil/Build Addressables")]
         static void BuildContentMenu() => BuildContent(false);
 
-        [MenuItem("CatVillage/Build Addressables (Clean)")]
+        [MenuItem("YangVil/Build Addressables (Clean)")]
         static void BuildContentCleanMenu() => BuildContent(true);
 
         public static bool BuildContent(bool clean)

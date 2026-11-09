@@ -2,7 +2,7 @@
 set -u
 
 ROOT="$(git rev-parse --show-toplevel)"
-CHECK_DIR="${CATVILLAGE_CHECK_DIR:-$(dirname "$ROOT")/CatVillage-check}"
+CHECK_DIR="${YANGVIL_CHECK_DIR:-$(dirname "$ROOT")/YangVil-check}"
 
 DIRTY="$(git -C "$ROOT" status --porcelain -- Assets Packages ProjectSettings)"
 if [ -n "$DIRTY" ]; then
@@ -10,7 +10,7 @@ if [ -n "$DIRTY" ]; then
   printf '%s\n' "$DIRTY" | sed 's/^/  /'
 fi
 
-CATVILLAGE_BUILD_WEBGL=1 bash "$ROOT/scripts/checks/unity-check.sh" HEAD || { echo "[deploy-web] 검증 실패 → 배포 중단"; exit 1; }
+YANGVIL_BUILD_WEBGL=1 bash "$ROOT/scripts/checks/unity-check.sh" HEAD || { echo "[deploy-web] 검증 실패 → 배포 중단"; exit 1; }
 
 NODE_MAJOR="$(node -v 2>/dev/null | sed 's/^v\([0-9]*\).*/\1/')"
 if [ -z "$NODE_MAJOR" ] || [ "$NODE_MAJOR" -lt 22 ]; then

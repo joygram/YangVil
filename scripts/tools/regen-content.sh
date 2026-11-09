@@ -3,13 +3,13 @@ set -u
 
 if [ $# -lt 2 ]; then
   echo "사용법: bash regen-content.sh <ExecuteMethod> <원본으로 가져올 경로>..."
-  echo "예: bash regen-content.sh CatVillage.EditorTools.GameDataBuilder.Build Assets/Data Assets/Resources/GameConfig.asset"
+  echo "예: bash regen-content.sh YangVil.EditorTools.GameDataBuilder.Build Assets/Data Assets/Resources/GameConfig.asset"
   exit 1
 fi
 
 METHOD="$1"; shift
 ROOT="$(git rev-parse --show-toplevel)"
-CHECK_DIR="${CATVILLAGE_CHECK_DIR:-$(dirname "$ROOT")/CatVillage-check}"
+CHECK_DIR="${YANGVIL_CHECK_DIR:-$(dirname "$ROOT")/YangVil-check}"
 source "$ROOT/scripts/checks/unity-path.sh"
 
 TREE="$(git -C "$ROOT" write-tree)"

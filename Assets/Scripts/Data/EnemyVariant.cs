@@ -1,10 +1,10 @@
 using UnityEngine;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
     public enum BossPattern { None, Summon, Rage, DrainGauge, ChargeBlast }
 
-    [CreateAssetMenu(menuName = "CatVillage/Enemy Variant")]
+    [CreateAssetMenu(menuName = "YangVil/Enemy Variant")]
     public class EnemyVariant : ScriptableObject
     {
         public string id;

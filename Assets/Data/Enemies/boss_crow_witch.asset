@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad3285255958e9b4b86b09dc4107365c, type: 3}
   m_Name: boss_crow_witch
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.EnemyVariant
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.Data.EnemyVariant
   id: boss_crow_witch
   enemyBase: {fileID: 11400000, guid: 824d48f5336f9c54095d0855b75eddbb, type: 2}
   element: 5

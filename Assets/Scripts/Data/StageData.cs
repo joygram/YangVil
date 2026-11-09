@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CatVillage.Data
+namespace YangVil.Data
 {
     [Serializable]
     public class WaveData
@@ -13,7 +13,7 @@ namespace CatVillage.Data
         public int levelBonus;
     }
 
-    [CreateAssetMenu(menuName = "CatVillage/Stage")]
+    [CreateAssetMenu(menuName = "YangVil/Stage")]
     public class StageData : ScriptableObject
     {
         public string id;

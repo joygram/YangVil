@@ -467,7 +467,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7332e0a1fd4a030479113ae4c096fdef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.LabeledButton
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.LabeledButton
   button: {fileID: 6005866534083625097}
   label: {fileID: 9191176143742858652}
   background: {fileID: 603636464297798675}
@@ -525,7 +525,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e76f8742daf9454b85d098c7f2d3e7d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.UI.StageSelectScreen
+  m_EditorClassIdentifier: Assembly-CSharp::YangVil.UI.StageSelectScreen
   listContent: {fileID: 4298170073169169497}
   stageButtonPrefab: {fileID: 5400166936337760207, guid: a58551a96173c534d9123c92b51ad45e, type: 3}
   partyWarning: {fileID: 8961351429298675300}
