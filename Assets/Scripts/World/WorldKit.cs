@@ -58,9 +58,9 @@ namespace CatVillage.World
 
         public static Clickable Clickable(GameObject go, Vector2 size, Action onClick)
         {
-            var col = go.GetComponent<BoxCollider2D>() ?? go.AddComponent<BoxCollider2D>();
+            if (!go.TryGetComponent<BoxCollider2D>(out var col)) col = go.AddComponent<BoxCollider2D>();
             col.size = size;
-            var c = go.GetComponent<Clickable>() ?? go.AddComponent<Clickable>();
+            if (!go.TryGetComponent<Clickable>(out var c)) c = go.AddComponent<Clickable>();
             c.OnClick = onClick;
             return c;
         }
