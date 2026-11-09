@@ -336,6 +336,38 @@ namespace YangVil.World
             v.coins.text = n > 0 ? $"● {n}" : "";
         }
 
+        public void Date(OwnedCat a, OwnedCat b)
+        {
+            var wa = WandererOf(a);
+            var wb = WandererOf(b);
+            if (wa == null || wb == null || wa.transform.parent != wb.transform.parent)
+            {
+                if (wa != null) wa.Hearts(4);
+                if (wb != null) wb.Hearts(4);
+                return;
+            }
+            wa.StartCoroutine(PlayDate(wa, wb, _game.PersonalityOf(a), _game.DisplayName(b)));
+        }
+
+        System.Collections.IEnumerator PlayDate(CatWanderer a, CatWanderer b, Personality p, string partner)
+        {
+            yield return a.WalkTo(b.Spot + new Vector2(-0.55f, 0f));
+            a.Say(CatLife.Bark(p, "date", partner));
+            var area = a.Area;
+            for (var i = 0; i < 2 && a != null && b != null; i++)
+            {
+                var spot = new Vector2(UnityEngine.Random.Range(area.xMin + 0.6f, area.xMax), UnityEngine.Random.Range(area.yMin, area.yMax));
+                b.StartCoroutine(b.WalkTo(spot));
+                yield return a.WalkTo(spot + new Vector2(-0.55f, 0f));
+            }
+            if (a == null || b == null) yield break;
+            a.Hearts(4);
+            b.Hearts(4);
+            yield return a.Hop(0.08f, 1.2f, 4);
+            a.Release();
+            b.Release();
+        }
+
         public CatWanderer WandererOf(OwnedCat cat) => _wanderers.TryGetValue(cat.uid, out var w) ? w.wanderer : null;
 
         void Update()

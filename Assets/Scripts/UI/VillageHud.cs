@@ -357,10 +357,7 @@ namespace YangVil.UI
 
         void CelebrateDate(OwnedCat a, OwnedCat b)
         {
-            var wa = _world.WandererOf(a);
-            var wb = _world.WandererOf(b);
-            if (wa != null) wa.Hearts(4);
-            if (wb != null) wb.Hearts(4);
+            _world.Date(a, b);
         }
 
         void RenderEpisode(Episode episode, OwnedCat cat)
@@ -418,6 +415,10 @@ namespace YangVil.UI
             Row($"특이 개체 {outliers.Count(o => Game.Data.discovered.Contains($"outlier:{o}"))}/{outliers.Length} (짝짓기로 낮은 확률 탄생)", null, null);
             foreach (var o in outliers)
                 Row(Game.Data.discovered.Contains($"outlier:{o}") ? $"★ {Genetics.OutlierName(o)}" : "★ ??? (미발견)", null, null);
+            var seen = CatLife.Episodes.Where(e => Game.Data.episodesSeen.Any(s => s.StartsWith(e.Id + ":"))).ToList();
+            Row($"이야기 {seen.Count}/{CatLife.Episodes.Length}", null, null);
+            foreach (var e in CatLife.Episodes)
+                Row(seen.Contains(e) ? $"📖 {e.Title}" : "📖 ??? (아직 못 본 이야기)", null, null);
         }
 
         public static string Describe(ItemData item) => item.kind switch
