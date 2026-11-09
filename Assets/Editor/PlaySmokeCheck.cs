@@ -14,7 +14,42 @@ namespace CatVillage.EditorTools
     public static class PlaySmokeCheck
     {
         const string ActiveKey = "CatVillage.PlaySmoke.Active";
+        const string BuildAfterKey = "CatVillage.PlaySmoke.BuildAfter";
+        const string PendingBuildKey = "CatVillage.PlaySmoke.PendingBuild";
         const string SaveDir = "Library/PlaySmokeSave";
+
+        public static void RunThenBuildWebGL()
+        {
+            SessionState.SetBool(BuildAfterKey, true);
+            Run();
+        }
+
+        public static void Finish(int errors)
+        {
+            if (errors > 0 || !SessionState.GetBool(BuildAfterKey, false))
+            {
+                EditorApplication.Exit(errors == 0 ? 0 : 1);
+                return;
+            }
+            SessionState.SetBool(BuildAfterKey, false);
+            SessionState.SetBool(PendingBuildKey, true);
+            EditorApplication.playModeStateChanged += OnEditMode;
+            EditorApplication.ExitPlaymode();
+        }
+
+        static void OnEditMode(PlayModeStateChange state)
+        {
+            if (state != PlayModeStateChange.EnteredEditMode || !SessionState.GetBool(PendingBuildKey, false)) return;
+            SessionState.SetBool(PendingBuildKey, false);
+            EditorApplication.playModeStateChanged -= OnEditMode;
+            EditorApplication.delayCall += () =>
+            {
+                Debug.Log("PlaySmoke: 검증 통과 → WebGL 빌드 시작");
+                var ok = BuildTool.TryBuildWebGL();
+                Debug.Log($"PlaySmoke: WebGL 빌드 {(ok ? "성공" : "실패")}");
+                EditorApplication.Exit(ok ? 0 : 1);
+            };
+        }
 
         public static void Run()
         {
@@ -34,6 +69,7 @@ namespace CatVillage.EditorTools
         [InitializeOnLoadMethod]
         static void Hook()
         {
+            if (SessionState.GetBool(PendingBuildKey, false)) EditorApplication.playModeStateChanged += OnEditMode;
             if (!SessionState.GetBool(ActiveKey, false)) return;
             SaveSystem.DirectoryOverride = SaveDir;
             EditorApplication.playModeStateChanged += OnPlayMode;
@@ -117,12 +153,17 @@ namespace CatVillage.EditorTools
             else _errors.Add($"실패: {name}");
         }
 
+        bool _finished;
+
         void Finish()
         {
+            if (_finished) return;
+            _finished = true;
+            StopAllCoroutines();
             Application.logMessageReceived -= OnLog;
             foreach (var e in _errors) Debug.Log($"PlaySmoke: ✘ {e}");
             Debug.Log($"PlaySmoke: 결과 오류 {_errors.Count}건");
-            EditorApplication.Exit(_errors.Count == 0 ? 0 : 1);
+            PlaySmokeCheck.Finish(_errors.Count);
         }
     }
 }

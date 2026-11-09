@@ -18,7 +18,9 @@ namespace CatVillage.EditorTools
             Build(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64, Path.Combine(BuildRoot, "Windows", "CatVillage.exe"));
         }
 
-        public static void BuildWebGL()
+        public static void BuildWebGL() => TryBuildWebGL();
+
+        public static bool TryBuildWebGL()
         {
             PlayerSettings.WebGL.template = "PROJECT:CatVillage";
             PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
@@ -31,21 +33,24 @@ namespace CatVillage.EditorTools
             PlayerSettings.SetIl2CppCodeGeneration(NamedBuildTarget.WebGL, Il2CppCodeGeneration.OptimizeSize);
             EditorUserBuildSettings.SetPlatformSettings("WebGL", "CodeOptimization", "diskSizeLTO");
             var output = Path.Combine(BuildRoot, "WebGL");
-            if (!Build(BuildTargetGroup.WebGL, BuildTarget.WebGL, output)) return;
+            if (!Build(BuildTargetGroup.WebGL, BuildTarget.WebGL, output)) return false;
             var headers = Path.Combine(output, "_headers");
             if (File.Exists(headers)) File.Delete(headers);
-            CheckAssetLimit(output);
+            return CheckAssetLimit(output);
         }
 
         const long WorkerAssetLimitBytes = 25L * 1024 * 1024;
 
-        static void CheckAssetLimit(string output)
+        static bool CheckAssetLimit(string output)
         {
             foreach (var file in Directory.GetFiles(output, "*", SearchOption.AllDirectories))
             {
                 var size = new FileInfo(file).Length;
-                if (size > WorkerAssetLimitBytes) Fail($"{file} {size / 1048576}MB → Cloudflare 정적 에셋 25MiB 제한 초과");
+                if (size <= WorkerAssetLimitBytes) continue;
+                Fail($"{file} {size / 1048576}MB → Cloudflare 정적 에셋 25MiB 제한 초과");
+                return false;
             }
+            return true;
         }
 
         public static void BuildAll()

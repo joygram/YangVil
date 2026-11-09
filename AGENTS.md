@@ -38,6 +38,14 @@
 - Play 점검 = 창 없음, `-quit` 붙이지 않음, 마을→전투→결과→마을 자동 진행, 오류 1건이라도 있으면 종료 코드 1
 - 🚫 컴파일 0건 + Play 점검 `결과 오류 0건` 둘 다 확인 전 커밋·푸시 금지
 - 새 화면·기능 추가 시 PlaySmokeCheck에 단계 추가
+
+## 자동 검증·배포
+- 최초 1회: `git config core.hooksPath .githooks` → 커밋마다 pre-commit 훅 동작
+- 훅: 스테이징 내용을 `../CatVillage-check`에 풀어 컴파일 + 헤드리스 Play 점검 → 실패 시 커밋 거부
+- Assets·Packages·ProjectSettings 변경 없는 커밋(문서 등)은 점검 생략
+- 🚫 `--no-verify`·`SKIP_UNITY_CHECK=1` 사용 금지 (사용자가 지시한 경우만)
+- 웹 배포: `bash scripts/deploy-web.sh` → HEAD 검증 통과 시에만 WebGL 빌드 → Cloudflare 배포
+- 웹 빌드는 Unity 설치 PC에서만 가능 (CI는 Unity 라이선스 등록 후 수동 실행만)
 - 어느 씬에서 Play 해도 Intro(빌드 0번)부터 시작됨
 
 ## 커밋 전 체크 (하나라도 실패하면 커밋 금지)

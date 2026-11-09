@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -u
+
+if [ "${SKIP_UNITY_CHECK:-0}" = "1" ]; then
+  echo "[pre-commit] SKIP_UNITY_CHECK=1 → Unity 점검 건너뜀"
+  exit 0
+fi
+
+if ! git diff --cached --name-only | grep -qE '^(Assets|Packages|ProjectSettings)/'; then
+  echo "[pre-commit] Unity 파일 변경 없음 → 점검 건너뜀"
+  exit 0
+fi
+
+exec bash "$(git rev-parse --show-toplevel)/scripts/checks/unity-check.sh" index

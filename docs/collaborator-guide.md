@@ -58,8 +58,14 @@
 - 시트 1장: sprites.sheet 연결 + cellSize(16·32·64·128) + 행 번호·프레임 수 지정
 - 픽셀아트는 Filter Point 유지 (Assets/Art 아래는 자동)
 
+## 커밋 검증·배포
+- 최초 1회: `git config core.hooksPath .githooks`
+- 커밋하면 자동으로 컴파일 + 헤드리스 Play 점검 → 실패하면 커밋 안 됨 (로그에 ✘ 단계 표시)
+- 웹 배포: `bash scripts/deploy-web.sh` → 검증 통과 시에만 빌드·배포
+- 웹 빌드는 Unity 설치된 PC에서만 가능, 결과 웹앱은 어디서나 플레이
+
 ## 배포·알림
-- main 푸시 → GitHub Actions: WebGL 빌드 → Cloudflare Worker `yangvil` 배포 → Google Chat 알림
+- GitHub Actions는 수동 실행만(Unity 라이선스 필요): WebGL 빌드 → Cloudflare Worker `yangvil` → Google Chat 알림
 - 플레이 주소: https://yangvil.deuklab.workers.dev
 - 필요 시크릿: UNITY_LICENSE(또는 UNITY_SERIAL)·UNITY_EMAIL·UNITY_PASSWORD·CLOUDFLARE_API_TOKEN·CLOUDFLARE_ACCOUNT_ID
 - 알림 시크릿: GOOGLE_CHAT_WEBHOOK (스페이스 → 앱 및 통합 → 웹훅 추가 → URL)
