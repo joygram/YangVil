@@ -25,7 +25,7 @@
 - 같은 프로젝트 폴더는 Unity 1개만 열림 (Temp/UnityLockfile)
 - CLI 점검·빌드는 점검 폴더 `../CatVillage-check` 하나에서만 (git 저장소 아님, 트리를 풀어 씀)
 - 점검 폴더 Library 캐시(약 2.4GB)는 최초 1회 생성 후 재사용 → 지우지 않음
-- 빌더(GameDataBuilder 등)로 콘텐츠 생성은 원본 에디터 메뉴 `CatVillage/…`에서 실행 → 결과를 원본에서 커밋
+- 빌더 콘텐츠 재생성: `bash scripts/tools/regen-content.sh <ExecuteMethod> <가져올 경로>…` (스테이징 트리 기준, 점검 폴더에서 생성 후 원본으로 복사)
 
 ## 빌드 규칙
 - 🚫 컴파일 확인 없이 빌드 금지: 먼저 `-batchmode -quit`(executeMethod 없이) → `error CS` 0건 확인 후 빌드

@@ -30,21 +30,41 @@ namespace CatVillage.Battle
         readonly Queue<BattleUnit> _order = new Queue<BattleUnit>();
         readonly HashSet<BattleUnit> _queuedSkills = new HashSet<BattleUnit>();
         readonly Dictionary<BattleUnit, int> _charging = new Dictionary<BattleUnit, int>();
+        readonly List<List<BattleUnit>> _waves;
 
-        public BattleState(List<BattleUnit> allies, List<BattleUnit> enemies, int maxTurns, int enemyLevel)
+        public int Wave { get; private set; }
+        public int WaveCount => _waves.Count;
+
+        public BattleState(List<BattleUnit> allies, List<List<BattleUnit>> waves, int maxTurns, int enemyLevel)
         {
             Allies = allies;
-            Enemies = enemies;
+            _waves = waves;
+            Enemies = new List<BattleUnit>(waves.Count > 0 ? waves[0] : new List<BattleUnit>());
             MaxTurns = maxTurns;
             EnemyLevel = enemyLevel;
+        }
+
+        bool WaveDown => Enemies.All(e => !e.Alive);
+
+        public bool WaveCleared => WaveDown && Wave < _waves.Count - 1 && Allies.Any(a => a.Alive);
+
+        public void AdvanceWave()
+        {
+            if (!WaveCleared) return;
+            Wave++;
+            Enemies.Clear();
+            Enemies.AddRange(_waves[Wave]);
+            _order.Clear();
+            _charging.Clear();
+            FocusTarget = null;
         }
 
         public BattleOutcome Outcome
         {
             get
             {
-                if (Enemies.All(e => !e.Alive)) return BattleOutcome.Victory;
                 if (Allies.All(a => !a.Alive) || Turn >= MaxTurns) return BattleOutcome.Defeat;
+                if (WaveDown && Wave >= _waves.Count - 1) return BattleOutcome.Victory;
                 return BattleOutcome.Ongoing;
             }
         }
@@ -68,7 +88,7 @@ namespace CatVillage.Battle
 
         public BattleAction Step()
         {
-            if (Outcome != BattleOutcome.Ongoing) return null;
+            if (Outcome != BattleOutcome.Ongoing || WaveCleared) return null;
             Refill();
             var actor = _order.Dequeue();
             while (!actor.Alive)

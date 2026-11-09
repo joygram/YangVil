@@ -37,7 +37,8 @@ namespace CatVillage.UI
         IEnumerator Bind()
         {
             while (_world.State == null) yield return null;
-            title.text = _world.Stage.displayName;
+            OnWave(_world.State.Wave + 1, _world.State.WaveCount);
+            _world.WaveStarted += OnWave;
             status.text = "";
             cutIn.SetActive(false);
             speed.OnClick(_world.ToggleSpeed);
@@ -69,6 +70,7 @@ namespace CatVillage.UI
         void OnDestroy()
         {
             if (_world == null) return;
+            _world.WaveStarted -= OnWave;
             _world.Narrated -= OnNarrated;
             _world.Updated -= Refresh;
             _world.SkillCutIn -= OnCutIn;
@@ -76,6 +78,8 @@ namespace CatVillage.UI
         }
 
         void OnNarrated(string text) => status.text = text;
+
+        void OnWave(int wave, int total) => title.text = $"{_world.Stage.displayName}  WAVE {wave}/{total}";
 
         void OnCutIn(BattleUnit unit) => StartCoroutine(CutIn(unit));
 

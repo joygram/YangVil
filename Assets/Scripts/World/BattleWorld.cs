@@ -60,15 +60,17 @@ namespace CatVillage.World
             _camHome = cam.transform.position;
 
             var allies = _game.Party.Select(c => BattleUnit.FromCat(_game.Species(c), c.level)).ToList();
-            var enemies = Stage.enemies.Select(e => BattleUnit.FromEnemy(e, Stage.enemyLevel)).ToList();
-            State = new BattleState(allies, enemies, _game.Config.maxBattleTurns, Stage.enemyLevel)
+            var waves = Stage.waves
+                .Select(w => w.enemies.Select(e => BattleUnit.FromEnemy(e, Stage.enemyLevel + w.levelBonus)).ToList())
+                .ToList();
+            State = new BattleState(allies, waves, _game.Config.maxBattleTurns, Stage.enemyLevel)
             {
                 FastClearTurns = _game.Config.fastClearTurns
             };
 
             BuildBackground();
             for (var i = 0; i < allies.Count; i++) Spawn(allies[i], allySlots[i % allySlots.Length]);
-            for (var i = 0; i < enemies.Count; i++) Spawn(enemies[i], enemySlots[i % enemySlots.Length]);
+            SpawnWave();
 
             var bgm = PresentationSet.IsSet(Stage.bgm) ? Stage.bgm : _art.bgmBattle;
             AudioHub.Instance?.PlayBgm(bgm);
@@ -79,6 +81,35 @@ namespace CatVillage.World
         {
             Time.timeScale = 1f;
             _scope?.Dispose();
+        }
+
+        public event Action<int, int> WaveStarted;
+
+        void SpawnWave()
+        {
+            for (var i = 0; i < State.Enemies.Count; i++) Spawn(State.Enemies[i], enemySlots[i % enemySlots.Length]);
+            WaveStarted?.Invoke(State.Wave + 1, State.WaveCount);
+        }
+
+        IEnumerator NextWave()
+        {
+            yield return new WaitForSeconds(0.6f);
+            foreach (var dead in _actors.Keys.Where(u => !u.IsAlly).ToList())
+            {
+                Destroy(_actors[dead].Root.gameObject);
+                _actors.Remove(dead);
+            }
+            State.AdvanceWave();
+            Narrated?.Invoke($"WAVE {State.Wave + 1} / {State.WaveCount}");
+            var allies = _actors.Values.Where(a => a.Unit.IsAlly && a.Unit.Alive).ToList();
+            foreach (var a in allies) a.Sprite.Play(ActorPose.Walk);
+            yield return new WaitForSeconds(0.5f);
+            foreach (var a in allies) a.Sprite.Play(ActorPose.Idle);
+            SpawnWave();
+            foreach (var u in State.Enemies)
+                StartCoroutine(Move(_actors[u].Root, _actors[u].Home + new Vector3(4f, 0, 0), _actors[u].Home, 0.45f));
+            RefreshAll();
+            yield return new WaitForSeconds(0.7f);
         }
 
         void BuildBackground()
@@ -203,6 +234,11 @@ namespace CatVillage.World
             yield return new WaitForSeconds(0.8f);
             while (State.Outcome == BattleOutcome.Ongoing)
             {
+                if (State.WaveCleared)
+                {
+                    yield return NextWave();
+                    continue;
+                }
                 var action = State.Step();
                 if (action == null) break;
                 yield return Animate(action);

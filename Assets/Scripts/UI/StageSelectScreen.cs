@@ -21,8 +21,8 @@ namespace CatVillage.UI
                 var stage = Game.Config.stages[i];
                 var unlocked = Game.IsUnlocked(i);
                 var b = Instantiate(stageButtonPrefab, listContent);
-                b.Text = unlocked ? $"{stage.displayName}  {Ui.Stars(Game.Stars(stage))}" : $"{stage.displayName}  (잠김)";
-                b.Highlight(stage.enemies.Any(e => e.isBoss));
+                b.Text = unlocked ? $"{stage.displayName}  {Ui.Stars(Game.Stars(stage))}  ({stage.waves.Count}웨이브)" : $"{stage.displayName}  (잠김)";
+                b.Highlight(stage.HasBoss);
                 b.Interactable = unlocked && hasParty;
                 var s = stage;
                 b.OnClick(() => Core.SceneFlow.Instance.GoBattle(s));

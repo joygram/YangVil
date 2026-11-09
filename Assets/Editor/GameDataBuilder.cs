@@ -40,6 +40,8 @@ namespace CatVillage.EditorTools
             config.starterCat = cats["cat_fire"];
             config.starterBasket = cats["cat_leaf"];
             config.starterHouse = houses[0];
+            config.maxBattleTurns = 90;
+            config.fastClearTurns = 30;
             config.presentation ??= new PresentationSet();
             foreach (var e in System.Enum.GetValues(typeof(Element)).Cast<Element>())
                 if (config.presentation.Fx(e) == null) config.presentation.elementFx.Add(new ElementFx { element = e });
@@ -217,14 +219,32 @@ namespace CatVillage.EditorTools
 
         static List<StageData> BuildStages(Dictionary<string, EnemyVariant> v, Dictionary<string, CatData> cats)
         {
-            var specs = new (string id, string name, string[] enemies, int level, int coins, string basket)[]
+            var specs = new (string id, string name, string[][] waves, int level, int coins, string basket)[]
             {
-                ("stage_1_1", "1-1 골목 입구", new[] { "rat_leaf" }, 1, 30, "cat_water"),
-                ("stage_1_2", "1-2 쓰레기통 뒤", new[] { "rat_leaf", "rat_fire" }, 2, 35, "cat_wind"),
-                ("stage_1_3", "1-3 전깃줄 아래", new[] { "crow_wind", "rat_water" }, 3, 40, "cat_sun"),
-                ("stage_1_4", "1-4 빈 공터", new[] { "dog_leaf", "rat_fire" }, 4, 45, "cat_moon"),
-                ("stage_1_5", "1-5 공사장", new[] { "dog_fire", "crow_moon", "rat_leaf" }, 5, 50, "cat_leaf"),
-                ("stage_1_6", "1-6 보스: 쥐 대왕", new[] { "boss_rat_king" }, 6, 120, "cat_fire")
+                ("stage_1_1", "1-1 골목 입구", new[]
+                {
+                    new[] { "rat_leaf" }, new[] { "rat_leaf", "rat_leaf" }, new[] { "rat_leaf", "rat_fire" }
+                }, 1, 30, "cat_water"),
+                ("stage_1_2", "1-2 쓰레기통 뒤", new[]
+                {
+                    new[] { "rat_leaf", "rat_fire" }, new[] { "rat_fire", "rat_water" }, new[] { "rat_leaf", "rat_fire", "rat_water" }
+                }, 2, 35, "cat_wind"),
+                ("stage_1_3", "1-3 전깃줄 아래", new[]
+                {
+                    new[] { "crow_wind" }, new[] { "crow_wind", "rat_water" }, new[] { "crow_wind", "crow_moon", "rat_water" }
+                }, 3, 40, "cat_sun"),
+                ("stage_1_4", "1-4 빈 공터", new[]
+                {
+                    new[] { "rat_fire", "rat_leaf" }, new[] { "dog_leaf" }, new[] { "dog_leaf", "rat_fire" }
+                }, 4, 45, "cat_moon"),
+                ("stage_1_5", "1-5 공사장", new[]
+                {
+                    new[] { "crow_moon", "rat_leaf" }, new[] { "dog_fire", "rat_leaf" }, new[] { "dog_fire", "crow_moon", "rat_leaf" }
+                }, 5, 50, "cat_leaf"),
+                ("stage_1_6", "1-6 보스: 쥐 대왕", new[]
+                {
+                    new[] { "rat_fire", "rat_fire" }, new[] { "rat_fire", "rat_water", "rat_leaf" }, new[] { "boss_rat_king" }
+                }, 6, 120, "cat_fire")
             };
             var list = new List<StageData>();
             foreach (var s in specs)
@@ -232,7 +252,7 @@ namespace CatVillage.EditorTools
                 var st = Upsert<StageData>($"{DataRoot}/Stages/{s.id}.asset");
                 st.id = s.id;
                 st.displayName = s.name;
-                st.enemies = s.enemies.Select(e => v[e]).ToList();
+                st.waves = s.waves.Select((w, i) => new WaveData { enemies = w.Select(e => v[e]).ToList(), levelBonus = i == s.waves.Length - 1 ? 1 : 0 }).ToList();
                 st.enemyLevel = s.level;
                 st.rewardCoins = s.coins;
                 st.rewardTreats = 2;

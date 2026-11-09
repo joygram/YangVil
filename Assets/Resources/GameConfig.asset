@@ -290,6 +290,6 @@ MonoBehaviour:
   breedPrice: 50
   expPerLevel: 50
   coinsPerLevelPerMinute: 1
-  maxBattleTurns: 30
-  fastClearTurns: 10
+  maxBattleTurns: 90
+  fastClearTurns: 30
   battleItemLimit: 3

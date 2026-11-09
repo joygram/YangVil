@@ -14,10 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.StageData
   id: stage_1_5
   displayName: "1-5 \uACF5\uC0AC\uC7A5"
-  enemies:
-  - {fileID: 11400000, guid: 6757377ce05ce524cb81160564294496, type: 2}
-  - {fileID: 11400000, guid: 4ab14b2078de40d41a4ee33bc02cdbd3, type: 2}
-  - {fileID: 11400000, guid: 1a8159e470fa3024484e172f00f0bc24, type: 2}
+  waves:
+  - enemies:
+    - {fileID: 11400000, guid: 4ab14b2078de40d41a4ee33bc02cdbd3, type: 2}
+    - {fileID: 11400000, guid: 1a8159e470fa3024484e172f00f0bc24, type: 2}
+    levelBonus: 0
+  - enemies:
+    - {fileID: 11400000, guid: 6757377ce05ce524cb81160564294496, type: 2}
+    - {fileID: 11400000, guid: 1a8159e470fa3024484e172f00f0bc24, type: 2}
+    levelBonus: 0
+  - enemies:
+    - {fileID: 11400000, guid: 6757377ce05ce524cb81160564294496, type: 2}
+    - {fileID: 11400000, guid: 4ab14b2078de40d41a4ee33bc02cdbd3, type: 2}
+    - {fileID: 11400000, guid: 1a8159e470fa3024484e172f00f0bc24, type: 2}
+    levelBonus: 1
   enemyLevel: 5
   rewardCoins: 50
   rewardTreats: 2

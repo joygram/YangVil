@@ -124,6 +124,9 @@ namespace CatVillage.EditorTools
             var battle = FindAnyObjectByType<BattleWorld>();
             yield return Step("전투 상태", () => battle.State != null, 10);
             battle.ToggleSpeed();
+            Check("스테이지 웨이브 3개", battle.State.WaveCount == 3);
+            yield return Step("마지막 웨이브 도달", () => battle.State.Wave == battle.State.WaveCount - 1 || FindAnyObjectByType<ResultScreen>() != null, 180);
+            Check("웨이브 전환 후 적 생성", battle.State.Wave == 0 || battle.State.Enemies.Count > 0);
             yield return Step("전투 종료→결과", () => FindAnyObjectByType<ResultScreen>() != null, 180);
             var result = FindAnyObjectByType<ResultScreen>();
             Check("1-1 승리", result.Victory);
