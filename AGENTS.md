@@ -49,7 +49,9 @@
 - 웹 배포: `bash scripts/deploy-web.sh` → HEAD 검증 통과 시에만 WebGL 빌드 → Cloudflare 배포
 - 웹 빌드는 Unity 설치 PC에서만 가능 (CI는 Unity 라이선스 등록 후 수동 실행만)
 - 자동 배포: 셀프 호스티드 러너(라벨 unity) → main 푸시 시 `deploy-self-hosted.yml`이 deploy-web.sh 실행
-- 러너 조건: Unity 6000.4.7f1 + WebGL 모듈 활성화, bash, Node, 시크릿 CLOUDFLARE_API_TOKEN·CLOUDFLARE_ACCOUNT_ID
+- Unity 버전 정본: `ProjectSettings/ProjectVersion.txt` (현재 6000.6.8f1) → 스크립트·러너·CI 전부 여기서 읽음, 하드코딩 금지
+- 버전 올리기: 새 에디터로 점검 폴더에서 프로젝트 열기 → ProjectSettings·Packages 반영 → 커밋 (러너는 다음 실행에서 자동 설치 대상 인식)
+- 러너 조건: ProjectVersion 버전 + WebGL 모듈 활성화, bash, Node, 시크릿 CLOUDFLARE_API_TOKEN·CLOUDFLARE_ACCOUNT_ID
 - 리눅스 러너: `setup-linux-runner.sh install` → 원격 데스크톱에서 unityhub 로그인·Personal 추가, `npx wrangler login` → `setup-linux-runner.sh ci`
 - 러너 .env: UNITY_EXE·UNITY_EXTRA_ARGS=-nographics·HOME·CATVILLAGE_CHECK_DIR(~/CatVillage-check, Library 캐시 유지)
 - 🚫 공개 저장소 → 셀프 호스티드 워크플로에 `pull_request`·`pull_request_target` 트리거 금지 (외부 코드가 장비에서 실행됨)

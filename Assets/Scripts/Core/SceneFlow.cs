@@ -61,15 +61,16 @@ namespace CatVillage.Core
             GC.Collect();
 
             _current = Addressables.LoadSceneAsync(scene, LoadSceneMode.Additive);
-            yield return _current;
+            while (!_current.IsDone) yield return null;
             _busy = false;
             _screens.ShowLoading(false);
             if (_current.Status != AsyncOperationStatus.Succeeded)
             {
-                Debug.LogError($"SceneFlow: {scene.RuntimeKey} 로드 실패");
+                Debug.LogError($"SceneFlow: {scene.RuntimeKey} 로드 실패 {_current.OperationException}");
                 yield break;
             }
             SceneManager.SetActiveScene(_current.Result.Scene);
+            Debug.Log($"SceneFlow: {_current.Result.Scene.name} 로드 완료");
             onLoaded();
         }
     }

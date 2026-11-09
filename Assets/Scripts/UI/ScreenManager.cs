@@ -35,10 +35,23 @@ namespace CatVillage.UI
             if (loadingIndicator != null) loadingIndicator.SetActive(on);
         }
 
+        Action _pending;
+
         public void Show<T>(Action<T> setup = null) where T : GameScreen
         {
-            if (_busy) return;
+            if (_busy)
+            {
+                _pending = () => Show(setup);
+                return;
+            }
             StartCoroutine(Switch(setup));
+        }
+
+        void RunPending()
+        {
+            var next = _pending;
+            _pending = null;
+            next?.Invoke();
         }
 
         IEnumerator Switch<T>(Action<T> setup) where T : GameScreen
@@ -59,7 +72,18 @@ namespace CatVillage.UI
 
             if (loadingIndicator != null) loadingIndicator.SetActive(false);
             _busy = false;
-            if (instance == null) yield break;
+            if (instance == null)
+            {
+                Debug.LogError($"ScreenManager: {typeof(T).Name} 생성 실패");
+                RunPending();
+                yield break;
+            }
+
+            if (_pending != null)
+            {
+                RunPending();
+                yield break;
+            }
 
             var screen = instance.GetComponent<T>();
             setup?.Invoke(screen);

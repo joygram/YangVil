@@ -4,9 +4,7 @@ set -u
 MODE="${1:-index}"
 ROOT="$(git rev-parse --show-toplevel)"
 CHECK_DIR="${CATVILLAGE_CHECK_DIR:-$(dirname "$ROOT")/CatVillage-check}"
-if [ -n "${UNITY_EXE:-}" ]; then UNITY="$UNITY_EXE"
-elif [ -x "$HOME/Unity/Hub/Editor/6000.4.7f1/Editor/Unity" ]; then UNITY="$HOME/Unity/Hub/Editor/6000.4.7f1/Editor/Unity"
-else UNITY="/c/Program Files/Unity/Hub/Editor/6000.4.7f1/Editor/Unity.exe"; fi
+source "$(dirname "$0")/unity-path.sh"
 EXTRA=${UNITY_EXTRA_ARGS:-}
 
 case "$MODE" in
@@ -18,6 +16,7 @@ echo "[unity-check] 대상 트리 $TREE → $CHECK_DIR"
 mkdir -p "$CHECK_DIR"
 rm -rf "$CHECK_DIR/Assets" "$CHECK_DIR/Packages" "$CHECK_DIR/ProjectSettings"
 git archive "$TREE" Assets Packages ProjectSettings | tar -x -C "$CHECK_DIR" || { echo "[unity-check] 트리 추출 실패"; exit 1; }
+resolve_unity "$CHECK_DIR" || exit 1
 
 echo "[unity-check] 1/2 컴파일 확인"
 for attempt in 1 2; do

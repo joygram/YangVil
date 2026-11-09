@@ -34,6 +34,7 @@ namespace CatVillage.EditorTools
         {
             var settings = AddressableAssetSettingsDefaultObject.GetSettings(true);
             settings.BuildRemoteCatalog = false;
+            UseAssetDatabaseInPlayMode(settings);
             var ui = Group(settings, UiGroup, BundledAssetGroupSchema.BundlePackingMode.PackTogether);
             var characters = Group(settings, CharacterGroup, BundledAssetGroupSchema.BundlePackingMode.PackTogetherByLabel);
             Group(settings, SceneGroup, BundledAssetGroupSchema.BundlePackingMode.PackSeparately);
@@ -48,6 +49,14 @@ namespace CatVillage.EditorTools
             AddFolder(settings, audio, AudioFolder, "t:AudioClip");
             AssetDatabase.SaveAssets();
             return settings;
+        }
+
+        public static void UseAssetDatabaseInPlayMode(AddressableAssetSettings settings = null)
+        {
+            settings ??= AddressableAssetSettingsDefaultObject.Settings;
+            if (settings == null) return;
+            var fast = settings.DataBuilders.FindIndex(b => b != null && b.GetType().Name == "BuildScriptFastMode");
+            if (fast >= 0 && settings.ActivePlayModeDataBuilderIndex != fast) settings.ActivePlayModeDataBuilderIndex = fast;
         }
 
         static void AddFolder(AddressableAssetSettings settings, AddressableAssetGroup group, string folder, string filter)

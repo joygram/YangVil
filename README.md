@@ -7,7 +7,7 @@
 - 설치 없이 브라우저(크롬·엣지 권장)에서 바로 실행
 - main에 푸시하면 자동 빌드·배포 → 항상 최신 버전
 - 플랫폼: PC(Windows) · 웹 브라우저(WebGL)
-- 엔진: Unity 6000.4.7f1
+- 엔진: Unity 6000.6.8f1 (정본: ProjectSettings/ProjectVersion.txt)
 
 ## 플레이 흐름
 ```

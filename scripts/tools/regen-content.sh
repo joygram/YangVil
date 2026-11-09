@@ -10,19 +10,18 @@ fi
 METHOD="$1"; shift
 ROOT="$(git rev-parse --show-toplevel)"
 CHECK_DIR="${CATVILLAGE_CHECK_DIR:-$(dirname "$ROOT")/CatVillage-check}"
-if [ -n "${UNITY_EXE:-}" ]; then UNITY="$UNITY_EXE"
-elif [ -x "$HOME/Unity/Hub/Editor/6000.4.7f1/Editor/Unity" ]; then UNITY="$HOME/Unity/Hub/Editor/6000.4.7f1/Editor/Unity"
-else UNITY="/c/Program Files/Unity/Hub/Editor/6000.4.7f1/Editor/Unity.exe"; fi
+source "$ROOT/scripts/checks/unity-path.sh"
 
 TREE="$(git -C "$ROOT" write-tree)"
 mkdir -p "$CHECK_DIR"
 rm -rf "$CHECK_DIR/Assets" "$CHECK_DIR/Packages" "$CHECK_DIR/ProjectSettings"
 git -C "$ROOT" archive "$TREE" Assets Packages ProjectSettings | tar -x -C "$CHECK_DIR" || exit 1
+if [ -n "${UNITY_EXE:-}" ]; then UNITY="$UNITY_EXE"; else resolve_unity "$CHECK_DIR" || exit 1; fi
 
 for attempt in 1 2; do
   out="$("$UNITY" -batchmode -quit ${UNITY_EXTRA_ARGS:-} -projectPath "$CHECK_DIR" -buildTarget WebGL -executeMethod "$METHOD" -logFile - 2>&1)"
   code=$?
-  errors="$(printf '%s\n' "$out" | grep -E 'error CS|Exception' | grep -v 'Exceptions\.cs' | sort -u)"
+  errors="$(printf '%s\n' "$out" | grep -E 'error CS|^[A-Za-z.]*Exception:' | sort -u)"
   [ $code -eq 0 ] && [ -z "$errors" ] && break
   [ $attempt -eq 1 ] && [ -z "$errors" ] && { echo "[regen] 종료 코드 $code → 10초 후 재시도"; sleep 10; continue; }
   printf '%s\n' "$errors"

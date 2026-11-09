@@ -2,14 +2,14 @@
 
 - 대상: 디자이너 — UI/UX·고양이 에셋·이펙트를 Unity에서 직접 바꿔 봄
 - 게임 골격(데이터·전투·저장·화면 전환)은 완성 상태 → 프리팹·스프라이트만 바꾸면 화면이 바뀜
-- 도구: VS Code + Codex, Unity 6000.4.7f1, Unity CLI(batchmode)
+- 도구: VS Code + Codex, Unity 6000.6.8f1(ProjectVersion.txt 기준), Unity CLI(batchmode)
 - 규칙 정본: 저장소 루트 AGENTS.md (Codex가 자동으로 읽음)
 
 ## 준비
-- Unity Hub에서 Unity 6000.4.7f1 설치, 모듈: Windows Build Support·WebGL Build Support
+- Unity Hub에서 프로젝트를 열면 ProjectVersion.txt 버전(6000.6.8f1) 설치를 안내함, 모듈: WebGL Build Support
 - VS Code 확장: C# Dev Kit, Unity, Codex
 - Unity → Preferences → External Tools → Editor = VS Code
-- 환경변수 UNITY_EXE = C:\Program Files\Unity\Hub\Editor\6000.4.7f1\Editor\Unity.exe
+- 스크립트가 Unity 경로를 버전으로 자동 탐색 (다른 위치면 환경변수 UNITY_EDITOR_ROOT = Editor 상위 폴더)
 - 첫 실행: Unity Hub에서 CatVillage 폴더 열기 → Assets/Scenes/Intro.unity 열고 Play
 
 ## 프로젝트 구조

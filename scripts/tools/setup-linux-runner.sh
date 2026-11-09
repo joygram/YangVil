@@ -2,8 +2,11 @@
 set -uo pipefail
 
 REPO="joygram/YangVil"
-UNITY_VERSION="6000.4.7f1"
-UNITY_CHANGESET="f3c3c4248748"
+REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+source "$REPO_ROOT/scripts/checks/unity-path.sh"
+UNITY_VERSION="$(unity_version "$REPO_ROOT")"
+UNITY_CHANGESET="$(unity_changeset "$REPO_ROOT")"
+[ -n "$UNITY_VERSION" ] && [ -n "$UNITY_CHANGESET" ] || { echo "ProjectSettings/ProjectVersion.txt 읽기 실패"; exit 1; }
 TARGET_USER="${SUDO_USER:-$USER}"
 TARGET_HOME="$(getent passwd "$TARGET_USER" | cut -d: -f6)"
 find_unity() {
@@ -121,7 +124,9 @@ register() {
     as_user tar xzf runner.tar.gz && rm -f runner.tar.gz
   fi
   as_user ./config.sh --unattended --url "https://github.com/$REPO" --token "$token" --name "$(hostname)-unity" --labels unity,linux --replace || return 1
-  printf 'UNITY_EXE=%s\nUNITY_EXTRA_ARGS=-nographics\nHOME=%s\nCATVILLAGE_CHECK_DIR=%s\n' "$UNITY_EXE" "$TARGET_HOME" "$TARGET_HOME/CatVillage-check" | as_user tee .env >/dev/null
+  local editor_root
+  editor_root="$(dirname "$(dirname "$(dirname "$UNITY_EXE")")")"
+  printf 'UNITY_EDITOR_ROOT=%s\nUNITY_EXTRA_ARGS=-nographics\nHOME=%s\nCATVILLAGE_CHECK_DIR=%s\n' "$editor_root" "$TARGET_HOME" "$TARGET_HOME/CatVillage-check" | as_user tee .env >/dev/null
   sudo ./svc.sh install "$TARGET_USER" >/dev/null 2>&1 || true
   sudo ./svc.sh start
   sudo ./svc.sh status | grep -m1 -E 'Active:' | sed 's/^ */  /'

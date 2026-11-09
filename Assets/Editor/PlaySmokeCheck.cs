@@ -59,6 +59,7 @@ namespace CatVillage.EditorTools
                 EditorApplication.Exit(1);
                 return;
             }
+            AddressablesSetup.UseAssetDatabaseInPlayMode();
             if (Directory.Exists(SaveDir)) Directory.Delete(SaveDir, true);
             Directory.CreateDirectory(SaveDir);
             EditorSceneManager.OpenScene("Assets/Scenes/Intro.unity");

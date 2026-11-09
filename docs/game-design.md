@@ -1,7 +1,7 @@
 # 고양이 육성 수집 RPG — 개발 기획·규모·정의서
 
 - 작성일: 2026-11-09
-- 엔진: Unity 6000.4.7f1, 2D URP, 세로 1080×1920 기준 UI
+- 엔진: Unity 6000.6.8f1, 2D URP, 세로 1080×1920 기준 UI
 - 빌드 타깃: PC(Windows 64bit) + 웹앱(WebGL), 창 기본 540×960
 - 빌드: 평소 `BuildTool.BuildWebGL` → Builds/WebGL, 배포 때만 `BuildTool.BuildWindows`
 - 시작 씬: Assets/Scenes/Intro.unity → 화면 프리팹 전환 (Intro·Village·StageSelect·Battle·Result)

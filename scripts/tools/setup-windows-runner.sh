@@ -3,7 +3,9 @@ set -euo pipefail
 
 REPO="joygram/YangVil"
 RUNNER_DIR="${RUNNER_DIR:-/d/actions-runner}"
-UNITY_EXE="${UNITY_EXE:-C:/Program Files/Unity/Hub/Editor/6000.4.7f1/Editor/Unity.exe}"
+REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+source "$REPO_ROOT/scripts/checks/unity-path.sh"
+UNITY_EXE="$(unity_exe "$(unity_version "$REPO_ROOT")")" || { echo "ProjectVersion.txt 버전의 Unity 없음"; exit 1; }
 
 command -v gh >/dev/null || { echo "gh CLI 필요"; exit 1; }
 [ -f "$UNITY_EXE" ] || { echo "Unity 없음: $UNITY_EXE"; exit 1; }
@@ -24,7 +26,7 @@ fi
 
 echo "[3/4] 러너 설정 (라벨 unity, windows)"
 ./config.cmd --unattended --url "https://github.com/$REPO" --token "$TOKEN" --name "$(hostname)-unity" --labels unity,windows --replace
-printf 'UNITY_EXE=%s\n' "$UNITY_EXE" > .env
+printf 'UNITY_EDITOR_ROOT=%s\n' "$(dirname "$(dirname "$(dirname "$UNITY_EXE")")")" > .env
 
 echo "[4/4] 실행"
 echo "현재 로그인 사용자로 실행해야 Unity 라이선스·wrangler 로그인을 그대로 씀"
