@@ -50,7 +50,8 @@
 - 웹 빌드는 Unity 설치 PC에서만 가능 (CI는 Unity 라이선스 등록 후 수동 실행만)
 - 자동 배포: 셀프 호스티드 러너(라벨 unity) → main 푸시 시 `deploy-self-hosted.yml`이 deploy-web.sh 실행
 - 러너 조건: Unity 6000.4.7f1 + WebGL 모듈 활성화, bash, Node, 시크릿 CLOUDFLARE_API_TOKEN·CLOUDFLARE_ACCOUNT_ID
-- 리눅스 러너: `setup-linux-runner.sh install` → 원격 데스크톱에서 unityhub 로그인·Personal 추가 → `license` → `register`
+- 리눅스 러너: `setup-linux-runner.sh install` → 원격 데스크톱에서 unityhub 로그인·Personal 추가, `npx wrangler login` → `setup-linux-runner.sh ci`
+- 러너 .env: UNITY_EXE·UNITY_EXTRA_ARGS=-nographics·HOME·CATVILLAGE_CHECK_DIR(~/CatVillage-check, Library 캐시 유지)
 - 어느 씬에서 Play 해도 Intro(빌드 0번)부터 시작됨
 
 ## 커밋 전 체크 (하나라도 실패하면 커밋 금지)

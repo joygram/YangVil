@@ -26,7 +26,9 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: bash scripts/deploy-web.sh
+        run: |
+          [ -z "$CLOUDFLARE_API_TOKEN" ] && unset CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID
+          bash scripts/deploy-web.sh
 
       - if: always()
         shell: bash

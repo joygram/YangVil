@@ -69,6 +69,17 @@ check() {
   [ $code -eq 0 ] && echo "  ✔ Unity 배치 실행 정상" || { echo "  ✘ 종료 코드 $code"; return 1; }
 }
 
+cloudflare() {
+  echo "[cloudflare] wrangler 로그인 (배포용)"
+  if [ -n "${CLOUDFLARE_API_TOKEN:-}" ] || as_user npx --yes wrangler whoami 2>/dev/null | grep -q 'You are logged in'; then
+    echo "  ✔ Cloudflare 인증 있음"
+    return 0
+  fi
+  echo "  ✘ 인증 없음 → 원격 데스크톱 터미널에서: cd ~/workspace/YangVil && npx wrangler login"
+  echo "    (또는 GitHub 시크릿 CLOUDFLARE_API_TOKEN 등록)"
+  return 1
+}
+
 register() {
   echo "[runner] GitHub Actions 러너"
   local token="${1:-}"
@@ -84,7 +95,7 @@ register() {
     as_user tar xzf runner.tar.gz && rm -f runner.tar.gz
   fi
   as_user ./config.sh --unattended --url "https://github.com/$REPO" --token "$token" --name "$(hostname)-unity" --labels unity,linux --replace || return 1
-  printf 'UNITY_EXE=%s\nUNITY_EXTRA_ARGS=-nographics\n' "$UNITY_EXE" | as_user tee .env >/dev/null
+  printf 'UNITY_EXE=%s\nUNITY_EXTRA_ARGS=-nographics\nHOME=%s\nCATVILLAGE_CHECK_DIR=%s\n' "$UNITY_EXE" "$TARGET_HOME" "$TARGET_HOME/CatVillage-check" | as_user tee .env >/dev/null
   sudo ./svc.sh install "$TARGET_USER" >/dev/null 2>&1 || true
   sudo ./svc.sh start
   sudo ./svc.sh status | grep -m1 -E 'Active:' | sed 's/^ */  /'
@@ -96,8 +107,10 @@ case "${1:-all}" in
   editor) editor ;;
   license) license ;;
   check) check ;;
+  cloudflare) cloudflare ;;
   register) shift; register "${1:-}" ;;
   install) deps && hub && editor && license && check ;;
-  all) deps && hub && editor && license && check && register "${2:-}" ;;
-  *) echo "사용법: bash $0 [install|license|check|register [토큰]|all]"; exit 1 ;;
+  ci) license && check && cloudflare && register "${2:-}" ;;
+  all) deps && hub && editor && license && check && cloudflare && register "${2:-}" ;;
+  *) echo "사용법: bash $0 [install|license|check|cloudflare|register [토큰]|ci|all]"; exit 1 ;;
 esac
