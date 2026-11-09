@@ -4,6 +4,8 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
+/Assets/AddressableAssetsData/link.xml
+/Assets/AddressableAssetsData/link.xml.meta
 /[Uu]ser[Ss]ettings/
 /[Mm]emoryCaptures/
 /[Rr]ecordings/

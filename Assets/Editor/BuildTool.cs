@@ -20,22 +20,32 @@ namespace CatVillage.EditorTools
 
         public static void BuildWebGL()
         {
-            PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Brotli;
+            PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
             PlayerSettings.WebGL.decompressionFallback = false;
             PlayerSettings.WebGL.dataCaching = true;
             PlayerSettings.WebGL.memoryGrowthMode = WebGLMemoryGrowthMode.Geometric;
             PlayerSettings.WebGL.initialMemorySize = WebGLInitialMemoryMB;
             PlayerSettings.WebGL.maximumMemorySize = WebGLMaximumMemoryMB;
             PlayerSettings.SetManagedStrippingLevel(NamedBuildTarget.WebGL, ManagedStrippingLevel.High);
+            PlayerSettings.SetIl2CppCodeGeneration(NamedBuildTarget.WebGL, Il2CppCodeGeneration.OptimizeSize);
+            EditorUserBuildSettings.SetPlatformSettings("WebGL", "CodeOptimization", "diskSizeLTO");
             var output = Path.Combine(BuildRoot, "WebGL");
-            if (Build(BuildTargetGroup.WebGL, BuildTarget.WebGL, output))
-                File.WriteAllText(Path.Combine(output, "_headers"), WebGLHeaders);
+            if (!Build(BuildTargetGroup.WebGL, BuildTarget.WebGL, output)) return;
+            var headers = Path.Combine(output, "_headers");
+            if (File.Exists(headers)) File.Delete(headers);
+            CheckAssetLimit(output);
         }
 
-        const string WebGLHeaders =
-            "/Build/*.js.br\n  Content-Type: application/javascript\n  Content-Encoding: br\n" +
-            "/Build/*.wasm.br\n  Content-Type: application/wasm\n  Content-Encoding: br\n" +
-            "/Build/*.data.br\n  Content-Type: application/octet-stream\n  Content-Encoding: br\n";
+        const long WorkerAssetLimitBytes = 25L * 1024 * 1024;
+
+        static void CheckAssetLimit(string output)
+        {
+            foreach (var file in Directory.GetFiles(output, "*", SearchOption.AllDirectories))
+            {
+                var size = new FileInfo(file).Length;
+                if (size > WorkerAssetLimitBytes) Fail($"{file} {size / 1048576}MB → Cloudflare 정적 에셋 25MiB 제한 초과");
+            }
+        }
 
         public static void BuildAll()
         {
