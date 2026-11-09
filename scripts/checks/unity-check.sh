@@ -4,7 +4,10 @@ set -u
 MODE="${1:-index}"
 ROOT="$(git rev-parse --show-toplevel)"
 CHECK_DIR="${CATVILLAGE_CHECK_DIR:-$(dirname "$ROOT")/CatVillage-check}"
-UNITY="${UNITY_EXE:-/c/Program Files/Unity/Hub/Editor/6000.4.7f1/Editor/Unity.exe}"
+if [ -n "${UNITY_EXE:-}" ]; then UNITY="$UNITY_EXE"
+elif [ -x "$HOME/Unity/Hub/Editor/6000.4.7f1/Editor/Unity" ]; then UNITY="$HOME/Unity/Hub/Editor/6000.4.7f1/Editor/Unity"
+else UNITY="/c/Program Files/Unity/Hub/Editor/6000.4.7f1/Editor/Unity.exe"; fi
+EXTRA=${UNITY_EXTRA_ARGS:-}
 
 case "$MODE" in
   index) TREE="$(git write-tree)" ;;
@@ -18,7 +21,7 @@ git archive "$TREE" Assets Packages ProjectSettings | tar -x -C "$CHECK_DIR" || 
 
 echo "[unity-check] 1/2 컴파일 확인"
 for attempt in 1 2; do
-  compile="$("$UNITY" -batchmode -quit -projectPath "$CHECK_DIR" -buildTarget WebGL -logFile - 2>&1)"
+  compile="$("$UNITY" -batchmode -quit $EXTRA -projectPath "$CHECK_DIR" -buildTarget WebGL -logFile - 2>&1)"
   code=$?
   errors="$(printf '%s\n' "$compile" | grep -E 'error CS|invalid parameters' | sort -u)"
   [ -n "$errors" ] && break
@@ -38,7 +41,7 @@ METHOD="CatVillage.EditorTools.PlaySmokeCheck.Run"
 [ "${CATVILLAGE_BUILD_WEBGL:-0}" = "1" ] && METHOD="CatVillage.EditorTools.PlaySmokeCheck.RunThenBuildWebGL"
 
 echo "[unity-check] 2/2 헤드리스 Play 점검 ($METHOD)"
-smoke="$("$UNITY" -batchmode -projectPath "$CHECK_DIR" -buildTarget WebGL -executeMethod "$METHOD" -logFile - 2>&1)"
+smoke="$("$UNITY" -batchmode $EXTRA -projectPath "$CHECK_DIR" -buildTarget WebGL -executeMethod "$METHOD" -logFile - 2>&1)"
 code=$?
 printf '%s\n' "$smoke" | grep -E '^PlaySmoke'
 if [ $code -ne 0 ] || ! printf '%s\n' "$smoke" | grep -q 'PlaySmoke: 결과 오류 0건'; then

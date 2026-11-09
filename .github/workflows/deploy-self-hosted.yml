@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, windows, unity]
+    runs-on: [self-hosted, unity]
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
