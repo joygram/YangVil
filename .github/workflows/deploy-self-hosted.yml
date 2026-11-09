@@ -56,7 +56,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          info="${YANGVIL_CHECK_DIR:-$HOME/YangVil-check}/Builds/WebGL/version.json"
+          info="${YANGVIL_CHECK_DIR:-$(dirname "$(git rev-parse --show-toplevel)")/YangVil-check}/Builds/WebGL/version.json"
           version="v$(node -p "require(process.argv[1]).version" "$info")"
           notes="$(git log --format='- %s' -n "$CHANGE_COUNT" "$GITHUB_SHA")"
           gh release create "$version" --target "$GITHUB_SHA" --title "냥빌 $version 배포" \
