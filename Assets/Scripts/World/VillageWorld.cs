@@ -166,9 +166,11 @@ namespace CatVillage.World
             wanderer.SetMood(_game.Mood(cat), species.tint, bubble);
             _wanderers[cat.uid] = (cat, wanderer, species.tint, bubble);
             var c = cat;
-            WorldKit.Clickable(go, new Vector2(1f, 1f), () => CatTapped?.Invoke(c)).transform.GetComponent<BoxCollider2D>().offset = new Vector2(0, 0.5f);
             var drag = go.AddComponent<CatDrag>();
+            WorldKit.Clickable(go, new Vector2(1f, 1f), () => { if (!drag.TakeLongPress()) wanderer.Pet(); })
+                .transform.GetComponent<BoxCollider2D>().offset = new Vector2(0, 0.5f);
             drag.cam = cam;
+            drag.LongPressed = () => CatTapped?.Invoke(c);
             drag.Began = () => Highlight(c);
             drag.Hovered = p => HoverDrop(c, p);
             drag.Dropped = p => DropCat(c, p);

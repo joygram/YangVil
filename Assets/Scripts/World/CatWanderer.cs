@@ -64,6 +64,7 @@ namespace CatVillage.World
         {
             if (_actor == null || !_actor.Ready) return;
             Express();
+            if (_petting) return;
             if (!_walking)
             {
                 if (Time.time < _waitUntil) return;
@@ -107,6 +108,53 @@ namespace CatVillage.World
                 _nextPuff = Time.time + Random.Range(0.6f, 1.2f);
                 StartCoroutine(Puff());
             }
+        }
+
+        bool _petting;
+
+        public bool Petting => _petting;
+
+        public void Pet()
+        {
+            if (_petting || _actor == null) return;
+            StartCoroutine(PetRoutine());
+            for (var i = 0; i < 3; i++) StartCoroutine(Heart(i * 0.15f));
+        }
+
+        System.Collections.IEnumerator PetRoutine()
+        {
+            _petting = true;
+            _walking = false;
+            _actor.Play(ActorPose.Idle);
+            var sprite = _actor.Renderer.transform;
+            if (_bubble != null) _bubble.text = "냥♡";
+            for (var k = 0f; k < 1f; k += Time.deltaTime / 0.6f)
+            {
+                sprite.localPosition = new Vector3(0, Mathf.Abs(Mathf.Sin(k * Mathf.PI * 2f)) * 0.18f, 0);
+                sprite.localScale = new Vector3(1f + Mathf.Sin(k * Mathf.PI * 4f) * 0.06f, 1f, 1f);
+                yield return null;
+            }
+            sprite.localPosition = Vector3.zero;
+            sprite.localScale = Vector3.one;
+            _waitUntil = Time.time + 1f;
+            yield return new WaitForSeconds(0.8f);
+            if (_bubble != null) _bubble.text = _mood == CatMood.Normal ? "" : CatCare.Label(_mood);
+            _petting = false;
+        }
+
+        System.Collections.IEnumerator Heart(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            var color = new Color(1f, 0.45f, 0.65f, 1f);
+            var heart = WorldKit.Box(transform.parent, "Heart", (Vector2)transform.localPosition + new Vector2(Random.Range(-0.35f, 0.35f), 0.9f),
+                new Vector2(0.16f, 0.16f), color, 530);
+            for (var k = 0f; k < 1f; k += Time.deltaTime / 0.9f)
+            {
+                heart.transform.localPosition += new Vector3(0, 0.012f, 0);
+                heart.color = new Color(color.r, color.g, color.b, 1 - k);
+                yield return null;
+            }
+            Destroy(heart.gameObject);
         }
 
         System.Collections.IEnumerator Puff()

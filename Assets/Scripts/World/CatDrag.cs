@@ -4,14 +4,45 @@ using UnityEngine.EventSystems;
 
 namespace CatVillage.World
 {
-    public class CatDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+    public class CatDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler,
+        IPointerDownHandler, IPointerUpHandler
     {
         public Camera cam;
         public float liftScale = 1.25f;
         public float liftHeight = 0.35f;
+        public float longPressSeconds = 0.5f;
         public Action Began;
         public Action<Vector2> Hovered;
         public Action<Vector2> Dropped;
+        public Action LongPressed;
+
+        bool _pressing;
+        float _pressedAt;
+        bool _longFired;
+
+        public bool TakeLongPress()
+        {
+            var fired = _longFired;
+            _longFired = false;
+            return fired;
+        }
+
+        public void OnPointerDown(PointerEventData e)
+        {
+            _pressing = true;
+            _longFired = false;
+            _pressedAt = Time.unscaledTime;
+        }
+
+        public void OnPointerUp(PointerEventData e) => _pressing = false;
+
+        void Update()
+        {
+            if (!_pressing || _dragging || VillageCamera.Locked || Time.unscaledTime - _pressedAt < longPressSeconds) return;
+            _pressing = false;
+            _longFired = true;
+            LongPressed?.Invoke();
+        }
 
         CatWanderer _wanderer;
         SpriteActor _actor;
@@ -42,6 +73,7 @@ namespace CatVillage.World
         public void OnBeginDrag(PointerEventData e)
         {
             if (VillageCamera.Locked) return;
+            _pressing = false;
             _dragging = true;
             _home = transform.position;
             _scale = transform.localScale;

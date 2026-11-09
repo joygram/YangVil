@@ -132,6 +132,9 @@ namespace CatVillage.EditorTools
             hud.hatchery.button.onClick.Invoke();
             Check("이사 중에도 버튼 동작", hud.panel.activeSelf && !world.Moving);
             hud.panelClose.button.onClick.Invoke();
+            var petted = FindObjectsByType<CatWanderer>(FindObjectsSortMode.None).First(w => w.GetComponent<SpriteActor>().Ready);
+            petted.Pet();
+            Check("고양이 쓰담 반응", petted.Petting);
             starter.cleanliness = 10f;
             Check("더러우면 꼬질꼬질 상태", GameBootstrap.Game.Mood(starter) == CatMood.Dirty);
             GameBootstrap.Game.Wash(starter);
