@@ -16,6 +16,13 @@ if [ -n "$auto" ]; then
   printf '%s\n' "$auto" | while IFS= read -r f; do git restore --source=HEAD --staged --worktree -- "$f"; done
 fi
 
+untracked="$(git ls-files --others --exclude-standard | grep -E "$AUTO_PATTERN" || true)"
+if [ -n "$untracked" ]; then
+  echo "[sync] 에디터가 새로 만든 자동 파일 제거 (원격 버전으로 받음):"
+  printf '%s\n' "$untracked" | sed 's/^/  /'
+  printf '%s\n' "$untracked" | while IFS= read -r f; do rm -f -- "$f" "$f.meta"; done
+fi
+
 if [ -n "$manual" ]; then
   echo "[sync] ✘ 직접 수정한 파일이 있어 자동으로 받지 않음 (커밋하거나 정리 후 다시 실행):"
   printf '%s\n' "$manual" | sed 's/^/  /'
