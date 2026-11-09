@@ -50,7 +50,7 @@
 - 웹 빌드는 Unity 설치 PC에서만 가능 (CI는 Unity 라이선스 등록 후 수동 실행만)
 - 자동 배포: 셀프 호스티드 러너(라벨 unity) → main 푸시 시 `deploy-self-hosted.yml`이 deploy-web.sh 실행
 - 게임 버전: `VERSION`(메이저.마이너) + 패치 = 빌드 번호(CI는 GITHUB_RUN_NUMBER, 로컬은 Library 카운터) → 빌드마다 자동 증가, 커밋 불필요
-- 버전 표시: 인트로 하단 `v메이저.마이너.패치 · 빌드일시`, 웹 version.json(페이지에 박힌 버전과 다르면 새 버전 배너)
+- 버전 표시: 인트로 하단 `v메이저.마이너.패치 · 빌드일시`, 웹 version.json(페이지에 박힌 버전과 다르면 새 버전 배너), 배포 성공 시 릴리즈 `v버전`(채팅 앱 배포 알림)
 - 메이저·마이너 올리기: `VERSION` 파일만 수정 후 커밋
 - Unity 버전 정본: `ProjectSettings/ProjectVersion.txt` (현재 6000.6.8f1) → 스크립트·러너·CI 전부 여기서 읽음, 하드코딩 금지
 - 버전 올리기: 새 에디터로 점검 폴더에서 프로젝트 열기 → ProjectSettings·Packages 반영 → 커밋 (러너는 다음 실행에서 자동 설치 대상 인식)

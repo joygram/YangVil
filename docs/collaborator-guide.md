@@ -69,7 +69,7 @@
 - 플레이 주소: https://yangvil.deuklab.workers.dev
 - 필요 시크릿: UNITY_LICENSE(또는 UNITY_SERIAL)·UNITY_EMAIL·UNITY_PASSWORD·CLOUDFLARE_API_TOKEN·CLOUDFLARE_ACCOUNT_ID
 - 푸시 알림: Google Chat GitHub 앱(링크로 권한 연결)
-- 배포 완료·실패 알림: 시크릿 GOOGLE_CHAT_WEBHOOK (앱이 Actions 이벤트를 안 올림) → 없으면 생략
+- 배포 완료 알림: 배포 성공 시 릴리즈 `v버전` 생성 → 채팅 GitHub 앱이 릴리즈 알림으로 올림
 - 시크릿 없으면 빌드·배포 건너뛰고 경고만 남김
 - 웹 빌드: Brotli 압축 + `_headers`로 Content-Encoding 지정 (Worker 정적 에셋)
 
