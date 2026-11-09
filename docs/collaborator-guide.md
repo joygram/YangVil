@@ -97,6 +97,7 @@
 | URP·플레이어 설정 | `CatVillage.EditorTools.ProjectSetup.Run` |
 | 데이터·프리팹·씬 재생성 | `CatVillage.EditorTools.ProjectSetup.BuildContent` |
 | 데이터만 | `CatVillage.EditorTools.GameDataBuilder.Build` |
+| 헤드리스 Play 점검 (`-quit` 없이) | `CatVillage.EditorTools.PlaySmokeCheck.Run` |
 | 화면 프리팹 등록 | `CatVillage.EditorTools.UiPrefabBuilder.RegisterScreens` |
 | Addressables 그룹 정리 | `CatVillage.EditorTools.AddressablesSetup.Run` |
 | 웹앱 빌드 (평소 확인용) | `CatVillage.EditorTools.BuildTool.BuildWebGL` |

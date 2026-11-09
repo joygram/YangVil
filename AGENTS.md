@@ -33,7 +33,11 @@
 - `[MenuItem]` 메서드는 인자 없음 → 인자 필요하면 메뉴용 래퍼 메서드를 따로 둠
 - 🚫 Unity 오브젝트에 `??`·`?.` 금지 (에디터의 가짜 null 통과) → `TryGetComponent`·`== null` 사용
 - 웹 빌드는 증분: Library·Addressables 캐시 재사용, 전체 재빌드는 `-cleanBuild` 인자 줄 때만
-- 빌드보다 플레이 확인이 먼저: 에디터 Play(Intro부터) 동작 확인 → 그다음 웹 빌드
+- 빌드보다 플레이 확인이 먼저: 헤드리스 Play 점검 통과 → 그다음 웹 빌드
+- Play 점검: `"$UNITY_EXE" -batchmode -projectPath <클론> -executeMethod CatVillage.EditorTools.PlaySmokeCheck.Run -logFile -`
+- Play 점검 = 창 없음, `-quit` 붙이지 않음, 마을→전투→결과→마을 자동 진행, 오류 1건이라도 있으면 종료 코드 1
+- 🚫 컴파일 0건 + Play 점검 `결과 오류 0건` 둘 다 확인 전 커밋·푸시 금지
+- 새 화면·기능 추가 시 PlaySmokeCheck에 단계 추가
 - 어느 씬에서 Play 해도 Intro(빌드 0번)부터 시작됨
 
 ## 커밋 전 체크 (하나라도 실패하면 커밋 금지)
