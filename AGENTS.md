@@ -20,6 +20,23 @@
 - UI 변경 시 데이터 바인딩 이름·버튼 이벤트 연결 유지
 - Scripts/Battle, Data/ 수치는 디자이너 요청으로 수정하지 않음
 - .meta 파일 삭제·이동 금지 (Unity 에디터나 CLI로만 이동)
+
+## 동시 작업
+- 같은 프로젝트 폴더는 Unity 1개만 열림 (Temp/UnityLockfile)
+- 에디터 열린 상태의 CLI 작업 → 빌드 전용 클론 `D:/workspace/CatVillage-build`에서 실행
+- 클론 반영: `git -C <클론> pull <원본> main` → 작업 → 클론 커밋 → 원본에서 `pull --ff-only <클론> main`
+
+## 커밋 전 체크 (하나라도 실패하면 커밋 금지)
+- 컴파일 0에러: 클론에서 `-batchmode -quit` 실행 → `error CS` 0건, 종료 코드 0
+- 코드와 생성 콘텐츠 짝 맞춤: 데이터·프리팹·씬을 읽는 코드를 바꿨으면 빌더 실행 결과(SO·프리팹·씬·GameConfig)까지 같은 커밋
+- 빌더 코드 수정 시 해당 빌더 실행 → 로그에 `Builder:` 완료 줄 확인
+- GameConfig 필수 참조 비어 있지 않음: starterCat·starterBasket·starterHouse·villageScene·battleScene·screens
+- 새 화면 프리팹 → screens 등록, 새 씬 → Addressables Scenes 그룹 등록
+- 삭제한 클래스 이름이 코드·프리팹에 남지 않음: `rg <클래스명> Assets` 0건
+- 저장 구조(SaveData) 바뀌면 `SaveData.CurrentVersion` 올림
+- 생성물·테스트 산출물 제외: Builds/ · Library/ · Assets/Resources/PerformanceTestRun*.json
+- 사용자가 에디터로 확인하는 변경이면 원본 폴더에 콘텐츠까지 반영된 뒤 알림
+
 ## 커밋·푸시
 - 커밋 전 `git status --short`로 바뀐 파일·새 파일(??)·삭제(D) 전부 확인
 - 새 에셋·스크립트는 짝 `.meta`와 함께 add (meta 빠지면 다른 PC에서 참조 깨짐)
