@@ -121,7 +121,7 @@
 - UI: uGUI + TextMeshPro, 화면당 프리팹 1개, ScreenManager 스택 전환
 - 연출: DOTween 트윈, Particle System 이펙트
 - 시간: 부화·생산은 UTC 타임스탬프 기준 → 오프라인 진행 반영
-- 폴더: Scripts/{Core,Data,Cat,House,Battle,UI} · Art/{Cats,UI,FX} · Data/
+- 폴더: Scripts/{Core,Data,Battle,UI} · Art/{Cats,Enemies,UI,FX,ThirdParty} · Data/ · Prefabs/UI
 
 ## 시스템 정의
 | 시스템 | 정의 |
