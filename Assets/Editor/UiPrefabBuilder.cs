@@ -193,7 +193,7 @@ namespace CatVillage.EditorTools
             var root = ScreenRoot("IntroScreen");
             UiFactory.Background(root, Paper);
             var s = root.gameObject.AddComponent<IntroScreen>();
-            var title = ui.Text(root, "고양이 마을", 110, Ink);
+            var title = ui.Text(root, "냥빌", 140, Ink);
             UiFactory.Place(title.rectTransform, new Vector2(0.5f, 0.72f), Vector2.zero, new Vector2(900, 180));
             var sub = ui.Text(root, "털실 바구니에서 태어난 고양이들의 모험", 34, Color.gray);
             UiFactory.Place(sub.rectTransform, new Vector2(0.5f, 0.64f), Vector2.zero, new Vector2(900, 80));

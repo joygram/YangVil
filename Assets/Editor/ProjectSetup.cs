@@ -76,7 +76,7 @@ namespace CatVillage.EditorTools
         static void SetupPlayer()
         {
             PlayerSettings.companyName = "CatVillage";
-            PlayerSettings.productName = "CatVillage";
+            PlayerSettings.productName = "YangVil";
             PlayerSettings.defaultScreenWidth = 540;
             PlayerSettings.defaultScreenHeight = 960;
             PlayerSettings.fullScreenMode = FullScreenMode.Windowed;

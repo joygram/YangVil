@@ -24,7 +24,6 @@ namespace CatVillage.EditorTools
             {
                 var font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(AssetDatabase.GUIDToAssetPath(guid));
                 if (font == null || font.atlasPopulationMode != AtlasPopulationMode.Dynamic) continue;
-                if (font.characterTable.Count == 0 && font.glyphTable.Count == 0) continue;
                 font.ClearFontAssetData(true);
                 EditorUtility.SetDirty(font);
                 count++;
