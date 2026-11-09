@@ -6,11 +6,31 @@ UNITY_VERSION="6000.4.7f1"
 UNITY_CHANGESET="f3c3c4248748"
 TARGET_USER="${SUDO_USER:-$USER}"
 TARGET_HOME="$(getent passwd "$TARGET_USER" | cut -d: -f6)"
-UNITY_EXE="$TARGET_HOME/Unity/Hub/Editor/$UNITY_VERSION/Editor/Unity"
+find_unity() {
+  local p="$TARGET_HOME/Unity/Hub/Editor/$UNITY_VERSION/Editor/Unity"
+  [ -x "$p" ] && { echo "$p"; return; }
+  if command -v unityhub >/dev/null; then
+    p="$(as_user unityhub --headless editors --installed 2>/dev/null | grep "$UNITY_VERSION" | grep -o '/[^ ]*' | head -1)"
+    [ -n "$p" ] && [ -d "$p" ] && p="$p/Editor/Unity"
+    [ -n "$p" ] && [ -x "$p" ] && { echo "$p"; return; }
+  fi
+  find "$TARGET_HOME" /opt -path "*$UNITY_VERSION*/Editor/Unity" -type f -perm -u+x 2>/dev/null | head -1
+}
 LICENSE_DIRS=("$TARGET_HOME/.local/share/unity3d/licenses" "$TARGET_HOME/.local/share/unity3d/Unity/licenses" "$TARGET_HOME/.local/share/unity3d/Unity")
 RUNNER_DIR="${RUNNER_DIR:-$TARGET_HOME/actions-runner}"
 
 as_user() { if [ "$(id -un)" = "$TARGET_USER" ]; then "$@"; else sudo -u "$TARGET_USER" -H "$@"; fi; }
+
+UNITY_EXE="$(find_unity)"
+[ -n "$UNITY_EXE" ] || UNITY_EXE="$TARGET_HOME/Unity/Hub/Editor/$UNITY_VERSION/Editor/Unity"
+
+need_unity() {
+  [ -x "$UNITY_EXE" ] && return 0
+  echo "  ✘ Unity $UNITY_VERSION 실행 파일 없음 ($UNITY_EXE)"
+  echo "    설치 중이면 끝난 뒤 다시 실행 / 설치: bash $0 editor"
+  echo "    설치된 에디터 목록: unityhub --headless editors --installed"
+  return 1
+}
 
 deps() {
   echo "[deps] 기본 패키지"
@@ -46,12 +66,14 @@ editor() {
   elif [ ! -d "$(dirname "$UNITY_EXE")/Data/PlaybackEngines/WebGLSupport" ]; then
     as_user unityhub --headless install-modules --version "$UNITY_VERSION" --module webgl
   fi
+  UNITY_EXE="$(find_unity)"
   [ -x "$UNITY_EXE" ] && echo "  ✔ $UNITY_EXE" || { echo "  ✘ 에디터 없음"; return 1; }
   [ -d "$(dirname "$UNITY_EXE")/Data/PlaybackEngines/WebGLSupport" ] && echo "  ✔ WebGL 모듈" || { echo "  ✘ WebGL 모듈 없음"; return 1; }
 }
 
 license() {
   echo "[license] Unity 라이선스"
+  need_unity || return 1
   for d in "${LICENSE_DIRS[@]}"; do
     f="$(ls "$d"/*.xml "$d"/*.ulf 2>/dev/null | head -1)"
     [ -n "$f" ] && { echo "  ✔ 라이선스 파일: $f"; return 0; }
@@ -65,7 +87,8 @@ license() {
 }
 
 check() {
-  echo "[check] 헤드리스 실행 확인"
+  echo "[check] 헤드리스 실행 확인 ($UNITY_EXE)"
+  need_unity || return 1
   out="$(as_user "$UNITY_EXE" -batchmode -quit -nographics -logFile - 2>&1)"
   code=$?
   printf '%s\n' "$out" | grep -iE 'licens|entitlement' | grep -viE 'debug' | tail -3 | sed 's/^/  /'
@@ -113,8 +136,8 @@ case "${1:-all}" in
   cloudflare) cloudflare ;;
   register) shift; register "${1:-}" ;;
   install) deps && hub && editor && license && check ;;
-  sync) bash "$(dirname "$0")/sync.sh" ;;
-  ci) bash "$(dirname "$0")/sync.sh"; license && check && cloudflare && register "${2:-}" ;;
-  all) bash "$(dirname "$0")/sync.sh"; deps && hub && editor && license && check && cloudflare && register "${2:-}" ;;
+  sync) SYNC_FOLLOW_REMOTE=1 bash "$(dirname "$0")/sync.sh" ;;
+  ci) SYNC_FOLLOW_REMOTE=1 bash "$(dirname "$0")/sync.sh"; license && check && cloudflare && register "${2:-}" ;;
+  all) SYNC_FOLLOW_REMOTE=1 bash "$(dirname "$0")/sync.sh"; deps && hub && editor && license && check && cloudflare && register "${2:-}" ;;
   *) echo "사용법: bash $0 [install|license|check|cloudflare|register [토큰]|ci|all]"; exit 1 ;;
 esac

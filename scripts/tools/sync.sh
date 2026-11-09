@@ -22,4 +22,17 @@ if [ -n "$manual" ]; then
   exit 1
 fi
 
-git pull --ff-only --quiet && echo "[sync] ✔ $(git rev-parse --short HEAD) 최신"
+git fetch --quiet origin || exit 1
+BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+if git merge-base --is-ancestor HEAD "origin/$BRANCH"; then
+  git merge --ff-only --quiet "origin/$BRANCH"
+elif [ "${SYNC_FOLLOW_REMOTE:-0}" = "1" ]; then
+  echo "[sync] 원격과 이력이 갈라짐 → 이 폴더는 원격 추종용 → 원격 기준으로 맞춤"
+  git reset --hard --quiet "origin/$BRANCH"
+else
+  echo "[sync] ✘ 원격과 이력이 갈라짐 (원격 이력이 다시 쓰였거나 로컬 커밋 있음):"
+  git log --oneline "origin/$BRANCH..HEAD" | head -5 | sed 's/^/  로컬만: /'
+  echo "  원격 기준으로 맞추려면: SYNC_FOLLOW_REMOTE=1 bash $0"
+  exit 1
+fi
+echo "[sync] ✔ $(git rev-parse --short HEAD) 최신"
