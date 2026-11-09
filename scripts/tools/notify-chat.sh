@@ -10,12 +10,15 @@ URL="https://yangvil.deuklab.workers.dev"
 RUN="${RUN_URL:-}"
 ACTOR="${GITHUB_ACTOR:-}"
 CHANGES="$(git log --format='• %s' -n "${CHANGE_COUNT:-5}" "$SHA" 2>/dev/null)"
+INFO="${CATVILLAGE_CHECK_DIR:-$(dirname "$(git rev-parse --show-toplevel)")/CatVillage-check}/Builds/WebGL/version.json"
+VERSION=""
+[ -f "$INFO" ] && VERSION="v$(node -p "require(process.argv[1]).version" "$INFO" 2>/dev/null)"
 
 case "$KIND" in
   start) TEXT="🛠 *냥빌 빌드 시작* \`$SHORT\` ($ACTOR)
 $CHANGES
 $RUN" ;;
-  done) TEXT="✅ *냥빌 새 버전 배포 완료* \`$SHORT\`${ELAPSED:+ · ${ELAPSED}}
+  done) TEXT="✅ *냥빌 ${VERSION:-새 버전} 배포 완료* \`$SHORT\`${ELAPSED:+ · ${ELAPSED}}
 ▶ $URL
 $CHANGES
 (열려 있는 게임은 자동으로 새 버전 안내가 떠요)" ;;

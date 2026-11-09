@@ -15,7 +15,7 @@ esac
 echo "[unity-check] 대상 트리 $TREE → $CHECK_DIR"
 mkdir -p "$CHECK_DIR"
 rm -rf "$CHECK_DIR/Assets" "$CHECK_DIR/Packages" "$CHECK_DIR/ProjectSettings"
-git archive "$TREE" Assets Packages ProjectSettings | tar -x -C "$CHECK_DIR" || { echo "[unity-check] 트리 추출 실패"; exit 1; }
+git archive "$TREE" Assets Packages ProjectSettings VERSION | tar -x -C "$CHECK_DIR" || { echo "[unity-check] 트리 추출 실패"; exit 1; }
 resolve_unity "$CHECK_DIR" || exit 1
 
 echo "[unity-check] 1/2 컴파일 확인"

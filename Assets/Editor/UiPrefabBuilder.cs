@@ -230,6 +230,8 @@ namespace CatVillage.EditorTools
             UiFactory.Place((RectTransform)s.start.transform, new Vector2(0.5f, 0.24f), Vector2.zero, new Vector2(560, 140));
             s.reset = ui.Button(root, "Reset", "처음부터", ui.Red, ui.BluePressed, null, 28);
             UiFactory.Place((RectTransform)s.reset.transform, new Vector2(0.5f, 0.12f), Vector2.zero, new Vector2(320, 90));
+            s.versionLabel = ui.Text(root, "v0.1.0", 26, Color.gray);
+            UiFactory.Place(s.versionLabel.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, 50), new Vector2(900, 50));
             return root;
         }
 

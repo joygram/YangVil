@@ -18,6 +18,12 @@ jobs:
   deploy:
     runs-on: [self-hosted, unity]
     timeout-minutes: 60
+    permissions:
+      contents: read
+      deployments: write
+    environment:
+      name: production
+      url: https://yangvil.deuklab.workers.dev
     env:
       GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
       RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -45,7 +51,8 @@ jobs:
         shell: bash
         run: |
           secs=$(( $(date +%s) - STARTED_AT ))
-          ELAPSED="$((secs / 60))분 $((secs % 60))초" bash scripts/tools/notify-chat.sh done
+          export ELAPSED="$((secs / 60))분 $((secs % 60))초"
+          bash scripts/tools/notify-chat.sh done
 
       - if: failure()
         shell: bash

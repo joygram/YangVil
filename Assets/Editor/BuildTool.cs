@@ -33,19 +33,38 @@ namespace CatVillage.EditorTools
             PlayerSettings.SetIl2CppCodeGeneration(NamedBuildTarget.WebGL, Il2CppCodeGeneration.OptimizeSize);
             EditorUserBuildSettings.SetPlatformSettings("WebGL", "CodeOptimization", "diskSizeLTO");
             var output = Path.Combine(BuildRoot, "WebGL");
+            var (version, date) = StampBuildInfo();
             if (!Build(BuildTargetGroup.WebGL, BuildTarget.WebGL, output)) return false;
             var headers = Path.Combine(output, "_headers");
             if (File.Exists(headers)) File.Delete(headers);
-            WriteVersion(output);
+            var sha = System.Environment.GetEnvironmentVariable("GITHUB_SHA") ?? "";
+            File.WriteAllText(Path.Combine(output, "version.json"),
+                $"{{\"version\":\"{version}\",\"builtAt\":\"{date}\",\"commit\":\"{(sha.Length >= 7 ? sha.Substring(0, 7) : sha)}\"}}");
+            Debug.Log($"BuildTool: 버전 {version} ({date})");
             return CheckAssetLimit(output);
         }
 
-        static void WriteVersion(string output)
+        const string BuildInfoPath = "Assets/Resources/BuildInfo.txt";
+        const string LocalBuildCounter = "Library/BuildNumber.txt";
+
+        static (string version, string date) StampBuildInfo()
         {
-            var sha = System.Environment.GetEnvironmentVariable("GITHUB_SHA");
-            var version = string.IsNullOrEmpty(sha) ? System.DateTime.UtcNow.ToString("yyyyMMddHHmmss") : sha.Substring(0, 7);
-            File.WriteAllText(Path.Combine(output, "version.json"),
-                $"{{\"version\":\"{version}\",\"builtAt\":\"{System.DateTime.UtcNow:o}\"}}");
+            var majorMinor = File.Exists("VERSION") ? File.ReadAllText("VERSION").Trim() : "0.1";
+            var run = System.Environment.GetEnvironmentVariable("GITHUB_RUN_NUMBER");
+            int patch;
+            if (!int.TryParse(run, out patch))
+            {
+                int.TryParse(File.Exists(LocalBuildCounter) ? File.ReadAllText(LocalBuildCounter).Trim() : "0", out patch);
+                patch++;
+                File.WriteAllText(LocalBuildCounter, patch.ToString());
+            }
+            var version = $"{majorMinor}.{patch}";
+            var date = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+            PlayerSettings.bundleVersion = version;
+            Directory.CreateDirectory(Path.GetDirectoryName(BuildInfoPath));
+            File.WriteAllText(BuildInfoPath, $"{version}\n{date}\n");
+            AssetDatabase.ImportAsset(BuildInfoPath);
+            return (version, date);
         }
 
         const long WorkerAssetLimitBytes = 25L * 1024 * 1024;

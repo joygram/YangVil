@@ -110,6 +110,8 @@ namespace CatVillage.EditorTools
         IEnumerator Start()
         {
             yield return Step("부트", () => GameBootstrap.Ready, 15);
+            yield return Step("인트로 화면", () => FindAnyObjectByType<IntroScreen>() != null, 15);
+            Check("인트로 버전 표시", FindAnyObjectByType<IntroScreen>().versionLabel.text.StartsWith("v"));
             GameBootstrap.Game.ResetSave();
 
             SceneFlow.Instance.GoVillage();
