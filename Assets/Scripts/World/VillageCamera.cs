@@ -10,6 +10,8 @@ namespace CatVillage.World
         public Rect bounds = new Rect(-7, -12, 14, 24);
         public Vector2 zoomRange = new Vector2(5f, 11f);
 
+        public static bool Locked;
+
         Vector3 _lastWorld;
 
         void Start() => Clamp();
@@ -18,6 +20,7 @@ namespace CatVillage.World
 
         public void OnDrag(PointerEventData e)
         {
+            if (Locked) return;
             var now = cam.ScreenToWorldPoint(e.position);
             cam.transform.position += _lastWorld - now;
             Clamp();
@@ -27,9 +30,10 @@ namespace CatVillage.World
         void Update()
         {
             var mouse = Mouse.current;
-            if (mouse == null) return;
+            if (mouse == null || Locked) return;
             var scroll = mouse.scroll.ReadValue().y;
             if (Mathf.Abs(scroll) < 0.01f) return;
+            if (WorldKit.PointerOverUI(mouse.position.ReadValue())) return;
             cam.orthographicSize = Mathf.Clamp(cam.orthographicSize - Mathf.Sign(scroll) * 0.6f, zoomRange.x, zoomRange.y);
             Clamp();
         }

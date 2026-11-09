@@ -119,6 +119,11 @@ namespace CatVillage.EditorTools
             Check("마을 고양이 생성", FindObjectsByType<SpriteActor>(FindObjectsSortMode.None).Length >= 1);
             Check("고양이 프레임 로드", FindObjectsByType<SpriteActor>(FindObjectsSortMode.None).All(a => a.Ready));
             Check("가이드 안내 표시", !string.IsNullOrEmpty(FindAnyObjectByType<VillageHud>().guideLabel.text));
+            var starter = GameBootstrap.Game.Data.cats[0];
+            var home = GameBootstrap.Game.House(starter.houseUid);
+            Check("고양이 집 위치 판정", world.HouseAt(world.transform.Find("Dynamic").Find(home.uid).position) == home);
+            Check("고양이 끌어놓기 판정", world.DropCat(starter, world.transform.Find("Dynamic").Find(home.uid).position) == MoveResult.Same);
+            Check("빈 땅에 놓으면 이동 안 함", world.DropCat(starter, new Vector2(0, 100)) == null);
 
             SceneFlow.Instance.GoBattle(GameBootstrap.Game.Config.stages[0]);
             yield return Step("전투 로드", () => FindAnyObjectByType<BattleWorld>() != null && FindAnyObjectByType<BattleHud>() != null, 30);

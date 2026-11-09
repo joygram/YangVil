@@ -58,6 +58,7 @@ namespace CatVillage.UI
 
         void OnDestroy()
         {
+            VillageCamera.Locked = false;
             var game = Screens == null ? null : Screens.Game;
             if (game != null) game.Changed -= Refresh;
             if (_world == null) return;
@@ -90,11 +91,13 @@ namespace CatVillage.UI
             panelTitle.text = title;
             _render = render;
             panel.SetActive(true);
+            VillageCamera.Locked = true;
             Refresh();
         }
 
         void Close()
         {
+            VillageCamera.Locked = false;
             panel.SetActive(false);
             _render = null;
         }

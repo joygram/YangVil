@@ -160,7 +160,32 @@ namespace CatVillage.World
             go.AddComponent<CatWanderer>().Init(actor, area);
             var c = cat;
             WorldKit.Clickable(go, new Vector2(1f, 1f), () => CatTapped?.Invoke(c)).transform.GetComponent<BoxCollider2D>().offset = new Vector2(0, 0.5f);
+            var drag = go.AddComponent<CatDrag>();
+            drag.cam = cam;
+            drag.Began = () => Highlight(c);
+            drag.Dropped = p => DropCat(c, p);
             StartCoroutine(_scope.LoadFrames(species.sprites, actor.SetFrames));
+        }
+
+        public OwnedHouse HouseAt(Vector2 worldPoint)
+        {
+            foreach (var house in _game.Data.houses)
+            {
+                if (!_houses.TryGetValue(house.uid, out var v)) continue;
+                var center = (Vector2)v.root.position;
+                if (new Rect(center - houseSize / 2, houseSize).Contains(worldPoint)) return house;
+            }
+            return null;
+        }
+
+        public MoveResult? DropCat(OwnedCat cat, Vector2 worldPoint)
+        {
+            EndMove();
+            var house = HouseAt(worldPoint);
+            if (house == null) return null;
+            var result = _game.MoveCat(cat, house);
+            MoveAttempted?.Invoke(result);
+            return result;
         }
 
         void OnHouseTapped(OwnedHouse house)

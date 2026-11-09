@@ -56,6 +56,19 @@ namespace CatVillage.World
             return t;
         }
 
+        static readonly System.Collections.Generic.List<RaycastResult> Hits = new System.Collections.Generic.List<RaycastResult>();
+
+        public static bool PointerOverUI(Vector2 screenPosition)
+        {
+            var es = EventSystem.current;
+            if (es == null) return false;
+            Hits.Clear();
+            es.RaycastAll(new PointerEventData(es) { position = screenPosition }, Hits);
+            foreach (var h in Hits)
+                if (h.module is UnityEngine.UI.GraphicRaycaster) return true;
+            return false;
+        }
+
         public static Clickable Clickable(GameObject go, Vector2 size, Action onClick)
         {
             if (!go.TryGetComponent<BoxCollider2D>(out var col)) col = go.AddComponent<BoxCollider2D>();

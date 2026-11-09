@@ -35,7 +35,7 @@ namespace CatVillage.Core
             {
                 var species = game.Species(cat);
                 if (data.houses.Any(h => game.CanMoveTo(cat, h)))
-                    return new GuideStep($"{species.displayName}에게 집이 필요해요 → 부화소에서 '이동'", GuideTarget.Hatchery);
+                    return new GuideStep($"부화소 앞 {species.displayName}을(를) 끌어서 초록색 집에 놓아요", GuideTarget.Hatchery);
                 var house = game.Config.houses.FirstOrDefault(h => h.price > 0 && h.Accepts(species.element));
                 if (house != null)
                     return new GuideStep($"{species.displayName}({Affinity.Label(species.element)})이 살 {house.displayName}을 지어요 ({house.price}코인) → 상점", GuideTarget.Shop);
