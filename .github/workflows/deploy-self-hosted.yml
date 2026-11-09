@@ -19,7 +19,7 @@ jobs:
     runs-on: [self-hosted, unity]
     timeout-minutes: 60
     permissions:
-      contents: read
+      contents: write
       deployments: write
     environment:
       name: production
@@ -50,6 +50,17 @@ jobs:
           secs=$(( $(date +%s) - STARTED_AT ))
           export ELAPSED="$((secs / 60))분 $((secs % 60))초"
           bash scripts/tools/notify-chat.sh done
+
+      - if: success()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          info="${CATVILLAGE_CHECK_DIR:-$HOME/CatVillage-check}/Builds/WebGL/version.json"
+          version="v$(node -p "require(process.argv[1]).version" "$info")"
+          notes="$(git log --format='- %s' -n "$CHANGE_COUNT" "$GITHUB_SHA")"
+          gh release create "$version" --target "$GITHUB_SHA" --title "냥빌 $version 배포" \
+            --notes "$(printf '▶ https://yangvil.deuklab.workers.dev\n\n%s' "$notes")"
 
       - if: failure()
         shell: bash
