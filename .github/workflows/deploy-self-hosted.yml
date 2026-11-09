@@ -24,36 +24,15 @@ jobs:
     environment:
       name: production
       url: https://yangvil.deuklab.workers.dev
-    env:
-      GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      CHANGE_COUNT: ${{ github.event.commits && github.event.commits.length || 1 }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 20
 
       - shell: bash
-        run: |
-          echo "STARTED_AT=$(date +%s)" >> "$GITHUB_ENV"
-          bash scripts/tools/notify-chat.sh start
-
-      - id: deploy
-        shell: bash
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           [ -z "$CLOUDFLARE_API_TOKEN" ] && unset CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID
           bash scripts/deploy-web.sh
-
-      - if: success()
-        shell: bash
-        run: |
-          secs=$(( $(date +%s) - STARTED_AT ))
-          export ELAPSED="$((secs / 60))분 $((secs % 60))초"
-          bash scripts/tools/notify-chat.sh done
-
-      - if: failure()
-        shell: bash
-        run: bash scripts/tools/notify-chat.sh fail

@@ -48,8 +48,8 @@ namespace CatVillage.Core
                         c = belly ? Color.Lerp(g.accent * 0.8f, g.accent, shade) : Color.Lerp(g.accent2, g.dark, shade);
                         break;
                     case CoatPattern.Calico:
-                        var n = Hash(x / 4, y / 4, g.seed) % 3;
-                        var baseColor = n == 0 ? g.light : n == 1 ? g.accent2 : g.accent;
+                        var n = Hash(x / 8, y / 6, g.seed) % 5;
+                        var baseColor = n == 0 ? g.accent : n == 1 ? g.accent2 : g.light;
                         c = Color.Lerp(baseColor * 0.75f, baseColor, shade);
                         break;
                     default:

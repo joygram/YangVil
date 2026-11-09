@@ -19,6 +19,24 @@ namespace CatVillage.Core
         {
             Config = config;
             Data = SaveSystem.Load() ?? NewSave();
+            if (Data.version < SaveData.CurrentVersion) Upgrade();
+        }
+
+        void Upgrade()
+        {
+            Data.cats.RemoveAll(c => Config.Cat(c.speciesId) == null);
+            Data.houses.RemoveAll(h => Config.House(h.houseId) == null);
+            if (Data.houses.Count == 0) AddHouse(Config.starterHouse, 0);
+            foreach (var cat in Data.cats)
+            {
+                if (cat.genes == null || cat.genes.seed == 0) cat.genes = Genetics.FromSpecies(Species(cat), _rng);
+                if (cat.careUnix == 0) cat.careUnix = Now;
+                if (Data.houses.All(h => h.uid != cat.houseUid)) cat.houseUid = Data.houses[0].uid;
+            }
+            foreach (var b in Data.baskets)
+                if (b.genes == null) b.genes = new CatGenes();
+            Data.version = SaveData.CurrentVersion;
+            SaveSystem.Save(Data);
         }
 
         public static long Now => DateTimeOffset.UtcNow.ToUnixTimeSeconds();

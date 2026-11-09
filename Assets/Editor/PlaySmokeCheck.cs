@@ -127,6 +127,11 @@ namespace CatVillage.EditorTools
             Check("고양이 집 위치 판정", world.HouseAt(world.transform.Find("Dynamic").Find(home.uid).position) == home);
             Check("고양이 끌어놓기 판정", world.DropCat(starter, world.transform.Find("Dynamic").Find(home.uid).position) == MoveResult.Same);
             Check("빈 땅에 놓으면 이동 안 함", world.DropCat(starter, new Vector2(0, 100)) == null);
+            var hud = FindAnyObjectByType<VillageHud>();
+            world.BeginMove(starter);
+            hud.hatchery.button.onClick.Invoke();
+            Check("이사 중에도 버튼 동작", hud.panel.activeSelf && !world.Moving);
+            hud.panelClose.button.onClick.Invoke();
             starter.cleanliness = 10f;
             Check("더러우면 꼬질꼬질 상태", GameBootstrap.Game.Mood(starter) == CatMood.Dirty);
             GameBootstrap.Game.Wash(starter);

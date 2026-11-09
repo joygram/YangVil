@@ -92,7 +92,7 @@ namespace CatVillage.UI
 
         void Open(string title, Action render)
         {
-            if (_world.Moving) return;
+            if (_world.Moving) CancelMove();
             panelTitle.text = title;
             _render = render;
             panel.SetActive(true);

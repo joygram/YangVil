@@ -126,8 +126,7 @@ namespace CatVillage.World
             foreach (var house in _game.Data.houses) BuildHouse(house);
 
             var waiting = _game.Waiting.ToList();
-            var hatchery = Buildings[0];
-            var area = new Rect(hatchery.pos.x - 2.5f, hatchery.pos.y - 2.6f, 5f, 0.8f);
+            var area = new Rect(-4.2f, 3.9f, 3.8f, 1.1f);
             foreach (var cat in waiting) SpawnCat(cat, area, _dynamic);
 
             if (_moving != null) Highlight(_moving);

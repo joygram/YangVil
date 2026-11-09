@@ -26,7 +26,7 @@
   <div id="update"><span>새 버전이 나왔어요</span><button id="update-btn">새로고침</button></div>
   <script>
     (function () {
-      var current = null;
+      var current = "{{{ PRODUCT_VERSION }}}";
       var banner = document.getElementById("update");
       document.getElementById("update-btn").onclick = function () { location.reload(); };
       function check() {
@@ -34,7 +34,6 @@
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (v) {
             if (!v || !v.version) return;
-            if (current === null) { current = v.version; return; }
             if (v.version === current) return;
             if (document.hidden) { location.reload(); return; }
             banner.style.display = "flex";

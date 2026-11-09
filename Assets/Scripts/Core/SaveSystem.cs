@@ -15,11 +15,12 @@ namespace CatVillage.Core
             try
             {
                 var data = JsonUtility.FromJson<SaveData>(File.ReadAllText(FilePath));
-                return data != null && data.version == SaveData.CurrentVersion ? data : null;
+                return data != null && data.version >= 1 && data.version <= SaveData.CurrentVersion ? data : null;
             }
             catch (System.Exception e)
             {
                 Debug.LogWarning($"SaveSystem: 저장 파일을 읽지 못해 새로 시작합니다. {e.Message}");
+                File.Copy(FilePath, FilePath + ".bak", true);
                 return null;
             }
         }

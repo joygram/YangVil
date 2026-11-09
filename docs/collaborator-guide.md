@@ -68,7 +68,7 @@
 - GitHub Actions는 수동 실행만(Unity 라이선스 필요): WebGL 빌드 → Cloudflare Worker `yangvil` → Google Chat 알림
 - 플레이 주소: https://yangvil.deuklab.workers.dev
 - 필요 시크릿: UNITY_LICENSE(또는 UNITY_SERIAL)·UNITY_EMAIL·UNITY_PASSWORD·CLOUDFLARE_API_TOKEN·CLOUDFLARE_ACCOUNT_ID
-- 알림 시크릿: GOOGLE_CHAT_WEBHOOK (스페이스 → 앱 및 통합 → 웹훅 추가 → URL)
+- 채팅 알림: Google Chat GitHub 앱(링크로 권한 연결) → 푸시·배포 기록 알림
 - 시크릿 없으면 빌드·배포 건너뛰고 경고만 남김
 - 웹 빌드: Brotli 압축 + `_headers`로 Content-Encoding 지정 (Worker 정적 에셋)
 
