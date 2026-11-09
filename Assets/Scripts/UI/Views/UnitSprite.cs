@@ -1,6 +1,4 @@
 using System.Collections;
-using CatVillage.Core;
-using CatVillage.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,14 +17,21 @@ namespace CatVillage.UI
 
         public Image Image => _image != null ? _image : _image = GetComponent<Image>();
 
-        public void Bind(SpriteSet set, Color tint)
+        public void Prepare(Color tint)
         {
-            _image = GetComponent<Image>();
-            _image.color = tint;
-            _idle = SpriteLibrary.Idle(set);
-            _attack = SpriteLibrary.Attack(set);
+            Image.color = tint;
+            Image.enabled = false;
+        }
+
+        public void SetFrames(Sprite[] idle, Sprite[] attack)
+        {
+            if (this == null) return;
+            _idle = idle;
+            _attack = attack.Length > 0 ? attack : idle;
             _current = _idle;
-            if (_idle.Length > 0) _image.sprite = _idle[0];
+            if (_idle.Length == 0) return;
+            Image.sprite = _idle[0];
+            Image.enabled = true;
         }
 
         public void Face(bool left)
@@ -82,10 +87,10 @@ namespace CatVillage.UI
 
         public IEnumerator Flash(Color color, float duration)
         {
-            var original = _image.color;
-            _image.color = color;
+            var original = Image.color;
+            Image.color = color;
             yield return new WaitForSeconds(duration);
-            _image.color = original;
+            Image.color = original;
         }
     }
 }

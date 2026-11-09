@@ -58,6 +58,24 @@
 - 시트 1장: sprites.sheet 연결 + cellSize(16·32·64·128) + 행 번호·프레임 수 지정
 - 픽셀아트는 Filter Point 유지 (Assets/Art 아래는 자동)
 
+## 에셋 분산 로딩 (Addressables)
+- 시작 다운로드 = 엔진·Intro 씬만, 나머지는 필요할 때 번들로 받음
+- UI 그룹: 화면 프리팹·컴포넌트·폰트·UI 스프라이트 → 번들 1개
+- Characters 그룹: 폴더 단위 번들 (CuteKitty·Dog·Art/Cats·Art/Enemies 폴더마다 1개)
+- 새 캐릭터 그림은 Assets/Art/Cats·Assets/Art/Enemies 아래 폴더로 → 폴더 = 번들
+- 캐릭터 그림은 CatData·EnemyBase의 sprites(AssetReference)로만 연결
+- 🚫 화면 프리팹 Image에 캐릭터 그림 직접 끌어다 넣기 금지 → UI 번들에 딸려 들어감
+- 새 화면 프리팹 추가 후 `UiPrefabBuilder.RegisterScreens` 실행 → GameConfig 등록
+
+## 메모리 정책
+- 화면 전환 시 이전 화면 프리팹·그림 해제 → 사용 안 하는 에셋 언로드 → GC
+- 전투는 참가 유닛 그림만 로드, 끝나면 해제
+- 브라우저 메모리 부족 신호(lowMemory) 시 즉시 언로드
+- WebGL 힙: 시작 64MB → 필요 시 증가(Geometric) → 최대 2GB
+- 256px 이하 그림: 무압축·Point (도트 선명)
+- 256px 초과 그림: Crunch 압축·Bilinear, 최대 2048px 자동 축소
+- 설정 위치: GameConfig.memory (언로드 주기·GC·저메모리 대응)
+
 ## Unity CLI 명령
 - 실행 전 Unity 에디터 창 닫기 (같은 프로젝트 동시 실행 불가)
 - 종료 코드 0 아니면 실패 → 로그를 Codex에 붙여 "이 로그 고쳐줘"
@@ -71,6 +89,8 @@
 | URP·플레이어 설정 | `CatVillage.EditorTools.ProjectSetup.Run` |
 | 데이터·프리팹·씬 재생성 | `CatVillage.EditorTools.ProjectSetup.BuildContent` |
 | 데이터만 | `CatVillage.EditorTools.GameDataBuilder.Build` |
+| 화면 프리팹 등록 | `CatVillage.EditorTools.UiPrefabBuilder.RegisterScreens` |
+| Addressables 그룹 정리 | `CatVillage.EditorTools.AddressablesSetup.Run` |
 | 웹앱 빌드 (평소 확인용) | `CatVillage.EditorTools.BuildTool.BuildWebGL` |
 | PC 빌드 (배포 때만) | `CatVillage.EditorTools.BuildTool.BuildWindows` |
 - 평소 확인은 에디터 Play 또는 WebGL 빌드 → PC 빌드는 배포 시점에만

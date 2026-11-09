@@ -92,7 +92,7 @@ namespace CatVillage.UI
         void AddSlot(BattleUnit u)
         {
             var slot = Instantiate(slotPrefab, u.IsAlly ? allyRow : enemyRow);
-            slot.sprite.Bind(u.Sprites, u.Tint);
+            BindUnit(slot.sprite, u.Sprites, u.Tint);
             slot.sprite.SetScale(u.Scale);
             slot.sprite.Face(!u.IsAlly);
             slot.nameLabel.text = u.Name;

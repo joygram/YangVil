@@ -28,7 +28,12 @@ MonoBehaviour:
   sprites:
     idle: []
     attack: []
-    sheet: {fileID: 2800000, guid: 146dd9b5f05d5dc4ea0bad5691bfa229, type: 3}
+    sheet:
+      m_AssetGUID: 146dd9b5f05d5dc4ea0bad5691bfa229
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
     cellSize: 16
     idleRow: 0
     attackRow: 4

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CatVillage.Data
 {
@@ -14,7 +15,10 @@ namespace CatVillage.Data
         public CatData starterCat;
         public CatData starterBasket;
 
-        public List<GameObject> screenPrefabs = new List<GameObject>();
+        public List<ScreenEntry> screens = new List<ScreenEntry>();
+        public MemoryPolicy memory = new MemoryPolicy();
+
+        public AssetReferenceGameObject Screen(string screenType) => screens.Find(s => s.screenType == screenType)?.prefab;
 
         public int basketPrice = 100;
         public int firstHatchSeconds = 30;

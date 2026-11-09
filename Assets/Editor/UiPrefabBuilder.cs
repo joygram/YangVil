@@ -69,20 +69,30 @@ namespace CatVillage.EditorTools
             var slot = Save(UnitSlot(ui), $"{ComponentDir}/UnitSlot.prefab").GetComponent<UnitSlot>();
             var popup = Save(Popup(ui), $"{ComponentDir}/DamagePopup.prefab").GetComponent<DamagePopup>();
 
-            var screens = new[]
-            {
-                Save(Intro(ui), $"{ScreenDir}/IntroScreen.prefab"),
-                Save(Village(ui, catCard, rowCard), $"{ScreenDir}/VillageScreen.prefab"),
-                Save(StageSelect(ui, stageButton), $"{ScreenDir}/StageSelectScreen.prefab"),
-                Save(Battle(ui, slot, portrait, itemButton, popup), $"{ScreenDir}/BattleScreen.prefab"),
-                Save(Result(ui), $"{ScreenDir}/ResultScreen.prefab")
-            };
+            Save(Intro(ui), $"{ScreenDir}/IntroScreen.prefab");
+            Save(Village(ui, catCard, rowCard), $"{ScreenDir}/VillageScreen.prefab");
+            Save(StageSelect(ui, stageButton), $"{ScreenDir}/StageSelectScreen.prefab");
+            Save(Battle(ui, slot, portrait, itemButton, popup), $"{ScreenDir}/BattleScreen.prefab");
+            Save(Result(ui), $"{ScreenDir}/ResultScreen.prefab");
+            RegisterScreens();
+        }
 
+        [MenuItem("CatVillage/Register Screen Prefabs")]
+        public static void RegisterScreens()
+        {
+            AddressablesSetup.Run();
             var config = AssetDatabase.LoadAssetAtPath<GameConfig>(ConfigPath);
-            config.screenPrefabs = screens.ToList();
+            config.screens.Clear();
+            foreach (var guid in AssetDatabase.FindAssets("t:Prefab", new[] { ScreenDir }))
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(guid));
+                var screen = prefab.GetComponent<GameScreen>();
+                if (screen == null) continue;
+                config.screens.Add(new ScreenEntry { screenType = screen.GetType().Name, prefab = AddressablesSetup.Prefab(prefab) });
+            }
             EditorUtility.SetDirty(config);
             AssetDatabase.SaveAssets();
-            Debug.Log($"UiPrefabBuilder: 컴포넌트 7, 화면 {screens.Length}");
+            Debug.Log($"UiPrefabBuilder: 화면 {config.screens.Count}개 등록");
         }
 
         static TMP_FontAsset FontAsset()

@@ -118,7 +118,10 @@
 
 ## 기술 구조
 - 데이터: ScriptableObject (CatData·EnemyBase·EnemyVariant·StageData·SkillData·ItemData·BreedTable)
-- UI: uGUI + TextMeshPro, 화면당 프리팹 1개, ScreenManager 스택 전환
+- UI: uGUI + TextMeshPro, 화면당 프리팹 1개, ScreenManager 전환
+- 로딩: Addressables — 화면 프리팹(UI 번들)·캐릭터 그림(폴더별 번들) 필요 시 다운로드
+- 메모리: 화면 단위 AssetScope 해제 → 언로드·GC, WebGL 힙 64MB 시작·최대 2GB
+- 큰 그림(256px 초과): Crunch 압축·최대 2048px → 그래픽 확장 대비
 - 연출: DOTween 트윈, Particle System 이펙트
 - 시간: 부화·생산은 UTC 타임스탬프 기준 → 오프라인 진행 반영
 - 폴더: Scripts/{Core,Data,Battle,UI} · Art/{Cats,Enemies,UI,FX,ThirdParty} · Data/ · Prefabs/UI

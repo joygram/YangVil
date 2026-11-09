@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
@@ -9,18 +10,24 @@ namespace CatVillage.EditorTools
     public static class BuildTool
     {
         const string BuildRoot = "Builds";
+        const int WebGLInitialMemoryMB = 64;
+        const int WebGLMaximumMemoryMB = 2048;
 
         public static void BuildWindows()
         {
-            Build(BuildTarget.StandaloneWindows64, Path.Combine(BuildRoot, "Windows", "CatVillage.exe"));
+            Build(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64, Path.Combine(BuildRoot, "Windows", "CatVillage.exe"));
         }
 
         public static void BuildWebGL()
         {
             PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Brotli;
             PlayerSettings.WebGL.decompressionFallback = true;
-            PlayerSettings.SetManagedStrippingLevel(UnityEditor.Build.NamedBuildTarget.WebGL, ManagedStrippingLevel.High);
-            Build(BuildTarget.WebGL, Path.Combine(BuildRoot, "WebGL"));
+            PlayerSettings.WebGL.dataCaching = true;
+            PlayerSettings.WebGL.memoryGrowthMode = WebGLMemoryGrowthMode.Geometric;
+            PlayerSettings.WebGL.initialMemorySize = WebGLInitialMemoryMB;
+            PlayerSettings.WebGL.maximumMemorySize = WebGLMaximumMemoryMB;
+            PlayerSettings.SetManagedStrippingLevel(NamedBuildTarget.WebGL, ManagedStrippingLevel.High);
+            Build(BuildTargetGroup.WebGL, BuildTarget.WebGL, Path.Combine(BuildRoot, "WebGL"));
         }
 
         public static void BuildAll()
@@ -29,13 +36,21 @@ namespace CatVillage.EditorTools
             BuildWebGL();
         }
 
-        static void Build(BuildTarget target, string outputPath)
+        static void Build(BuildTargetGroup group, BuildTarget target, string outputPath)
         {
             var scenes = EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray();
             if (scenes.Length == 0)
             {
-                Debug.LogError("BuildTool: Build Settings에 활성 씬이 없습니다.");
-                EditorApplication.Exit(1);
+                Fail("Build Settings에 활성 씬이 없습니다.");
+                return;
+            }
+
+            if (EditorUserBuildSettings.activeBuildTarget != target)
+                EditorUserBuildSettings.SwitchActiveBuildTarget(group, target);
+
+            if (!AddressablesSetup.BuildContent())
+            {
+                Fail("Addressables 빌드 실패");
                 return;
             }
 
@@ -48,8 +63,13 @@ namespace CatVillage.EditorTools
             });
 
             Debug.Log($"BuildTool: {target} → {report.summary.result}, {report.summary.totalSize} bytes, {outputPath}");
-            if (report.summary.result != BuildResult.Succeeded)
-                EditorApplication.Exit(1);
+            if (report.summary.result != BuildResult.Succeeded) Fail("플레이어 빌드 실패");
+        }
+
+        static void Fail(string message)
+        {
+            Debug.LogError($"BuildTool: {message}");
+            if (Application.isBatchMode) EditorApplication.Exit(1);
         }
     }
 }

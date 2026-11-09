@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: UI
+  m_GUID: 364d50c0c6d02bb4f8e4a0d039484171
+  m_SerializeEntries:
+  - m_GUID: 5f36553c4097fbf468058e161ef57998
+    m_Address: Assets/Prefabs/UI/Screens/IntroScreen.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 747a2269599f6b04ba0c7c0fe212a2d8
+    m_Address: Assets/Prefabs/UI/Screens/ResultScreen.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83dbcd892e92a5f49a3445bdc1853c1f
+    m_Address: Assets/Prefabs/UI/Screens/VillageScreen.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: df051e6cc6de62942b37b45b07c39751
+    m_Address: Assets/Prefabs/UI/Screens/StageSelectScreen.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f309dbb851824314290bbadf0e2bca85
+    m_Address: Assets/Prefabs/UI/Screens/BattleScreen.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 979bbe879c9c76d4799e301dbda9d457, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: fcf74d2662149ee4a8174f85f966c7ea, type: 2}
+    - {fileID: 11400000, guid: ad6b3a0488c93004e845056ed41797d7, type: 2}

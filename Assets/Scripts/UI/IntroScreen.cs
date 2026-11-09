@@ -9,7 +9,7 @@ namespace CatVillage.UI
         protected override void Build()
         {
             var starter = Game.Config.starterCat;
-            mascot.Bind(starter.sprites, starter.tint);
+            BindUnit(mascot, starter.sprites, starter.tint);
             start.OnClick(() => Screens.Show<VillageScreen>());
             reset.OnClick(() => Game.ResetSave());
         }

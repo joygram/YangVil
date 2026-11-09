@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Characters
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Characters
+  m_GUID: b48058ae7f3ad944db5825fbba12dc87
+  m_SerializeEntries:
+  - m_GUID: 146dd9b5f05d5dc4ea0bad5691bfa229
+    m_Address: Assets/Art/ThirdParty/Dog/dog_brown_sheet.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Dog
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22a6d19e463202d4f97718f1767a567d
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_idle_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28e3fae11f865d440b3b06440575626e
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_attack_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2cd9efada95a13b43ba1ca668af3b0a3
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_attack_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4bd71ab5bf9daf844a03f829cee9b097
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_walk_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 585d7232e7ed28f4d81b081003f177e6
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_death_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58f428472c0536541b8a62a267e9e157
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_attack_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a220fa73129f2b41ac01fbad4858ef3
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_attack_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f9d243ac23cd474298258fbb114f5f6
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_death_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 73fb8fb63f9f0964fa91f234277fb7cf
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_death_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79616f61c237a414f8a7efb1c946a697
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_idle_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87a78a1137adfff4f82510fdad98aa0e
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_walk_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b030e981eb811a4398d8a17f8bf3d48
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_attack_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2ed9831ae93d6a4aa1da35f3a7ea8f2
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_walk_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce1d8b407dc29b74398df7a2d16d15f3
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_attack_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4a46fee4b8a60345a473a27b288d9e2
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_idle_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5fcd01f2f8ab074cb992cc3ba07c856
+    m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_idle_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 979bbe879c9c76d4799e301dbda9d457, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: eddb7afc2c96009498f038194b85786f, type: 2}
+    - {fileID: 11400000, guid: 45d9ba5b72733934e9e5f6155f1b1719, type: 2}

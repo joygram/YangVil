@@ -4,6 +4,7 @@ using System.Linq;
 using CatVillage.Data;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CatVillage.EditorTools
 {
@@ -21,6 +22,7 @@ namespace CatVillage.EditorTools
                 Directory.CreateDirectory($"{DataRoot}/{dir}");
             Directory.CreateDirectory("Assets/Resources");
             AssetDatabase.Refresh();
+            AddressablesSetup.Run();
 
             var cats = BuildCats();
             var variants = BuildEnemies();
@@ -38,16 +40,14 @@ namespace CatVillage.EditorTools
             Debug.Log($"GameDataBuilder: 고양이 {cats.Count}, 적 {variants.Count}, 스테이지 {stages.Count}, 아이템 {items.Count}");
         }
 
-        static Texture2D Tex(string path) => AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-
-        static Texture2D[] Frames(string action, int count) =>
-            Enumerable.Range(1, count).Select(i => Tex($"{Kitty}/kitty_{action}_0{i}.png")).ToArray();
+        static List<AssetReferenceTexture2D> Frames(string action, int count) =>
+            Enumerable.Range(1, count).Select(i => AddressablesSetup.Texture($"{Kitty}/kitty_{action}_0{i}.png")).ToList();
 
         static SpriteSet KittySet() => new SpriteSet { idle = Frames("idle", 4), attack = Frames("attack", 6), cellSize = 16 };
 
         static SpriteSet DogSet() => new SpriteSet
         {
-            sheet = Tex(Dog), cellSize = 16, framesPerRow = 6, idleRow = 0, idleFrames = 4, attackRow = 4, attackFrames = 6
+            sheet = AddressablesSetup.Texture(Dog), cellSize = 16, framesPerRow = 6, idleRow = 0, idleFrames = 4, attackRow = 4, attackFrames = 6
         };
 
         static T Upsert<T>(string path) where T : ScriptableObject

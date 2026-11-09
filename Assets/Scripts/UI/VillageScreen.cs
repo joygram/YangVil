@@ -80,7 +80,7 @@ namespace CatVillage.UI
             {
                 var species = Game.Species(cat);
                 var card = Instantiate(catCardPrefab, listContent);
-                card.portrait.Bind(species.sprites, species.tint);
+                BindUnit(card.portrait, species.sprites, species.tint);
                 card.portrait.SetScale(0.75f + 0.125f * CatData.GrowthStage(cat.level));
                 var s = species.StatsAt(cat.level);
                 card.info.text =

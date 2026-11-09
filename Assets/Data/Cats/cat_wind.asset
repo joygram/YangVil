@@ -30,18 +30,63 @@ MonoBehaviour:
   tint: {r: 0.8625, g: 0.97249997, b: 0.945, a: 1}
   sprites:
     idle:
-    - {fileID: 2800000, guid: f5fcd01f2f8ab074cb992cc3ba07c856, type: 3}
-    - {fileID: 2800000, guid: 79616f61c237a414f8a7efb1c946a697, type: 3}
-    - {fileID: 2800000, guid: 22a6d19e463202d4f97718f1767a567d, type: 3}
-    - {fileID: 2800000, guid: e4a46fee4b8a60345a473a27b288d9e2, type: 3}
+    - m_AssetGUID: f5fcd01f2f8ab074cb992cc3ba07c856
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: 79616f61c237a414f8a7efb1c946a697
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: 22a6d19e463202d4f97718f1767a567d
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: e4a46fee4b8a60345a473a27b288d9e2
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
     attack:
-    - {fileID: 2800000, guid: 2cd9efada95a13b43ba1ca668af3b0a3, type: 3}
-    - {fileID: 2800000, guid: ce1d8b407dc29b74398df7a2d16d15f3, type: 3}
-    - {fileID: 2800000, guid: 58f428472c0536541b8a62a267e9e157, type: 3}
-    - {fileID: 2800000, guid: 5a220fa73129f2b41ac01fbad4858ef3, type: 3}
-    - {fileID: 2800000, guid: 9b030e981eb811a4398d8a17f8bf3d48, type: 3}
-    - {fileID: 2800000, guid: 28e3fae11f865d440b3b06440575626e, type: 3}
-    sheet: {fileID: 0}
+    - m_AssetGUID: 2cd9efada95a13b43ba1ca668af3b0a3
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: ce1d8b407dc29b74398df7a2d16d15f3
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: 58f428472c0536541b8a62a267e9e157
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: 5a220fa73129f2b41ac01fbad4858ef3
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: 9b030e981eb811a4398d8a17f8bf3d48
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: 28e3fae11f865d440b3b06440575626e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    sheet:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
     cellSize: 16
     idleRow: 0
     attackRow: 4

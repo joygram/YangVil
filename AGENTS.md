@@ -11,6 +11,10 @@
 - UI: 화면별 프리팹(Assets/Prefabs/UI), 9-slice 스프라이트, TextMeshPro, public 필드 연결 유지
 - BuildContent·UiPrefabBuilder는 프리팹을 덮어씀 → 디자이너 작업 후 실행 금지
 - 빌드 확인은 WebGL, PC 빌드는 배포 때만
+- 화면 프리팹·캐릭터 그림은 Addressables로만 로드 (Resources·직접 참조 금지)
+- 캐릭터 그림 연결은 SpriteSet의 AssetReferenceTexture2D, 로드는 화면의 AssetScope
+- 새 화면 프리팹 → UiPrefabBuilder.RegisterScreens, 새 캐릭터 폴더 → AddressablesSetup.Run
+- 로드한 에셋은 AssetScope가 화면 종료 시 해제 → 직접 Addressables.Load 호출 시 해제 책임 명시
 - 이펙트 프리팹: 2초 내 자동 소멸, 루프 금지(오라 제외)
 - 디자이너 작업 범위: Assets/Art, UI 프리팹·레이아웃, FX 프리팹, 연출 컴포넌트
 - UI 변경 시 데이터 바인딩 이름·버튼 이벤트 연결 유지
