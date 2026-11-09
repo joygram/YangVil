@@ -18,6 +18,20 @@ rm -rf "$CHECK_DIR/Assets" "$CHECK_DIR/Packages" "$CHECK_DIR/ProjectSettings"
 git archive "$TREE" Assets Packages ProjectSettings VERSION | tar -x -C "$CHECK_DIR" || { echo "[unity-check] 트리 추출 실패"; exit 1; }
 resolve_unity "$CHECK_DIR" || exit 1
 
+if [ "${YANGVIL_BUILD_ONLY:-0}" = "1" ]; then
+  echo "[unity-check] WebGL 빌드만 (컴파일·빌드 실패 시 중단)"
+  rm -rf "$CHECK_DIR/Builds/WebGL"
+  build="$("$UNITY" -batchmode -quit $EXTRA -projectPath "$CHECK_DIR" -buildTarget WebGL -executeMethod YangVil.EditorTools.BuildTool.BuildWebGL -logFile - 2>&1)"
+  code=$?
+  printf '%s\n' "$build" | grep -E 'error CS|^BuildTool' | sort -u
+  if [ $code -ne 0 ] || [ ! -f "$CHECK_DIR/Builds/WebGL/version.json" ]; then
+    echo "[unity-check] ✘ WebGL 빌드 실패 (종료 코드 $code)"
+    exit 1
+  fi
+  echo "[unity-check] ✔ WebGL 빌드 성공"
+  exit 0
+fi
+
 echo "[unity-check] 1/2 컴파일 확인"
 for attempt in 1 2; do
   compile="$("$UNITY" -batchmode -quit $EXTRA -projectPath "$CHECK_DIR" -buildTarget WebGL -logFile - 2>&1)"

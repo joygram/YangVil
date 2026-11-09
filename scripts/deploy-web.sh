@@ -10,7 +10,7 @@ if [ -n "$DIRTY" ]; then
   printf '%s\n' "$DIRTY" | sed 's/^/  /'
 fi
 
-YANGVIL_BUILD_WEBGL=1 bash "$ROOT/scripts/checks/unity-check.sh" HEAD || { echo "[deploy-web] 검증 실패 → 배포 중단"; exit 1; }
+YANGVIL_BUILD_ONLY=1 bash "$ROOT/scripts/checks/unity-check.sh" HEAD || { echo "[deploy-web] 빌드 실패 → 배포 중단"; exit 1; }
 
 NODE_MAJOR="$(node -v 2>/dev/null | sed 's/^v\([0-9]*\).*/\1/')"
 if [ -z "$NODE_MAJOR" ] || [ "$NODE_MAJOR" -lt 22 ]; then

@@ -46,7 +46,7 @@
 - 훅: 스테이징 내용을 `../YangVil-check`에 풀어 컴파일 + 헤드리스 Play 점검 → 실패 시 커밋 거부
 - Assets·Packages·ProjectSettings 변경 없는 커밋(문서 등)은 점검 생략
 - 🚫 `--no-verify`·`SKIP_UNITY_CHECK=1` 사용 금지 (사용자가 지시한 경우만)
-- 웹 배포: `bash scripts/deploy-web.sh` → HEAD 검증 통과 시에만 WebGL 빌드 → Cloudflare 배포
+- 웹 배포: `bash scripts/deploy-web.sh` → HEAD WebGL 빌드(컴파일·빌드 실패 시 중단) → Cloudflare 배포, Play 점검은 커밋 훅 몫
 - 웹 빌드는 Unity 설치 PC에서만 가능 (CI는 Unity 라이선스 등록 후 수동 실행만)
 - 자동 배포: 셀프 호스티드 러너(라벨 unity) → main 푸시 시 `deploy-self-hosted.yml`이 deploy-web.sh 실행
 - 게임 버전: `VERSION`(메이저.마이너) + 패치 = 빌드 번호(CI는 GITHUB_RUN_NUMBER, 로컬은 Library 카운터) → 빌드마다 자동 증가, 커밋 불필요

@@ -61,7 +61,7 @@
 ## 커밋 검증·배포
 - 최초 1회: `git config core.hooksPath .githooks`
 - 커밋하면 자동으로 컴파일 + 헤드리스 Play 점검 → 실패하면 커밋 안 됨 (로그에 ✘ 단계 표시)
-- 웹 배포: `bash scripts/deploy-web.sh` → 검증 통과 시에만 빌드·배포
+- 웹 배포: `bash scripts/deploy-web.sh` → WebGL 빌드만(Play 점검은 커밋 훅 몫), 빌드 실패 시 배포 중단
 - 웹 빌드는 Unity 설치된 PC에서만 가능, 결과 웹앱은 어디서나 플레이
 
 ## 배포·알림
