@@ -18,9 +18,11 @@ namespace CatVillage.EditorTools
         [MenuItem("CatVillage/Build Game Data")]
         public static void Build()
         {
-            foreach (var dir in new[] { "Cats", "Enemies", "Stages", "Items" })
+            foreach (var dir in new[] { "Cats", "Enemies", "Stages", "Items", "Houses" })
                 Directory.CreateDirectory($"{DataRoot}/{dir}");
             Directory.CreateDirectory("Assets/Resources");
+            foreach (var dir in AddressablesSetup.ArtFolders) Directory.CreateDirectory(dir);
+            Directory.CreateDirectory(AddressablesSetup.AudioFolder);
             AssetDatabase.Refresh();
             AddressablesSetup.Run();
 
@@ -28,27 +30,65 @@ namespace CatVillage.EditorTools
             var variants = BuildEnemies();
             var items = BuildItems();
             var stages = BuildStages(variants, cats);
+            var houses = BuildHouses();
 
             var config = Upsert<GameConfig>(ConfigPath);
             config.cats = cats.Values.ToList();
             config.items = items;
             config.stages = stages;
+            config.houses = houses;
             config.starterCat = cats["cat_fire"];
             config.starterBasket = cats["cat_leaf"];
+            config.starterHouse = houses[0];
+            config.presentation ??= new PresentationSet();
+            foreach (var e in System.Enum.GetValues(typeof(Element)).Cast<Element>())
+                if (config.presentation.Fx(e) == null) config.presentation.elementFx.Add(new ElementFx { element = e });
+            foreach (var id in new[] { "hatchery", "shop", "breed", "dex", "gate" })
+                if (config.presentation.buildings.All(b => b.buildingId != id)) config.presentation.buildings.Add(new BuildingArt { buildingId = id });
             EditorUtility.SetDirty(config);
             AssetDatabase.SaveAssets();
-            Debug.Log($"GameDataBuilder: 고양이 {cats.Count}, 적 {variants.Count}, 스테이지 {stages.Count}, 아이템 {items.Count}");
+            Debug.Log($"GameDataBuilder: 고양이 {cats.Count}, 적 {variants.Count}, 스테이지 {stages.Count}, 아이템 {items.Count}, 집 {houses.Count}");
         }
 
         static List<AssetReferenceTexture2D> Frames(string action, int count) =>
             Enumerable.Range(1, count).Select(i => AddressablesSetup.Texture($"{Kitty}/kitty_{action}_0{i}.png")).ToList();
 
-        static SpriteSet KittySet() => new SpriteSet { idle = Frames("idle", 4), attack = Frames("attack", 6), cellSize = 16 };
+        static SpriteSet KittySet() => new SpriteSet
+        {
+            idle = Frames("idle", 4), walk = Frames("walk", 3), attack = Frames("attack", 6), hurt = Frames("death", 1), cellSize = 16
+        };
 
         static SpriteSet DogSet() => new SpriteSet
         {
-            sheet = AddressablesSetup.Texture(Dog), cellSize = 16, framesPerRow = 6, idleRow = 0, idleFrames = 4, attackRow = 4, attackFrames = 6
+            sheet = AddressablesSetup.Texture(Dog), cellSize = 16, framesPerRow = 6, idleRow = 0, idleFrames = 4,
+            walkRow = 1, walkFrames = 6, attackRow = 4, attackFrames = 6, hurtRow = -1
         };
+
+        static List<HouseData> BuildHouses()
+        {
+            var specs = new (string id, string name, Element[] accepts, int price, Color tint)[]
+            {
+                ("house_fire", "모닥불 집", new[] { Element.Fire }, 0, new Color(1f, 0.55f, 0.35f)),
+                ("house_water", "연못 집", new[] { Element.Water }, 150, new Color(0.45f, 0.7f, 1f)),
+                ("house_leaf", "풀숲 집", new[] { Element.Leaf }, 150, new Color(0.45f, 0.85f, 0.4f)),
+                ("house_wind", "바람개비 집", new[] { Element.Wind }, 200, new Color(0.7f, 0.95f, 0.9f)),
+                ("house_light", "햇살 정원", new[] { Element.Sun, Element.Moon }, 300, new Color(1f, 0.9f, 0.5f)),
+                ("house_forest", "숲속 오두막", new[] { Element.Fire, Element.Leaf, Element.Wind, Element.Water }, 500, new Color(0.65f, 0.5f, 0.35f))
+            };
+            var list = new List<HouseData>();
+            foreach (var s in specs)
+            {
+                var h = Upsert<HouseData>($"{DataRoot}/Houses/{s.id}.asset");
+                h.id = s.id;
+                h.displayName = s.name;
+                h.accepts = s.accepts.ToList();
+                h.price = s.price;
+                h.tint = s.tint;
+                EditorUtility.SetDirty(h);
+                list.Add(h);
+            }
+            return list;
+        }
 
         static T Upsert<T>(string path) where T : ScriptableObject
         {

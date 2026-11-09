@@ -12,27 +12,57 @@ namespace CatVillage.EditorTools
     {
         public const string UiGroup = "UI";
         public const string CharacterGroup = "Characters";
+        public const string SceneGroup = "Scenes";
+        public const string ArtGroup = "WorldArt";
+        public const string AudioGroup = "Audio";
+        const string FontAssetPath = "Assets/Art/UI/Fonts/Galmuri11 SDF.asset";
 
         static readonly string[] CharacterFolders =
         {
             "Assets/Art/ThirdParty/CuteKitty", "Assets/Art/ThirdParty/Dog", "Assets/Art/Cats", "Assets/Art/Enemies"
         };
 
+        public static readonly string[] ArtFolders =
+        {
+            "Assets/Art/Backgrounds", "Assets/Art/Buildings", "Assets/Art/FX"
+        };
+
+        public const string AudioFolder = "Assets/Audio";
+
         [MenuItem("CatVillage/Setup Addressables")]
         public static AddressableAssetSettings Run()
         {
             var settings = AddressableAssetSettingsDefaultObject.GetSettings(true);
             settings.BuildRemoteCatalog = false;
-            Group(settings, UiGroup, BundledAssetGroupSchema.BundlePackingMode.PackTogether);
+            var ui = Group(settings, UiGroup, BundledAssetGroupSchema.BundlePackingMode.PackTogether);
             var characters = Group(settings, CharacterGroup, BundledAssetGroupSchema.BundlePackingMode.PackTogetherByLabel);
-            foreach (var folder in CharacterFolders)
-            {
-                if (!AssetDatabase.IsValidFolder(folder)) continue;
-                foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { folder }))
-                    Add(settings, characters, guid);
-            }
+            Group(settings, SceneGroup, BundledAssetGroupSchema.BundlePackingMode.PackSeparately);
+            var art = Group(settings, ArtGroup, BundledAssetGroupSchema.BundlePackingMode.PackTogetherByLabel);
+            var audio = Group(settings, AudioGroup, BundledAssetGroupSchema.BundlePackingMode.PackSeparately);
+
+            var font = AssetDatabase.AssetPathToGUID(FontAssetPath);
+            if (!string.IsNullOrEmpty(font)) Add(settings, ui, font);
+
+            foreach (var folder in CharacterFolders) AddFolder(settings, characters, folder, "t:Texture2D");
+            foreach (var folder in ArtFolders) AddFolder(settings, art, folder, "t:Texture2D t:GameObject");
+            AddFolder(settings, audio, AudioFolder, "t:AudioClip");
             AssetDatabase.SaveAssets();
             return settings;
+        }
+
+        static void AddFolder(AddressableAssetSettings settings, AddressableAssetGroup group, string folder, string filter)
+        {
+            if (!AssetDatabase.IsValidFolder(folder)) return;
+            foreach (var guid in AssetDatabase.FindAssets(filter, new[] { folder }))
+                Add(settings, group, guid);
+        }
+
+        public static AssetReference Scene(string path)
+        {
+            var settings = Run();
+            var guid = AssetDatabase.AssetPathToGUID(path);
+            Add(settings, settings.FindGroup(SceneGroup), guid);
+            return new AssetReference(guid);
         }
 
         static AddressableAssetGroup Group(AddressableAssetSettings settings, string name, BundledAssetGroupSchema.BundlePackingMode mode)
@@ -54,7 +84,7 @@ namespace CatVillage.EditorTools
             var entry = settings.CreateOrMoveEntry(guid, group, false, false);
             var path = AssetDatabase.GUIDToAssetPath(guid);
             entry.address = path;
-            if (group.Name == CharacterGroup)
+            if (group.Name == CharacterGroup || group.Name == ArtGroup)
             {
                 entry.labels.Clear();
                 entry.SetLabel(System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(path)), true, true);

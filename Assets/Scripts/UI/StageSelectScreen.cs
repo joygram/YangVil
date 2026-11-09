@@ -14,7 +14,7 @@ namespace CatVillage.UI
         {
             var hasParty = Game.Party.Any();
             partyWarning.SetActive(!hasParty);
-            back.OnClick(() => Screens.Show<VillageScreen>());
+            back.OnClick(() => Screens.Show<VillageHud>());
 
             for (var i = 0; i < Game.Config.stages.Count; i++)
             {
@@ -25,7 +25,7 @@ namespace CatVillage.UI
                 b.Highlight(stage.enemies.Any(e => e.isBoss));
                 b.Interactable = unlocked && hasParty;
                 var s = stage;
-                b.OnClick(() => Screens.Show<BattleScreen>(screen => screen.Stage = s));
+                b.OnClick(() => Core.SceneFlow.Instance.GoBattle(s));
             }
         }
     }

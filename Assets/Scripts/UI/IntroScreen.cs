@@ -10,7 +10,7 @@ namespace CatVillage.UI
         {
             var starter = Game.Config.starterCat;
             BindUnit(mascot, starter.sprites, starter.tint);
-            start.OnClick(() => Screens.Show<VillageScreen>());
+            start.OnClick(() => Core.SceneFlow.Instance.GoVillage());
             reset.OnClick(() => Game.ResetSave());
         }
     }

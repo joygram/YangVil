@@ -30,6 +30,11 @@ namespace CatVillage.UI
             _scope?.Dispose();
         }
 
+        public void ShowLoading(bool on)
+        {
+            if (loadingIndicator != null) loadingIndicator.SetActive(on);
+        }
+
         public void Show<T>(Action<T> setup = null) where T : GameScreen
         {
             if (_busy) return;

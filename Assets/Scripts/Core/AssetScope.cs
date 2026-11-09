@@ -13,6 +13,7 @@ namespace CatVillage.Core
         readonly Dictionary<object, AsyncOperationHandle> _handles = new Dictionary<object, AsyncOperationHandle>();
         readonly Dictionary<(Texture2D, Rect), Sprite> _sprites = new Dictionary<(Texture2D, Rect), Sprite>();
         readonly List<GameObject> _instances = new List<GameObject>();
+        readonly List<Sprite> _looseSprites = new List<Sprite>();
 
         public bool Disposed { get; private set; }
 
@@ -43,26 +44,78 @@ namespace CatVillage.Core
             done(handle.Result);
         }
 
-        public IEnumerator LoadFrames(SpriteSet set, Action<Sprite[], Sprite[]> done)
+        public IEnumerator LoadFrames(SpriteSet set, Action<FrameSet> done)
         {
+            var frames = new FrameSet { Fps = set.fps };
             if (set.UsesSheet)
             {
                 var sheet = Load<Texture2D>(set.sheet);
                 yield return sheet;
                 if (Disposed || sheet.Status != AsyncOperationStatus.Succeeded) yield break;
-                done(FromSheet(set, sheet.Result, set.idleRow, set.idleFrames),
-                    FromSheet(set, sheet.Result, set.attackRow, set.attackFrames));
+                frames.Idle = FromSheet(set, sheet.Result, set.idleRow, set.idleFrames);
+                frames.Walk = FromSheet(set, sheet.Result, set.walkRow, set.walkFrames);
+                frames.Attack = FromSheet(set, sheet.Result, set.attackRow, set.attackFrames);
+                frames.Hurt = FromSheet(set, sheet.Result, set.hurtRow, set.hurtFrames);
+                done(frames);
                 yield break;
             }
 
-            var idle = new List<AsyncOperationHandle<Texture2D>>();
-            var attack = new List<AsyncOperationHandle<Texture2D>>();
-            foreach (var r in set.idle) idle.Add(Load<Texture2D>(r));
-            foreach (var r in set.attack) attack.Add(Load<Texture2D>(r));
-            foreach (var h in idle) yield return h;
-            foreach (var h in attack) yield return h;
+            var lists = new[] { set.idle, set.walk, set.attack, set.hurt };
+            var handles = new List<AsyncOperationHandle<Texture2D>>[lists.Length];
+            for (var i = 0; i < lists.Length; i++)
+            {
+                handles[i] = new List<AsyncOperationHandle<Texture2D>>();
+                if (lists[i] == null) continue;
+                foreach (var r in lists[i])
+                    if (r != null && r.RuntimeKeyIsValid()) handles[i].Add(Load<Texture2D>(r));
+            }
+            foreach (var list in handles)
+                foreach (var h in list) yield return h;
             if (Disposed) yield break;
-            done(FromFrames(idle), FromFrames(attack));
+            frames.Idle = FromFrames(handles[0]);
+            frames.Walk = FromFrames(handles[1]);
+            frames.Attack = FromFrames(handles[2]);
+            frames.Hurt = FromFrames(handles[3]);
+            done(frames);
+        }
+
+        public IEnumerator LoadSprite(AssetReferenceTexture2D reference, Vector2 pivot, float pixelsPerUnit, Action<Sprite> done)
+        {
+            if (reference == null || !reference.RuntimeKeyIsValid()) yield break;
+            var h = Load<Texture2D>(reference);
+            yield return h;
+            if (Disposed || h.Status != AsyncOperationStatus.Succeeded) yield break;
+            var t = h.Result;
+            var s = UnityEngine.Sprite.Create(t, new Rect(0, 0, t.width, t.height), pivot, pixelsPerUnit);
+            _looseSprites.Add(s);
+            done(s);
+        }
+
+        public IEnumerator LoadClip(AssetReference reference, Action<AudioClip> done)
+        {
+            if (reference == null || !reference.RuntimeKeyIsValid()) yield break;
+            var h = Load<AudioClip>(reference);
+            yield return h;
+            if (Disposed || h.Status != AsyncOperationStatus.Succeeded) yield break;
+            done(h.Result);
+        }
+
+        public IEnumerator Spawn(AssetReferenceGameObject reference, Vector3 position, Transform parent, float lifetime)
+        {
+            if (reference == null || !reference.RuntimeKeyIsValid()) yield break;
+            var handle = Addressables.InstantiateAsync(reference, position, Quaternion.identity, parent);
+            yield return handle;
+            if (handle.Status != AsyncOperationStatus.Succeeded) yield break;
+            if (Disposed)
+            {
+                Addressables.ReleaseInstance(handle);
+                yield break;
+            }
+            _instances.Add(handle.Result);
+            yield return new WaitForSeconds(lifetime);
+            if (Disposed || handle.Result == null) yield break;
+            _instances.Remove(handle.Result);
+            Addressables.ReleaseInstance(handle.Result);
         }
 
         Sprite[] FromFrames(List<AsyncOperationHandle<Texture2D>> handles)
@@ -78,6 +131,7 @@ namespace CatVillage.Core
         {
             var cell = set.cellSize;
             var rows = t.height / cell;
+            if (row < 0 || row >= rows || count <= 0) return new Sprite[0];
             var n = Mathf.Min(count, set.framesPerRow);
             var result = new Sprite[n];
             for (var i = 0; i < n; i++)
@@ -99,6 +153,8 @@ namespace CatVillage.Core
             Disposed = true;
             foreach (var s in _sprites.Values) UnityEngine.Object.Destroy(s);
             _sprites.Clear();
+            foreach (var s in _looseSprites) UnityEngine.Object.Destroy(s);
+            _looseSprites.Clear();
             foreach (var go in _instances)
                 if (go != null) Addressables.ReleaseInstance(go);
             _instances.Clear();

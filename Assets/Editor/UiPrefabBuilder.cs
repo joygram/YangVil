@@ -66,16 +66,19 @@ namespace CatVillage.EditorTools
             var stageButton = Save(ListButton(ui, "StageButton", 130), $"{ComponentDir}/StageButton.prefab").GetComponent<LabeledButton>();
             var portrait = Save(ListButton(ui, "PortraitButton", 0), $"{ComponentDir}/PortraitButton.prefab").GetComponent<LabeledButton>();
             var itemButton = Save(ListButton(ui, "ItemButton", 0), $"{ComponentDir}/ItemButton.prefab").GetComponent<LabeledButton>();
-            var slot = Save(UnitSlot(ui), $"{ComponentDir}/UnitSlot.prefab").GetComponent<UnitSlot>();
-            var popup = Save(Popup(ui), $"{ComponentDir}/DamagePopup.prefab").GetComponent<DamagePopup>();
+            foreach (var legacy in new[] { $"{ComponentDir}/UnitSlot.prefab", $"{ComponentDir}/DamagePopup.prefab",
+                         $"{ScreenDir}/VillageScreen.prefab", $"{ScreenDir}/BattleScreen.prefab" })
+                AssetDatabase.DeleteAsset(legacy);
 
             Save(Intro(ui), $"{ScreenDir}/IntroScreen.prefab");
-            Save(Village(ui, catCard, rowCard), $"{ScreenDir}/VillageScreen.prefab");
+            Save(VillageHud(ui, catCard, rowCard), $"{ScreenDir}/VillageHud.prefab");
             Save(StageSelect(ui, stageButton), $"{ScreenDir}/StageSelectScreen.prefab");
-            Save(Battle(ui, slot, portrait, itemButton, popup), $"{ScreenDir}/BattleScreen.prefab");
+            Save(BattleHud(ui, portrait, itemButton), $"{ScreenDir}/BattleHud.prefab");
             Save(Result(ui), $"{ScreenDir}/ResultScreen.prefab");
             RegisterScreens();
         }
+
+        public static TMP_FontAsset Font => AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontAssetPath);
 
         [MenuItem("CatVillage/Register Screen Prefabs")]
         public static void RegisterScreens()
@@ -147,17 +150,19 @@ namespace CatVillage.EditorTools
         static RectTransform CatCard(UiFactory ui)
         {
             var card = ui.Sliced(null, "CatCard", ui.Panel);
-            card.rectTransform.sizeDelta = new Vector2(1000, 220);
-            UiFactory.Height(card, 220);
+            card.rectTransform.sizeDelta = new Vector2(940, 270);
+            UiFactory.Height(card, 270);
             var c = card.gameObject.AddComponent<CatCard>();
             c.portrait = UiFactory.Unit(card.transform, 170);
             UiFactory.Place((RectTransform)c.portrait.transform, new Vector2(0, 0.5f), new Vector2(115, -5), new Vector2(170, 170));
-            c.info = ui.Text(card.transform, "치즈 [불꽃] Lv1 아기\nHP 120  공격 22  방어 10  속도 12\nEXP 0/50", 28, Ink, TextAlignmentOptions.MidlineLeft);
+            c.info = ui.Text(card.transform, "치즈 [불꽃] Lv1 아기\nHP 120 공격 22 방어 10 속도 12\nEXP 0/50 · 모닥불 집", 26, Ink, TextAlignmentOptions.MidlineLeft);
             UiFactory.Stretch(c.info.rectTransform, 220, 10, 250, 10);
-            c.feed = ui.BlueButton(card.transform, "Feed", "츄르 주기", 28);
-            UiFactory.Place((RectTransform)c.feed.transform, new Vector2(1, 0.5f), new Vector2(-125, 50), new Vector2(220, 84));
-            c.party = ui.BlueButton(card.transform, "Party", "파티 편성", 28);
-            UiFactory.Place((RectTransform)c.party.transform, new Vector2(1, 0.5f), new Vector2(-125, -50), new Vector2(220, 84));
+            c.feed = ui.BlueButton(card.transform, "Feed", "츄르 주기", 26);
+            UiFactory.Place((RectTransform)c.feed.transform, new Vector2(1, 0.5f), new Vector2(-125, 80), new Vector2(220, 72));
+            c.party = ui.BlueButton(card.transform, "Party", "파티 편성", 26);
+            UiFactory.Place((RectTransform)c.party.transform, new Vector2(1, 0.5f), new Vector2(-125, 0), new Vector2(220, 72));
+            c.move = ui.GreenButton(card.transform, "Move", "이동", 26);
+            UiFactory.Place((RectTransform)c.move.transform, new Vector2(1, 0.5f), new Vector2(-125, -80), new Vector2(220, 72));
             return card.rectTransform;
         }
 
@@ -183,41 +188,6 @@ namespace CatVillage.EditorTools
             return rt;
         }
 
-        static RectTransform UnitSlot(UiFactory ui)
-        {
-            var slot = UiFactory.Node("UnitSlot", null);
-            UiFactory.Place(slot, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(300, 400));
-            var hit = slot.gameObject.AddComponent<Image>();
-            hit.color = new Color(0, 0, 0, 0);
-            var s = slot.gameObject.AddComponent<UnitSlot>();
-            s.button = slot.gameObject.AddComponent<Button>();
-            s.button.transition = Selectable.Transition.None;
-            s.sprite = UiFactory.Unit(slot, 200);
-            UiFactory.Place((RectTransform)s.sprite.transform, new Vector2(0.5f, 0.5f), new Vector2(0, 10), new Vector2(200, 200));
-            s.nameLabel = ui.Text(slot, "이름", 26, Ink);
-            UiFactory.Place(s.nameLabel.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -20), new Vector2(300, 40));
-            s.hp = ui.Bar(slot, "Hp", new Color(0.35f, 0.85f, 0.35f), new Vector2(0, 50), new Vector2(220, 22));
-            s.gauge = ui.Bar(slot, "Gauge", new Color(1f, 0.85f, 0.2f), new Vector2(0, 20), new Vector2(220, 14));
-            var marker = ui.Text(slot, "▼ 집중", 28, Color.red);
-            UiFactory.Place(marker.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, 15), new Vector2(200, 40));
-            s.focusMarker = marker.gameObject;
-            s.popupAnchor = UiFactory.Node("PopupAnchor", slot);
-            UiFactory.Place(s.popupAnchor, new Vector2(0.5f, 0.6f), Vector2.zero, new Vector2(10, 10));
-            return slot;
-        }
-
-        static RectTransform Popup(UiFactory ui)
-        {
-            var root = UiFactory.Node("DamagePopup", null);
-            UiFactory.Place(root, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(340, 70));
-            var p = root.gameObject.AddComponent<DamagePopup>();
-            p.label = ui.Text(root, "-99", 40, Color.white);
-            p.label.outlineWidth = 0.25f;
-            p.label.outlineColor = Color.black;
-            UiFactory.Stretch(p.label.rectTransform);
-            return root;
-        }
-
         static RectTransform Intro(UiFactory ui)
         {
             var root = ScreenRoot("IntroScreen");
@@ -236,39 +206,50 @@ namespace CatVillage.EditorTools
             return root;
         }
 
-        static RectTransform Village(UiFactory ui, CatCard catCard, RowCard rowCard)
+        static RectTransform VillageHud(UiFactory ui, CatCard catCard, RowCard rowCard)
         {
-            var root = ScreenRoot("VillageScreen");
-            UiFactory.Background(root, Paper);
-            var s = root.gameObject.AddComponent<VillageScreen>();
+            var root = ScreenRoot("VillageHud");
+            var s = root.gameObject.AddComponent<VillageHud>();
             s.catCardPrefab = catCard;
             s.rowCardPrefab = rowCard;
 
             var top = ui.Sliced(root, "TopBar", ui.Panel);
-            UiFactory.Place(top.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -90), new Vector2(1040, 150));
-            s.wallet = ui.Text(top.transform, "생선 코인 0", 36, Ink, TextAlignmentOptions.MidlineLeft);
-            UiFactory.Stretch(s.wallet.rectTransform, 30, 10, 380, 10);
-            s.collect = ui.GreenButton(top.transform, "Collect", "코인 받기", 28);
-            UiFactory.Place((RectTransform)s.collect.transform, new Vector2(1f, 0.5f), new Vector2(-190, 0), new Vector2(340, 100));
+            UiFactory.Place(top.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -70), new Vector2(1040, 110));
+            s.wallet = ui.Text(top.transform, "생선 코인 0", 32, Ink, TextAlignmentOptions.MidlineLeft);
+            UiFactory.Stretch(s.wallet.rectTransform, 30, 10, 30, 10);
 
-            var tabs = UiFactory.Node("Tabs", root);
-            UiFactory.Place(tabs, new Vector2(0.5f, 1f), new Vector2(0, -240), new Vector2(1040, 110));
-            UiFactory.Row(tabs, 16);
-            s.tabCats = ui.BlueButton(tabs, "TabCats", "고양이");
-            s.tabBaskets = ui.BlueButton(tabs, "TabBaskets", "바구니");
-            s.tabShop = ui.BlueButton(tabs, "TabShop", "상점");
+            var menu = UiFactory.Node("Menu", root);
+            UiFactory.Place(menu, new Vector2(0.5f, 0f), new Vector2(0, 90), new Vector2(1040, 130));
+            UiFactory.Row(menu, 10);
+            s.hatchery = ui.BlueButton(menu, "Hatchery", "부화소", 30);
+            s.shop = ui.BlueButton(menu, "Shop", "상점", 30);
+            s.breed = ui.BlueButton(menu, "Breed", "짝짓기", 30);
+            s.dex = ui.BlueButton(menu, "Dex", "도감", 30);
+            s.adventure = ui.GreenButton(menu, "Adventure", "모험", 34);
 
-            s.listContent = ui.ScrollList(root, "List");
-            UiFactory.Stretch((RectTransform)s.listContent.parent, 20, 220, 20, 310);
+            var panel = ui.Sliced(root, "Panel", ui.Panel);
+            UiFactory.Stretch(panel.rectTransform, 30, 240, 30, 150);
+            s.panel = panel.gameObject;
+            s.panelTitle = ui.Text(panel.transform, "제목", 44, Ink);
+            UiFactory.Place(s.panelTitle.rectTransform, new Vector2(0.5f, 1f), new Vector2(-60, -60), new Vector2(800, 80));
+            s.panelClose = ui.Button(panel.transform, "Close", "닫기", ui.Red, ui.BluePressed, null, 28);
+            UiFactory.Place((RectTransform)s.panelClose.transform, new Vector2(1f, 1f), new Vector2(-100, -60), new Vector2(150, 80));
+            s.panelContent = ui.ScrollList(panel.transform, "List");
+            UiFactory.Stretch((RectTransform)s.panelContent.parent, 20, 20, 20, 120);
 
-            s.adventure = ui.GreenButton(root, "Adventure", "모험 떠나기", 48);
-            UiFactory.Place((RectTransform)s.adventure.transform, new Vector2(0.5f, 0f), new Vector2(0, 110), new Vector2(1000, 160));
+            var banner = ui.Sliced(root, "MoveBanner", ui.Panel, new Color(0.85f, 1f, 0.8f));
+            UiFactory.Place(banner.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -200), new Vector2(1040, 120));
+            s.moveBanner = banner.gameObject;
+            s.moveLabel = ui.Text(banner.transform, "옮길 집을 누르세요", 28, Ink, TextAlignmentOptions.MidlineLeft);
+            UiFactory.Stretch(s.moveLabel.rectTransform, 30, 10, 200, 10);
+            s.moveCancel = ui.Button(banner.transform, "Cancel", "취소", ui.Red, ui.BluePressed, null, 28);
+            UiFactory.Place((RectTransform)s.moveCancel.transform, new Vector2(1f, 0.5f), new Vector2(-100, 0), new Vector2(160, 90));
 
             var toastBg = UiFactory.Solid(root, "Toast", new Color(0, 0, 0, 0.75f));
-            UiFactory.Place(toastBg.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(800, 120));
+            UiFactory.Place(toastBg.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(860, 120));
             toastBg.raycastTarget = false;
             s.toast = toastBg.gameObject.AddComponent<Toast>();
-            s.toast.label = ui.Text(toastBg.transform, "알림", 36, Color.white);
+            s.toast.label = ui.Text(toastBg.transform, "알림", 34, Color.white);
             UiFactory.Stretch(s.toast.label.rectTransform);
             return root;
         }
@@ -291,18 +272,24 @@ namespace CatVillage.EditorTools
             return root;
         }
 
-        static RectTransform Battle(UiFactory ui, UnitSlot slot, LabeledButton portrait, LabeledButton item, DamagePopup popup)
+        static RectTransform BattleHud(UiFactory ui, LabeledButton portrait, LabeledButton item)
         {
-            var root = ScreenRoot("BattleScreen");
-            UiFactory.Background(root, new Color(0.86f, 0.92f, 0.82f));
-            var s = root.gameObject.AddComponent<BattleScreen>();
-            s.slotPrefab = slot;
+            var root = ScreenRoot("BattleHud");
+            var s = root.gameObject.AddComponent<BattleHud>();
             s.portraitPrefab = portrait;
             s.itemButtonPrefab = item;
-            s.popupPrefab = popup;
 
-            s.title = ui.Text(root, "스테이지", 44, Ink);
+            s.title = ui.Text(root, "스테이지", 40, Color.white);
+            s.title.outlineWidth = 0.2f;
+            s.title.outlineColor = Color.black;
             UiFactory.Place(s.title.rectTransform, new Vector2(0.5f, 1f), new Vector2(-200, -70), new Vector2(600, 90));
+
+            var cut = UiFactory.Solid(root, "CutIn", new Color(0.1f, 0.06f, 0.04f, 0.85f));
+            UiFactory.Place(cut.rectTransform, new Vector2(0.5f, 0.62f), Vector2.zero, new Vector2(1200, 220));
+            cut.raycastTarget = false;
+            s.cutIn = cut.gameObject;
+            s.cutInLabel = ui.Text(cut.transform, "필살기!", 64, new Color(1f, 0.85f, 0.2f));
+            UiFactory.Stretch(s.cutInLabel.rectTransform);
 
             var controls = UiFactory.Node("Controls", root);
             UiFactory.Place(controls, new Vector2(1f, 1f), new Vector2(-230, -70), new Vector2(420, 90));
@@ -311,13 +298,10 @@ namespace CatVillage.EditorTools
             s.autoSkill = ui.BlueButton(controls, "AutoSkill", "자동필살", 22);
             s.pause = ui.BlueButton(controls, "Pause", "정지", 26);
 
-            s.enemyRow = UiFactory.Node("Enemies", root);
-            UiFactory.Place(s.enemyRow, new Vector2(0.5f, 0.68f), Vector2.zero, new Vector2(1040, 420));
-            s.allyRow = UiFactory.Node("Allies", root);
-            UiFactory.Place(s.allyRow, new Vector2(0.5f, 0.36f), Vector2.zero, new Vector2(1040, 420));
-
-            s.status = ui.Text(root, "", 34, Ink);
-            UiFactory.Place(s.status.rectTransform, new Vector2(0.5f, 0.52f), Vector2.zero, new Vector2(1000, 80));
+            s.status = ui.Text(root, "", 34, Color.white);
+            s.status.outlineWidth = 0.2f;
+            s.status.outlineColor = Color.black;
+            UiFactory.Place(s.status.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -170), new Vector2(1000, 80));
 
             s.portraitRow = UiFactory.Node("Portraits", root);
             UiFactory.Place(s.portraitRow, new Vector2(0.5f, 0f), new Vector2(0, 270), new Vector2(1040, 170));

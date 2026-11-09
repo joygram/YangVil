@@ -9,5 +9,6 @@ namespace CatVillage.UI
         public TMP_Text info;
         public LabeledButton feed;
         public LabeledButton party;
+        public LabeledButton move;
     }
 }

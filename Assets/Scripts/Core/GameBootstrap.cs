@@ -9,6 +9,7 @@ namespace CatVillage.Core
         public GameConfig config;
         public ScreenManager screens;
         public RectTransform screenLayer;
+        public SceneFlow sceneFlow;
 
         public static Game Game { get; private set; }
 
@@ -18,6 +19,7 @@ namespace CatVillage.Core
             Ui.Config = config;
             Game = new Game(config);
             screens.Init(Game, screenLayer);
+            sceneFlow.Init(config, screens);
             screens.Show<IntroScreen>();
         }
 

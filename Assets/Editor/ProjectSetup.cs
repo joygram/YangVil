@@ -41,6 +41,7 @@ namespace CatVillage.EditorTools
         {
             GameDataBuilder.Build();
             UiPrefabBuilder.Build();
+            WorldSceneBuilder.Build();
             BuildIntroScene();
             AssetDatabase.SaveAssets();
             Debug.Log("ProjectSetup: 콘텐츠 빌드 완료");
@@ -94,7 +95,9 @@ namespace CatVillage.EditorTools
             var camera = Camera.main;
             camera.orthographic = true;
             camera.clearFlags = CameraClearFlags.SolidColor;
-            camera.backgroundColor = new Color(0.98f, 0.94f, 0.86f);
+            camera.backgroundColor = new Color(0.17f, 0.13f, 0.1f);
+            camera.depth = -10;
+            camera.cullingMask = 0;
 
             new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
 
@@ -107,10 +110,21 @@ namespace CatVillage.EditorTools
             var layer = UiFactory.Stretch(UiFactory.Node("Screens", canvasGo.transform));
             var screens = canvasGo.AddComponent<ScreenManager>();
 
-            var boot = new GameObject("GameBootstrap").AddComponent<GameBootstrap>();
+            var loading = UiFactory.Solid(canvasGo.transform, "Loading", new Color(0.17f, 0.13f, 0.1f, 0.85f));
+            UiFactory.Stretch(loading.rectTransform);
+            var spinner = UiFactory.Solid(loading.transform, "Spinner", new Color(1f, 0.85f, 0.4f));
+            UiFactory.Place(spinner.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(90, 90));
+            spinner.gameObject.AddComponent<Spinner>();
+            loading.gameObject.SetActive(false);
+            screens.loadingIndicator = loading.gameObject;
+
+            var bootGo = new GameObject("GameBootstrap");
+            var boot = bootGo.AddComponent<GameBootstrap>();
             boot.config = AssetDatabase.LoadAssetAtPath<GameConfig>("Assets/Resources/GameConfig.asset");
             boot.screens = screens;
             boot.screenLayer = layer;
+            boot.sceneFlow = bootGo.AddComponent<SceneFlow>();
+            bootGo.AddComponent<AudioHub>();
 
             EditorSceneManager.SaveScene(scene, IntroScenePath);
             EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(IntroScenePath, true) };

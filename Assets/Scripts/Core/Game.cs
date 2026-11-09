@@ -5,6 +5,8 @@ using CatVillage.Data;
 
 namespace CatVillage.Core
 {
+    public enum MoveResult { Moved, WrongElement, Full, Same }
+
     public class Game
     {
         public const int PartySize = 3;
@@ -23,9 +25,11 @@ namespace CatVillage.Core
 
         SaveData NewSave()
         {
-            var data = new SaveData { lastCollectUnix = Now };
+            var data = new SaveData();
             Data = data;
-            AddCat(Config.starterCat, true);
+            var house = AddHouse(Config.starterHouse, 0);
+            var cat = AddCat(Config.starterCat, true);
+            cat.houseUid = house.uid;
             data.baskets.Add(new Basket { speciesId = Config.starterBasket.id, hatchAtUnix = Now + Config.firstHatchSeconds });
             AddItem(Config.Item(ItemKind.Heal), 2);
             AddItem(Config.Item(ItemKind.Exp), 3);
@@ -54,10 +58,78 @@ namespace CatVillage.Core
         {
             var cat = new OwnedCat { uid = $"c{Data.nextUid++}", speciesId = species.id, inParty = inParty };
             Data.cats.Add(cat);
+            if (!Data.discovered.Contains(species.id)) Data.discovered.Add(species.id);
             return cat;
         }
 
+        public HouseData HouseDef(OwnedHouse h) => Config.House(h.houseId);
+
+        public OwnedHouse House(string uid) => Data.houses.Find(h => h.uid == uid);
+
+        public IEnumerable<OwnedCat> CatsIn(OwnedHouse h) => Data.cats.Where(c => c.houseUid == h.uid);
+
+        public IEnumerable<OwnedCat> Waiting => Data.cats.Where(c => string.IsNullOrEmpty(c.houseUid));
+
+        OwnedHouse AddHouse(HouseData def, int slot)
+        {
+            var house = new OwnedHouse { uid = $"h{Data.nextUid++}", houseId = def.id, slot = slot, lastCollectUnix = Now };
+            Data.houses.Add(house);
+            return house;
+        }
+
+        public int FreeVillageSlot()
+        {
+            for (var i = 0; i < Config.villageSlots; i++)
+                if (Data.houses.All(h => h.slot != i)) return i;
+            return -1;
+        }
+
+        public bool BuyHouse(HouseData def)
+        {
+            var slot = FreeVillageSlot();
+            if (slot < 0 || Data.coins < def.price) return false;
+            Data.coins -= def.price;
+            AddHouse(def, slot);
+            Commit();
+            return true;
+        }
+
+        public bool UpgradeHouse(OwnedHouse h)
+        {
+            var cost = HouseDef(h).UpgradeCost(h.level);
+            if (cost < 0 || Data.coins < cost) return false;
+            Collect(h);
+            Data.coins -= cost;
+            h.level++;
+            Commit();
+            return true;
+        }
+
+        public bool CanMoveTo(OwnedCat cat, OwnedHouse h) => Check(cat, h) == MoveResult.Moved;
+
+        MoveResult Check(OwnedCat cat, OwnedHouse h)
+        {
+            if (cat.houseUid == h.uid) return MoveResult.Same;
+            if (!HouseDef(h).Accepts(Species(cat).element)) return MoveResult.WrongElement;
+            if (CatsIn(h).Count() >= HouseDef(h).Capacity(h.level)) return MoveResult.Full;
+            return MoveResult.Moved;
+        }
+
+        public MoveResult MoveCat(OwnedCat cat, OwnedHouse h)
+        {
+            var result = Check(cat, h);
+            if (result != MoveResult.Moved) return result;
+            var from = House(cat.houseUid);
+            if (from != null) Collect(from);
+            Collect(h);
+            cat.houseUid = h.uid;
+            Commit();
+            return result;
+        }
+
         public bool IsReady(Basket b) => Now >= b.hatchAtUnix;
+
+        public int FreeHatcherySlots => Config.hatcherySlots - Data.baskets.Count;
 
         public OwnedCat Hatch(Basket b)
         {
@@ -68,17 +140,25 @@ namespace CatVillage.Core
             return cat;
         }
 
-        public void AddBasket(CatData species)
+        public void AddBasket(CatData species, int seconds = -1)
         {
-            Data.baskets.Add(new Basket { speciesId = species.id, hatchAtUnix = Now + Config.hatchSeconds });
+            Data.baskets.Add(new Basket { speciesId = species.id, hatchAtUnix = Now + (seconds < 0 ? Config.hatchSeconds : seconds) });
         }
 
         public bool BuyBasket()
         {
-            if (Data.coins < Config.basketPrice) return false;
+            if (FreeHatcherySlots <= 0 || Data.coins < Config.basketPrice) return false;
             Data.coins -= Config.basketPrice;
-            var pick = Config.cats[UnityEngine.Random.Range(0, Config.cats.Count)];
-            AddBasket(pick);
+            AddBasket(Config.cats[UnityEngine.Random.Range(0, Config.cats.Count)]);
+            Commit();
+            return true;
+        }
+
+        public bool Breed(OwnedCat a, OwnedCat b)
+        {
+            if (a == b || FreeHatcherySlots <= 0 || Data.coins < Config.breedPrice) return false;
+            Data.coins -= Config.breedPrice;
+            AddBasket(UnityEngine.Random.value < 0.5f ? Species(a) : Species(b), Config.breedSeconds);
             Commit();
             return true;
         }
@@ -92,7 +172,7 @@ namespace CatVillage.Core
             return true;
         }
 
-        public int ItemCount(ItemData item) => Data.items.Find(s => s.itemId == item.id)?.count ?? 0;
+        public int ItemCount(ItemData item) => item == null ? 0 : Data.items.Find(s => s.itemId == item.id)?.count ?? 0;
 
         public void AddItem(ItemData item, int n)
         {
@@ -104,7 +184,7 @@ namespace CatVillage.Core
 
         public bool ConsumeItem(ItemData item)
         {
-            var stack = Data.items.Find(s => s.itemId == item.id);
+            var stack = item == null ? null : Data.items.Find(s => s.itemId == item.id);
             if (stack == null || stack.count <= 0) return false;
             stack.count--;
             return true;
@@ -114,6 +194,8 @@ namespace CatVillage.Core
         {
             var treat = Config.Item(ItemKind.Exp);
             if (!ConsumeItem(treat)) return false;
+            var house = House(cat.houseUid);
+            if (house != null) Collect(house);
             GainExp(cat, treat.value);
             Commit();
             return true;
@@ -147,21 +229,24 @@ namespace CatVillage.Core
             return true;
         }
 
-        public int PendingCoins
+        public int Pending(OwnedHouse h)
         {
-            get
-            {
-                var minutes = (Now - Data.lastCollectUnix) / 60f;
-                var rate = Data.cats.Sum(c => c.level) * Config.coinsPerLevelPerMinute;
-                return Math.Min(Config.coinCap, (int)(minutes * rate));
-            }
+            var minutes = (Now - h.lastCollectUnix) / 60f;
+            var rate = CatsIn(h).Sum(c => c.level) * Config.coinsPerLevelPerMinute;
+            return Math.Min(HouseDef(h).CoinCap(h.level), (int)(minutes * rate));
         }
 
-        public int CollectCoins()
+        public int Collect(OwnedHouse h)
         {
-            var n = PendingCoins;
+            var n = Pending(h);
             Data.coins += n;
-            Data.lastCollectUnix = Now;
+            h.lastCollectUnix = Now;
+            return n;
+        }
+
+        public int CollectAndSave(OwnedHouse h)
+        {
+            var n = Collect(h);
             Commit();
             return n;
         }

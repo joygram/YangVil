@@ -12,7 +12,8 @@ namespace CatVillage.Core
             if (!File.Exists(FilePath)) return null;
             try
             {
-                return JsonUtility.FromJson<SaveData>(File.ReadAllText(FilePath));
+                var data = JsonUtility.FromJson<SaveData>(File.ReadAllText(FilePath));
+                return data != null && data.version == SaveData.CurrentVersion ? data : null;
             }
             catch (System.Exception e)
             {

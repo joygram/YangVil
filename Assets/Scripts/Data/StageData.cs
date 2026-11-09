@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CatVillage.Data
 {
@@ -13,5 +14,7 @@ namespace CatVillage.Data
         public int rewardCoins = 30;
         public int rewardTreats = 1;
         public CatData firstClearBasket;
+        public AssetReferenceTexture2D background;
+        public AssetReferenceAudioClip bgm;
     }
 }

@@ -23,11 +23,11 @@ namespace CatVillage.UI
             Image.enabled = false;
         }
 
-        public void SetFrames(Sprite[] idle, Sprite[] attack)
+        public void SetFrames(Core.FrameSet frames)
         {
             if (this == null) return;
-            _idle = idle;
-            _attack = attack.Length > 0 ? attack : idle;
+            _idle = frames.Idle;
+            _attack = frames.AttackOrIdle;
             _current = _idle;
             if (_idle.Length == 0) return;
             Image.sprite = _idle[0];

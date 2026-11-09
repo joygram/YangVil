@@ -11,6 +11,17 @@ namespace CatVillage.Core
         public int level = 1;
         public int exp;
         public bool inParty;
+        public string houseUid = "";
+    }
+
+    [Serializable]
+    public class OwnedHouse
+    {
+        public string uid;
+        public string houseId;
+        public int level = 1;
+        public int slot;
+        public long lastCollectUnix;
     }
 
     [Serializable]
@@ -37,13 +48,16 @@ namespace CatVillage.Core
     [Serializable]
     public class SaveData
     {
-        public int version = 1;
+        public const int CurrentVersion = 2;
+
+        public int version = CurrentVersion;
         public int coins = 100;
         public List<OwnedCat> cats = new List<OwnedCat>();
+        public List<OwnedHouse> houses = new List<OwnedHouse>();
         public List<Basket> baskets = new List<Basket>();
         public List<StageRecord> stages = new List<StageRecord>();
         public List<ItemStack> items = new List<ItemStack>();
-        public long lastCollectUnix;
+        public List<string> discovered = new List<string>();
         public int nextUid = 1;
     }
 }
