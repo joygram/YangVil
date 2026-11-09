@@ -17,7 +17,9 @@ namespace CatVillage.EditorTools
 
         public static void BuildWebGL()
         {
-            PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
+            PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Brotli;
+            PlayerSettings.WebGL.decompressionFallback = true;
+            PlayerSettings.SetManagedStrippingLevel(UnityEditor.Build.NamedBuildTarget.WebGL, ManagedStrippingLevel.High);
             Build(BuildTarget.WebGL, Path.Combine(BuildRoot, "WebGL"));
         }
 

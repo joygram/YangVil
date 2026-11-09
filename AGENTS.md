@@ -16,4 +16,14 @@
 - UI 변경 시 데이터 바인딩 이름·버튼 이벤트 연결 유지
 - Scripts/Battle, Data/ 수치는 디자이너 요청으로 수정하지 않음
 - .meta 파일 삭제·이동 금지 (Unity 에디터나 CLI로만 이동)
-- 커밋: 바꾼 파일만 add, 한국어 메시지
+## 커밋·푸시
+- 커밋 전 `git status --short`로 바뀐 파일·새 파일(??)·삭제(D) 전부 확인
+- 새 에셋·스크립트는 짝 `.meta`와 함께 add (meta 빠지면 다른 PC에서 참조 깨짐)
+- 폴더째 추가한 경우 하위 파일과 폴더 `.meta`까지 포함됐는지 확인
+- 삭제한 파일은 `.meta`도 같이 삭제 상태인지 확인
+- 커밋 금지: Library/ · Temp/ · Logs/ · UserSettings/ · Builds/ · *.csproj · *.sln
+- 바꾼 파일만 add, 남의 작업·무관한 변경 섞지 않기
+- 메시지는 한국어, `종류: 무엇을` (feat·fix·docs·chore)
+- 커밋 후 `git status --short`가 비었거나 의도한 미커밋만 남았는지 재확인
+- 푸시: `git push` → main 푸시 시 GitHub Actions가 WebGL 빌드·Cloudflare 배포
+- 푸시 후 `gh run list --limit 1`로 배포 실행 상태 확인
