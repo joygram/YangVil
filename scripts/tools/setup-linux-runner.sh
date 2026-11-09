@@ -7,7 +7,7 @@ UNITY_CHANGESET="f3c3c4248748"
 TARGET_USER="${SUDO_USER:-$USER}"
 TARGET_HOME="$(getent passwd "$TARGET_USER" | cut -d: -f6)"
 UNITY_EXE="$TARGET_HOME/Unity/Hub/Editor/$UNITY_VERSION/Editor/Unity"
-LICENSE_DIR="$TARGET_HOME/.local/share/unity3d/Unity/licenses"
+LICENSE_DIRS=("$TARGET_HOME/.local/share/unity3d/licenses" "$TARGET_HOME/.local/share/unity3d/Unity/licenses" "$TARGET_HOME/.local/share/unity3d/Unity")
 RUNNER_DIR="${RUNNER_DIR:-$TARGET_HOME/actions-runner}"
 
 as_user() { if [ "$(id -un)" = "$TARGET_USER" ]; then "$@"; else sudo -u "$TARGET_USER" -H "$@"; fi; }
@@ -52,13 +52,16 @@ editor() {
 
 license() {
   echo "[license] Unity 라이선스"
-  if ls "$LICENSE_DIR"/*.xml >/dev/null 2>&1; then
-    echo "  ✔ 라이선스 파일 있음: $(ls "$LICENSE_DIR")"
-    return 0
+  for d in "${LICENSE_DIRS[@]}"; do
+    f="$(ls "$d"/*.xml "$d"/*.ulf 2>/dev/null | head -1)"
+    [ -n "$f" ] && { echo "  ✔ 라이선스 파일: $f"; return 0; }
+  done
+  out="$(as_user "$UNITY_EXE" -batchmode -quit -nographics -logFile - 2>&1)"
+  if printf '%s\n' "$out" | grep -qiE 'no valid unity editor license|license is not active|LicensingClient.*fail'; then
+    echo "  ✘ 라이선스 없음 → unityhub → Preferences > Licenses > Add license > Personal"
+    return 1
   fi
-  echo "  ✘ 라이선스 없음 → 원격 데스크톱 터미널에서 'unityhub' 실행 → 로그인 → Preferences > Licenses > Add > Personal"
-  echo "    끝나면: bash $0 license"
-  return 1
+  echo "  ✔ Unity 배치 실행에서 라이선스 오류 없음"
 }
 
 check() {
@@ -110,7 +113,8 @@ case "${1:-all}" in
   cloudflare) cloudflare ;;
   register) shift; register "${1:-}" ;;
   install) deps && hub && editor && license && check ;;
-  ci) license && check && cloudflare && register "${2:-}" ;;
-  all) deps && hub && editor && license && check && cloudflare && register "${2:-}" ;;
+  sync) bash "$(dirname "$0")/sync.sh" ;;
+  ci) bash "$(dirname "$0")/sync.sh"; license && check && cloudflare && register "${2:-}" ;;
+  all) bash "$(dirname "$0")/sync.sh"; deps && hub && editor && license && check && cloudflare && register "${2:-}" ;;
   *) echo "사용법: bash $0 [install|license|check|cloudflare|register [토큰]|ci|all]"; exit 1 ;;
 esac
