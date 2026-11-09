@@ -7,7 +7,7 @@ namespace YangVil.Core
 {
     public enum MoveResult { Moved, WrongElement, Full, Same }
 
-    public class Game
+    public partial class Game
     {
         public const int PartySize = 3;
 
@@ -31,10 +31,16 @@ namespace YangVil.Core
             {
                 if (cat.genes == null || cat.genes.seed == 0) cat.genes = Genetics.FromSpecies(Species(cat), _rng);
                 if (cat.careUnix == 0) cat.careUnix = Now;
+                if (cat.personality < 0) cat.personality = _rng.Next(CatLife.PersonalityCount);
+                if (cat.bondUnix == 0) cat.bondUnix = Now;
+                if (cat.memories == null) cat.memories = new List<CatMemory>();
                 if (Data.houses.All(h => h.uid != cat.houseUid)) cat.houseUid = Data.houses[0].uid;
             }
             foreach (var b in Data.baskets)
                 if (b.genes == null) b.genes = new CatGenes();
+            if (Data.relations == null) Data.relations = new List<Relation>();
+            if (Data.episodesSeen == null) Data.episodesSeen = new List<string>();
+            if (Data.expedition == null) Data.expedition = new Expedition();
             Data.version = SaveData.CurrentVersion;
             SaveSystem.Save(Data);
         }
@@ -70,16 +76,17 @@ namespace YangVil.Core
 
         public CatData Species(OwnedCat cat) => Config.Cat(cat.speciesId);
 
-        public IEnumerable<OwnedCat> Party => Data.cats.Where(c => c.inParty).Take(PartySize);
+        public IEnumerable<OwnedCat> Party => Data.cats.Where(c => c.inParty && !Away(c)).Take(PartySize);
 
         readonly System.Random _rng = new System.Random();
 
-        OwnedCat AddCat(CatData species, bool inParty, CatGenes genes = null)
+        OwnedCat AddCat(CatData species, bool inParty, CatGenes genes = null, int personality = -1)
         {
             var cat = new OwnedCat
             {
-                uid = $"c{Data.nextUid++}", speciesId = species.id, inParty = inParty, careUnix = Now,
-                genes = genes ?? Genetics.FromSpecies(species, _rng)
+                uid = $"c{Data.nextUid++}", speciesId = species.id, inParty = inParty, careUnix = Now, bondUnix = Now,
+                genes = genes ?? Genetics.FromSpecies(species, _rng),
+                personality = personality >= 0 ? personality : _rng.Next(CatLife.PersonalityCount)
             };
             Data.cats.Add(cat);
             if (!Data.discovered.Contains(species.id)) Data.discovered.Add(species.id);
@@ -167,18 +174,21 @@ namespace YangVil.Core
         {
             if (!IsReady(b)) return null;
             Data.baskets.Remove(b);
-            var cat = AddCat(Config.Cat(b.speciesId), Party.Count() < PartySize, b.hasGenes ? b.genes : null);
+            var cat = AddCat(Config.Cat(b.speciesId), Party.Count() < PartySize, b.hasGenes ? b.genes : null, b.personality);
+            LinkParents(cat, b);
             Commit();
             return cat;
         }
 
-        public void AddBasket(CatData species, int seconds = -1, CatGenes genes = null)
+        public Basket AddBasket(CatData species, int seconds = -1, CatGenes genes = null)
         {
-            Data.baskets.Add(new Basket
+            var basket = new Basket
             {
                 speciesId = species.id, hatchAtUnix = Now + (seconds < 0 ? Config.hatchSeconds : seconds),
                 hasGenes = genes != null, genes = genes ?? new CatGenes()
-            });
+            };
+            Data.baskets.Add(basket);
+            return basket;
         }
 
         public bool BuyBasket()
@@ -190,13 +200,23 @@ namespace YangVil.Core
             return true;
         }
 
-        public bool Breed(OwnedCat a, OwnedCat b)
+        public string Breed(OwnedCat a, OwnedCat b)
         {
-            if (a == b || FreeHatcherySlots <= 0 || Data.coins < Config.breedPrice) return false;
+            var refusal = BreedRefusal(a, b);
+            if (refusal != null) return refusal;
+            if (FreeHatcherySlots <= 0) return "부화 슬롯이 꽉 찼어요";
+            if (Data.coins < Config.breedPrice) return "코인이 부족해요";
             Data.coins -= Config.breedPrice;
-            AddBasket(_rng.Next(2) == 0 ? Species(a) : Species(b), Config.breedSeconds, Genetics.Breed(a.genes, b.genes, _rng));
+            var basket = AddBasket(_rng.Next(2) == 0 ? Species(a) : Species(b), Config.breedSeconds, Genetics.Breed(a.genes, b.genes, _rng));
+            basket.parentA = a.uid;
+            basket.parentB = b.uid;
+            basket.personality = _rng.NextDouble() < CatLife.PersonalityMutation
+                ? _rng.Next(CatLife.PersonalityCount)
+                : _rng.Next(2) == 0 ? a.personality : b.personality;
+            Remember(a, $"{DisplayName(b)}와 가족을 꾸렸다");
+            Remember(b, $"{DisplayName(a)}와 가족을 꾸렸다");
             Commit();
-            return true;
+            return null;
         }
 
         public bool BuyItem(ItemData item)
@@ -235,11 +255,16 @@ namespace YangVil.Core
             Care(cat);
             GainExp(cat, treat.value);
             cat.fullness = Math.Min(100f, cat.fullness + CatCare.FeedAmount);
+            OnFavored(cat, 2f, Grievance.Food, o => o.fullness < CatCare.HighThreshold);
             Commit();
             return true;
         }
 
-        public void Care(OwnedCat cat) => CatCare.Decay(cat, Now);
+        public void Care(OwnedCat cat)
+        {
+            CatCare.Decay(cat, Now);
+            DecayBond(cat);
+        }
 
         public CatMood Mood(OwnedCat cat)
         {
@@ -253,6 +278,7 @@ namespace YangVil.Core
             if (house != null) Collect(house);
             Care(cat);
             cat.cleanliness = 100f;
+            AddBond(cat, 1f);
             Commit();
         }
 

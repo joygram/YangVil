@@ -72,7 +72,7 @@
 ## 데이터 추가분
 - OwnedCat: personality·bond·memories·parentUids
 - SaveData: relations(쌍 uid → 호감·불만 원인별)·episodesSeen·expedition(파티·시작 시각)
-- SO: PersonalityData(가중치·바크 표)·EpisodeData(컷·선택지·조건)
+- 성격·바크·상호작용·에피소드 표 = 코드 표 하나(Core/CatLife) → 정의 한 곳
 - 저장 버전 5 → 6, 기존 고양이는 성격 무작위·유대 50·호감 0으로 이행
 
 ## 구현 순서

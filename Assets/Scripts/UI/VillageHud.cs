@@ -35,7 +35,6 @@ namespace YangVil.UI
 
         VillageWorld _world;
         Action _render;
-        OwnedCat _breedFirst;
         ShopTab _shopTab;
 
         protected override void Build()
@@ -84,9 +83,9 @@ namespace YangVil.UI
             {
                 case VillageWorld.Hatchery: Open("부화소", RenderHatchery); break;
                 case VillageWorld.Shop: Open("상점", RenderShop); break;
-                case VillageWorld.BreedTower: _breedFirst = null; Open("짝짓기 탑", RenderBreed); break;
+                case VillageWorld.BreedTower: Open("짝짓기 탑", RenderBreed); break;
                 case VillageWorld.Dex: Open("도감", RenderDex); break;
-                case VillageWorld.Gate: Screens.Show<StageSelectScreen>(); break;
+                case VillageWorld.Gate: Open("모험 게이트", RenderGate); break;
             }
         }
 
@@ -214,8 +213,13 @@ namespace YangVil.UI
                     $"{Genetics.Describe(cat.genes)}\n" +
                     $"HP {s.hp} 공격 {s.atk} 방어 {s.def} 속도 {s.spd}\n" +
                     $"EXP {cat.exp}/{Game.ExpToNext(cat)} · {(home != null ? Game.HouseDef(home).displayName : "부화소 대기")}\n" +
-                    $"{CatCare.Label(Game.Mood(cat))} · 배 {cat.fullness:0} · 청결 {cat.cleanliness:0}";
+                    $"{CatCare.Label(Game.Mood(cat))} · 배 {cat.fullness:0} · 청결 {cat.cleanliness:0}\n" +
+                    $"성격 {CatLife.Label(Game.PersonalityOf(cat))} · 유대 {cat.bond:0}{(Game.Away(cat) ? " · 산책 중" : "")}\n" +
+                    Game.RelationSummary(cat);
                 var c = cat;
+                if (cat.memories.Count > 0) Row($"기억: {string.Join(" / ", cat.memories.Take(3).Select(m => m.text))}", null, null);
+                var episode = Game.AvailableEpisode(cat);
+                if (episode != null) Row($"이야기 「{episode.Title}」", "보기", () => Open(episode.Title, () => RenderEpisode(episode, c)));
                 card.feed.OnClick(() => { if (!Game.Feed(c)) toast.Show("츄르가 없어요"); });
                 card.wash.OnClick(() =>
                 {
@@ -334,27 +338,71 @@ namespace YangVil.UI
 
         void RenderBreed()
         {
-            Row(_breedFirst == null
-                    ? $"첫 번째 고양이를 고르세요 ({Game.Config.breedPrice}코인, {Game.Config.breedSeconds / 60}분)"
-                    : $"{Game.Species(_breedFirst).displayName} + 두 번째 고양이를 고르세요", null, null);
-            foreach (var cat in Game.Data.cats)
+            Row($"서로 좋아하는 성묘 둘을 소개해 주세요 (호감 {CatLife.BreedAffinity:0} 이상 · {Game.Config.breedPrice}코인 · {Game.Config.breedSeconds / 60}분)", null, null);
+            var pairs = Game.BreedCandidates().ToList();
+            if (pairs.Count == 0) Row("고양이가 둘 이상 있어야 해요", null, null);
+            foreach (var (a, b, affinity) in pairs)
             {
-                if (cat == _breedFirst) continue;
-                var c = cat;
-                Row($"{Game.DisplayName(cat)} Lv{cat.level} [{Affinity.Label(Game.Species(cat).element)}]\n{Genetics.Describe(cat.genes)}", "선택", () =>
+                var x = a;
+                var y = b;
+                var refusal = Game.BreedRefusal(a, b);
+                Row($"{Game.DisplayName(a)} ♥ {Game.DisplayName(b)}  호감 {affinity:0}\n{refusal ?? CatLife.Bark(Game.PersonalityOf(a), "date", Game.DisplayName(b))}", "소개", () =>
                 {
-                    if (_breedFirst == null)
-                    {
-                        _breedFirst = c;
-                        Refresh();
-                        return;
-                    }
-                    var ok = Game.Breed(_breedFirst, c);
-                    toast.Show(ok ? "바구니가 부화소에 들어갔어요" : Game.FreeHatcherySlots <= 0 ? "부화 슬롯이 꽉 찼어요" : "코인이 부족해요");
-                    _breedFirst = null;
-                    Refresh();
+                    var why = Game.Breed(x, y);
+                    toast.Show(why ?? "데이트 성공! 바구니가 부화소에 들어갔어요");
+                    if (why == null) CelebrateDate(x, y);
                 });
             }
+        }
+
+        void CelebrateDate(OwnedCat a, OwnedCat b)
+        {
+            var wa = _world.WandererOf(a);
+            var wb = _world.WandererOf(b);
+            if (wa != null) wa.Hearts(4);
+            if (wb != null) wb.Hearts(4);
+        }
+
+        void RenderEpisode(Episode episode, OwnedCat cat)
+        {
+            foreach (var line in episode.Lines) Row(Game.EpisodeText(line, cat), null, null);
+            foreach (var choice in episode.Choices)
+            {
+                var ch = choice;
+                Row($"▶ {ch.Label}", "선택", () =>
+                {
+                    var after = Game.ResolveEpisode(episode, cat, ch);
+                    Open(episode.Title, () => Row(after, "닫기", Close));
+                });
+            }
+        }
+
+        void RenderGate()
+        {
+            var stage = Game.BestClearedStage();
+            if (Game.OnExpedition)
+            {
+                var names = string.Join(", ", Game.Data.expedition.cats.Select(Game.Cat).Where(c => c != null).Select(Game.DisplayName));
+                var seconds = Game.ExpeditionSeconds;
+                Row($"산책 중: {names}\n{Ui.Clock(seconds)} 경과 (최대 {CatLife.ExpeditionCapSeconds / 3600}시간 · 전투 {seconds / CatLife.ExpeditionRunSeconds}회)",
+                    "귀가", () =>
+                    {
+                        var r = Game.ReturnExpedition();
+                        Open("산책 결과", () =>
+                        {
+                            Row($"\"{r.Bark}\"", null, null);
+                            Row($"전투 {r.Runs}회 · 코인 +{r.Coins} · 츄르 +{r.Treats} · EXP +{r.Exp}", "닫기", Close);
+                        });
+                    });
+            }
+            else
+            {
+                Row(stage == null
+                        ? "산책 보내기: 스테이지를 하나 클리어하면 열려요"
+                        : $"산책 보내기: 파티가 {stage.displayName}를 알아서 반복해요\n방치해도 최대 {CatLife.ExpeditionCapSeconds / 3600}시간 · 효율 {CatLife.ExpeditionEfficiency * 100:0}% · 배고프면 효율↓",
+                    stage == null ? null : "출발", () => toast.Show(Game.StartExpedition() ?? "파티가 산책을 떠났어요"));
+            }
+            Row("직접 모험: 스테이지를 골라 전투", Game.OnExpedition ? null : "입장", () => Screens.Show<StageSelectScreen>());
         }
 
         void RenderDex()

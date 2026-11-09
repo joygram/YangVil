@@ -153,6 +153,7 @@ namespace YangVil.EditorTools
             Check("아웃라이어 형질 적용", ghost.outlier == Outlier.Ghost && Genetics.OutlierName(ghost.outlier).Length > 0);
             Check("유전자대로 털 칠하기", FindObjectsByType<SpriteActor>(FindObjectsSortMode.None)
                 .Any(a => a.Renderer.sprite != null && string.IsNullOrEmpty(a.Renderer.sprite.texture.name)));
+            CheckCatLife(GameBootstrap.Game, starter);
 
             SceneFlow.Instance.GoBattle(GameBootstrap.Game.Config.stages[0]);
             yield return Step("전투 로드", () => FindAnyObjectByType<BattleWorld>() != null && FindAnyObjectByType<BattleHud>() != null, 30);
@@ -167,6 +168,7 @@ namespace YangVil.EditorTools
             Check("1-1 승리", result.Victory);
             Check("결과 '다음 스테이지' 버튼", result.next.gameObject.activeSelf);
 
+            CheckExpedition(GameBootstrap.Game);
             result.stages.button.onClick.Invoke();
             yield return Step("결과→모험 목록", () => FindAnyObjectByType<StageSelectScreen>() != null && FindAnyObjectByType<VillageWorld>() != null, 30);
 
@@ -174,6 +176,55 @@ namespace YangVil.EditorTools
             yield return Step("마을 복귀", () => FindAnyObjectByType<VillageWorld>() != null && FindAnyObjectByType<VillageHud>() != null, 30);
             yield return new WaitForSecondsRealtime(2f);
             Finish();
+        }
+
+        void CheckCatLife(Game game, OwnedCat starter)
+        {
+            Check("고양이 성격 부여", starter.personality >= 0 && starter.personality < CatLife.PersonalityCount);
+            var bond = starter.bond;
+            Check("쓰담 바크", !string.IsNullOrEmpty(game.Pet(starter)) && starter.bond > bond);
+            var basket = game.Data.baskets[0];
+            basket.hatchAtUnix = Game.Now;
+            var kitten = game.Hatch(basket);
+            Check("두 번째 고양이 부화", kitten != null);
+            var before = game.Affinity(starter, kitten);
+            var first = game.Interact(starter, kitten);
+            Check("고양이끼리 상호작용", first != null && !string.IsNullOrEmpty(first.BarkA) && game.Affinity(starter, kitten) != before);
+            var rel = game.Rel(starter, kitten);
+            rel.affinity = -50f;
+            InteractionResult fight = null;
+            for (var i = 0; i < 40 && fight == null; i++)
+            {
+                rel.grievances[(int)Grievance.Jealousy] = 100f;
+                var r = game.Interact(starter, kitten);
+                if (r.Kind == Interaction.Fight) fight = r;
+            }
+            Check("싸움 원인 표시", fight != null && fight.Cause == Grievance.Jealousy && fight.BarkA == CatLife.CauseBark(Grievance.Jealousy));
+            Check("관계 카드 갈등 원인", game.RelationSummary(starter).Contains(CatLife.Label(Grievance.Jealousy)));
+            Check("아기는 짝짓기 거절", game.BreedRefusal(starter, kitten) != null);
+            starter.level = kitten.level = 20;
+            starter.fullness = kitten.fullness = starter.cleanliness = kitten.cleanliness = 100f;
+            rel.affinity = 80f;
+            Check("호감 높은 성묘 짝짓기 허용", game.BreedRefusal(starter, kitten) == null);
+            starter.bond = 95f;
+            var episode = game.AvailableEpisode(starter);
+            Check("유대 에피소드 열림", episode != null && episode.Choices.Length > 0);
+            if (episode != null)
+            {
+                game.ResolveEpisode(episode, starter, episode.Choices[0]);
+                Check("에피소드 완료 기록", game.AvailableEpisode(starter) != episode);
+            }
+            starter.level = 1;
+            kitten.level = 1;
+        }
+
+        void CheckExpedition(Game game)
+        {
+            Check("산책 보내기 시작", game.StartExpedition() == null && game.OnExpedition);
+            game.Data.expedition.startUnix = Game.Now - 3600;
+            var coins = game.Data.coins;
+            var report = game.ReturnExpedition();
+            Check("방치 모험 보상", report != null && report.Runs == 3600 / CatLife.ExpeditionRunSeconds && game.Data.coins > coins && !game.OnExpedition);
         }
 
         IEnumerator Step(string name, System.Func<bool> done, float timeout)

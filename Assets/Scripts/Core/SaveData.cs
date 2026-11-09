@@ -16,6 +16,38 @@ namespace YangVil.Core
         public float cleanliness = 100f;
         public long careUnix;
         public Data.CatGenes genes = new Data.CatGenes();
+        public int personality = -1;
+        public float bond = 50f;
+        public long bondUnix;
+        public string parentA = "";
+        public string parentB = "";
+        public List<CatMemory> memories = new List<CatMemory>();
+    }
+
+    [Serializable]
+    public class CatMemory
+    {
+        public string text;
+        public long unix;
+    }
+
+    [Serializable]
+    public class Relation
+    {
+        public string a;
+        public string b;
+        public float affinity;
+        public float[] grievances = new float[4];
+        public int lastCause = -1;
+        public bool madeUp;
+    }
+
+    [Serializable]
+    public class Expedition
+    {
+        public List<string> cats = new List<string>();
+        public string stageId = "";
+        public long startUnix;
     }
 
     [Serializable]
@@ -35,6 +67,9 @@ namespace YangVil.Core
         public long hatchAtUnix;
         public bool hasGenes;
         public Data.CatGenes genes = new Data.CatGenes();
+        public string parentA = "";
+        public string parentB = "";
+        public int personality = -1;
     }
 
     [Serializable]
@@ -54,7 +89,7 @@ namespace YangVil.Core
     [Serializable]
     public class SaveData
     {
-        public const int CurrentVersion = 5;
+        public const int CurrentVersion = 6;
 
         public int version = CurrentVersion;
         public int coins = 250;
@@ -64,6 +99,9 @@ namespace YangVil.Core
         public List<StageRecord> stages = new List<StageRecord>();
         public List<ItemStack> items = new List<ItemStack>();
         public List<string> discovered = new List<string>();
+        public List<Relation> relations = new List<Relation>();
+        public List<string> episodesSeen = new List<string>();
+        public Expedition expedition = new Expedition();
         public int nextUid = 1;
     }
 }

@@ -125,7 +125,7 @@ namespace YangVil.World
 
             foreach (var house in _game.Data.houses) BuildHouse(house);
 
-            var waiting = _game.Waiting.ToList();
+            var waiting = _game.Waiting.Where(c => !_game.Away(c)).ToList();
             var area = new Rect(-4.2f, 3.9f, 3.8f, 1.1f);
             foreach (var cat in waiting) SpawnCat(cat, area, _dynamic);
 
@@ -147,7 +147,7 @@ namespace YangVil.World
             WorldKit.Clickable(yard.gameObject, Vector2.one, () => OnHouseTapped(house));
 
             var area = new Rect(-houseSize.x / 2 + 0.4f, -houseSize.y / 2 + 0.3f, houseSize.x - 0.8f, houseSize.y - 1.4f);
-            foreach (var cat in _game.CatsIn(house)) SpawnCat(cat, area, root);
+            foreach (var cat in _game.CatsIn(house).Where(c => !_game.Away(c))) SpawnCat(cat, area, root);
             _houses[house.uid] = (root, yard, coins);
             RefreshCoins(house);
         }
@@ -155,6 +155,7 @@ namespace YangVil.World
         void SpawnCat(OwnedCat cat, Rect area, Transform parent)
         {
             var species = _game.Species(cat);
+            var absent = Core.Game.Now - cat.bondUnix;
             var go = new GameObject(cat.uid);
             go.transform.SetParent(parent, false);
             var actor = go.AddComponent<SpriteActor>();
@@ -167,7 +168,7 @@ namespace YangVil.World
             _wanderers[cat.uid] = (cat, wanderer, species.tint, bubble);
             var c = cat;
             var drag = go.AddComponent<CatDrag>();
-            WorldKit.Clickable(go, new Vector2(1f, 1f), () => { if (!drag.TakeLongPress()) wanderer.Pet(); })
+            WorldKit.Clickable(go, new Vector2(1f, 1f), () => { if (!drag.TakeLongPress()) PetCat(c, wanderer); })
                 .transform.GetComponent<BoxCollider2D>().offset = new Vector2(0, 0.5f);
             drag.cam = cam;
             drag.LongPressed = () => CatTapped?.Invoke(c);
@@ -175,6 +176,88 @@ namespace YangVil.World
             drag.Hovered = p => HoverDrop(c, p);
             drag.Dropped = p => DropCat(c, p);
             StartCoroutine(_scope.LoadCatFrames(species.sprites, cat.genes, actor.SetFrames));
+            if (absent >= CatLife.WelcomeAfterSeconds)
+                wanderer.TryAmbientBark(CatLife.Bark(_game.PersonalityOf(cat), "welcome"));
+        }
+
+        public void PetCat(OwnedCat cat, CatWanderer wanderer)
+        {
+            if (wanderer.Busy) return;
+            wanderer.Pet();
+            wanderer.Say(_game.Pet(cat), 2f);
+        }
+
+        public const float InteractionInterval = 5f;
+        float _nextInteraction;
+
+        void TickInteractions()
+        {
+            if (Time.time < _nextInteraction) return;
+            _nextInteraction = Time.time + InteractionInterval;
+            var pairs = _wanderers.Values
+                .Where(w => w.wanderer != null && !w.wanderer.Busy && w.wanderer.GetComponent<SpriteActor>().Ready && !string.IsNullOrEmpty(w.cat.houseUid))
+                .GroupBy(w => w.cat.houseUid)
+                .Where(g => g.Count() >= 2)
+                .ToList();
+            if (pairs.Count == 0) return;
+            var group = pairs[UnityEngine.Random.Range(0, pairs.Count)].OrderBy(_ => UnityEngine.Random.value).Take(2).ToList();
+            Interact(group[0].cat, group[1].cat);
+        }
+
+        public InteractionResult Interact(OwnedCat a, OwnedCat b)
+        {
+            if (!_wanderers.TryGetValue(a.uid, out var wa) || !_wanderers.TryGetValue(b.uid, out var wb)) return null;
+            var result = _game.Interact(a, b);
+            wa.wanderer.StartCoroutine(PlayInteraction(wa.wanderer, wb.wanderer, result));
+            return result;
+        }
+
+        System.Collections.IEnumerator PlayInteraction(CatWanderer a, CatWanderer b, InteractionResult r)
+        {
+            var side = a.Spot.x <= b.Spot.x ? -0.55f : 0.55f;
+            var meet = b.Spot + new Vector2(side, 0f);
+            if (r.Kind == Interaction.Reject || r.Kind == Interaction.Hiss) meet = b.Spot + new Vector2(side * 1.8f, 0f);
+            yield return a.WalkTo(meet);
+            if (a == null || b == null) yield break;
+            a.Face(b.Spot);
+            b.Face(a.Spot);
+            a.Say(r.BarkA);
+            switch (r.Kind)
+            {
+                case Interaction.Groom:
+                case Interaction.MakeUp:
+                    a.Hearts(2);
+                    b.Hearts(2);
+                    yield return a.Hop(0.08f, 1.2f, 4);
+                    break;
+                case Interaction.Nap:
+                    b.Say("Zzz…");
+                    yield return new WaitForSeconds(2.5f);
+                    break;
+                case Interaction.Chase:
+                    StartCoroutine(b.Hop(0.2f, 0.6f, 2));
+                    yield return b.WalkTo(b.Spot + new Vector2(-side * 1.6f, 0.3f));
+                    yield return a.WalkTo(b.Spot + new Vector2(side, 0f));
+                    break;
+                case Interaction.Reject:
+                    yield return new WaitForSeconds(0.8f);
+                    b.Say(r.BarkB);
+                    yield return b.WalkTo(b.Spot + new Vector2(-side * 1.5f, 0f));
+                    break;
+                case Interaction.Hiss:
+                    b.Say("하악!");
+                    yield return b.Hop(0.12f, 0.5f, 3);
+                    break;
+                case Interaction.Fight:
+                    b.Say(r.BarkB);
+                    yield return a.WalkTo(b.Spot + new Vector2(side * 0.3f, 0f));
+                    StartCoroutine(b.Scuffle(1.6f));
+                    yield return a.Scuffle(1.6f);
+                    break;
+            }
+            yield return new WaitForSeconds(0.6f);
+            if (a != null) a.Release();
+            if (b != null) b.Release(2.5f);
         }
 
         void HoverDrop(OwnedCat cat, Vector2 worldPoint)
@@ -253,9 +336,13 @@ namespace YangVil.World
             v.coins.text = n > 0 ? $"● {n}" : "";
         }
 
+        public CatWanderer WandererOf(OwnedCat cat) => _wanderers.TryGetValue(cat.uid, out var w) ? w.wanderer : null;
+
         void Update()
         {
-            if (_game == null || Time.time < _nextCoinRefresh) return;
+            if (_game == null) return;
+            TickInteractions();
+            if (Time.time < _nextCoinRefresh) return;
             _nextCoinRefresh = Time.time + 1f;
             foreach (var house in _game.Data.houses) RefreshCoins(house);
             if (Time.time < _nextMoodRefresh) return;

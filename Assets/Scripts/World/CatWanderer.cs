@@ -36,7 +36,7 @@ namespace YangVil.World
             _bubble = bubble;
             var dirty = mood == CatMood.Dirty || mood == CatMood.Weak;
             _actor.SetTint(dirty ? Color.Lerp(baseTint, new Color(0.45f, 0.4f, 0.35f), 0.45f) : baseTint);
-            if (_bubble != null)
+            if (_bubble != null && _sayUntil <= 0)
             {
                 _bubble.text = mood == CatMood.Normal ? "" : CatCare.Label(mood);
                 _bubble.color = mood == CatMood.Happy ? new Color(1f, 0.85f, 0.3f) : new Color(0.85f, 0.85f, 0.9f);
@@ -60,11 +60,106 @@ namespace YangVil.World
 
         Vector2 RandomPoint() => new Vector2(Random.Range(_area.xMin, _area.xMax), Random.Range(_area.yMin, _area.yMax));
 
+        public const float BarkCooldown = 20f;
+
+        bool _busy;
+        float _sayUntil;
+        float _nextAmbientBark;
+
+        public bool Busy => _busy || _petting;
+        public Vector2 Spot => transform.localPosition;
+        public Rect Area => _area;
+
+        public void Say(string text, float seconds = 2.5f)
+        {
+            if (_bubble == null || string.IsNullOrEmpty(text)) return;
+            _bubble.text = text;
+            _bubble.color = Color.white;
+            _sayUntil = Time.time + seconds;
+        }
+
+        public bool TryAmbientBark(string text)
+        {
+            if (Time.time < _nextAmbientBark || Busy) return false;
+            _nextAmbientBark = Time.time + BarkCooldown;
+            Say(text);
+            return true;
+        }
+
+        void RestoreBubble()
+        {
+            if (_sayUntil <= 0 || Time.time < _sayUntil) return;
+            _sayUntil = 0;
+            if (_bubble == null) return;
+            _bubble.text = _mood == CatMood.Normal ? "" : CatCare.Label(_mood);
+            _bubble.color = _mood == CatMood.Happy ? new Color(1f, 0.85f, 0.3f) : new Color(0.85f, 0.85f, 0.9f);
+        }
+
+        public System.Collections.IEnumerator WalkTo(Vector2 point)
+        {
+            _busy = true;
+            _walking = false;
+            point = new Vector2(Mathf.Clamp(point.x, _area.xMin, _area.xMax), Mathf.Clamp(point.y, _area.yMin, _area.yMax));
+            _actor.Face(point.x > transform.localPosition.x);
+            _actor.Play(ActorPose.Walk);
+            while (((Vector2)transform.localPosition - point).sqrMagnitude > 0.0004f)
+            {
+                var pos = Vector2.MoveTowards(transform.localPosition, point, Speed * 1.5f * Time.deltaTime);
+                Place(pos);
+                yield return null;
+            }
+            _actor.Play(ActorPose.Idle);
+        }
+
+        public void Face(Vector2 point) => _actor.Face(point.x > transform.localPosition.x);
+
+        public void Release(float idle = 1.5f)
+        {
+            _busy = false;
+            _actor.Renderer.transform.localPosition = Vector3.zero;
+            _waitUntil = Time.time + idle;
+        }
+
+        public System.Collections.IEnumerator Hop(float height, float seconds, int hops)
+        {
+            var sprite = _actor.Renderer.transform;
+            for (var k = 0f; k < 1f; k += Time.deltaTime / seconds)
+            {
+                sprite.localPosition = new Vector3(0, Mathf.Abs(Mathf.Sin(k * Mathf.PI * hops)) * height, 0);
+                yield return null;
+            }
+            sprite.localPosition = Vector3.zero;
+        }
+
+        public System.Collections.IEnumerator Scuffle(float seconds)
+        {
+            var sprite = _actor.Renderer.transform;
+            for (var k = 0f; k < 1f; k += Time.deltaTime / seconds)
+            {
+                sprite.localPosition = new Vector3(Mathf.Sin(k * 60f) * 0.12f, Mathf.Abs(Mathf.Sin(k * 23f)) * 0.15f, 0);
+                if (Random.value < 0.08f) StartCoroutine(Puff());
+                yield return null;
+            }
+            sprite.localPosition = Vector3.zero;
+        }
+
+        public void Hearts(int n)
+        {
+            for (var i = 0; i < n; i++) StartCoroutine(Heart(i * 0.15f));
+        }
+
+        void Place(Vector2 pos)
+        {
+            transform.localPosition = new Vector3(pos.x, pos.y, pos.y * 0.01f);
+            _actor.Renderer.sortingOrder = 100 - Mathf.RoundToInt(pos.y * 10);
+        }
+
         void Update()
         {
             if (_actor == null || !_actor.Ready) return;
             Express();
-            if (_petting) return;
+            RestoreBubble();
+            if (_petting || _busy) return;
             if (!_walking)
             {
                 if (Time.time < _waitUntil) return;
@@ -76,8 +171,7 @@ namespace YangVil.World
             }
 
             var pos = Vector2.MoveTowards(transform.localPosition, _target, Speed * Time.deltaTime);
-            transform.localPosition = new Vector3(pos.x, pos.y, pos.y * 0.01f);
-            _actor.Renderer.sortingOrder = 100 - Mathf.RoundToInt(pos.y * 10);
+            Place(pos);
             if ((pos - _target).sqrMagnitude > 0.0004f) return;
             _walking = false;
             _actor.Play(ActorPose.Idle);
@@ -116,7 +210,7 @@ namespace YangVil.World
 
         public void Pet()
         {
-            if (_petting || _actor == null) return;
+            if (Busy || _actor == null) return;
             StartCoroutine(PetRoutine());
             for (var i = 0; i < 3; i++) StartCoroutine(Heart(i * 0.15f));
         }
@@ -127,7 +221,7 @@ namespace YangVil.World
             _walking = false;
             _actor.Play(ActorPose.Idle);
             var sprite = _actor.Renderer.transform;
-            if (_bubble != null) _bubble.text = "냥♡";
+            Say("냥♡", 1.4f);
             for (var k = 0f; k < 1f; k += Time.deltaTime / 0.6f)
             {
                 sprite.localPosition = new Vector3(0, Mathf.Abs(Mathf.Sin(k * Mathf.PI * 2f)) * 0.18f, 0);
@@ -138,7 +232,6 @@ namespace YangVil.World
             sprite.localScale = Vector3.one;
             _waitUntil = Time.time + 1f;
             yield return new WaitForSeconds(0.8f);
-            if (_bubble != null) _bubble.text = _mood == CatMood.Normal ? "" : CatCare.Label(_mood);
             _petting = false;
         }
 
