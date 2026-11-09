@@ -144,9 +144,9 @@ case "${1:-all}" in
   cloudflare) cloudflare ;;
   register) shift; register "${1:-}" ;;
   install) deps && hub && editor && license && check ;;
-  sync) SYNC_FOLLOW_REMOTE=1 bash "$(dirname "$0")/sync.sh"
-        git -C "$REPO_ROOT" config alias.sync '!SYNC_FOLLOW_REMOTE=1 bash scripts/tools/sync.sh'
-        git -C "$REPO_ROOT" config pull.ff only ;;
+  sync) git -C "$REPO_ROOT" config alias.sync '!SYNC_FOLLOW_REMOTE=1 bash scripts/tools/sync.sh'
+        git -C "$REPO_ROOT" config pull.ff only
+        SYNC_FOLLOW_REMOTE=1 bash "$(dirname "$0")/sync.sh" ;;
   ci) SYNC_FOLLOW_REMOTE=1 bash "$(dirname "$0")/sync.sh"; license && check && cloudflare && register "${2:-}" ;;
   all) SYNC_FOLLOW_REMOTE=1 bash "$(dirname "$0")/sync.sh"; deps && hub && editor && license && check && cloudflare && register "${2:-}" ;;
   *) echo "사용법: bash $0 [install|license|check|cloudflare|register [토큰]|ci|all]"; exit 1 ;;
