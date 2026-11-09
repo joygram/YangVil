@@ -28,6 +28,13 @@ namespace YangVil.Data
 
         public static int GrowthStage(int level) => level >= AdultLevel ? 2 : level >= TeenLevel ? 1 : 0;
 
+        public static float VisualScaleAt(int level, CatGenes genes = null) => (genes == null ? 1f : genes.size) * (GrowthStage(level) switch
+        {
+            0 => 0.55f,
+            1 => 0.8f,
+            _ => 1.1f
+        });
+
         public static string StageLabel(int level) => GrowthStage(level) switch
         {
             0 => "아기",

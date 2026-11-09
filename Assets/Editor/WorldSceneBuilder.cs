@@ -54,7 +54,7 @@ namespace YangVil.EditorTools
         static void BuildBattle()
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            var cam = WorldCamera(6f, new Color(0.62f, 0.82f, 0.95f), new Vector3(0, 0, -10));
+            var cam = WorldCamera(BattleWorld.ReferenceCameraSize, VillageIllustration.Hex(0xe2e9d5), new Vector3(0, 0, -10));
             var world = new GameObject("BattleWorld").AddComponent<BattleWorld>();
             world.cam = cam;
             world.font = UiPrefabBuilder.Font;

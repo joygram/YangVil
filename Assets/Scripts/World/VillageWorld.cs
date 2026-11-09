@@ -229,20 +229,25 @@ namespace YangVil.World
             var absent = Core.Game.Now - cat.bondUnix;
             var go = new GameObject(cat.uid);
             go.transform.SetParent(parent, false);
-            var actor = go.AddComponent<SpriteActor>();
+            var visual = new GameObject("Visual").transform;
+            visual.SetParent(go.transform, false);
+            var image = new GameObject("Sprite");
+            image.transform.SetParent(visual, false);
+            var actor = image.AddComponent<SpriteActor>();
             actor.Renderer.sortingOrder = 20;
             actor.SetTint(species.tint);
-            actor.SetHeight(catHeight * cat.genes.size * (0.75f + 0.125f * CatData.GrowthStage(cat.level)));
+            actor.SetHeight(catHeight * CatData.VisualScaleAt(cat.level, cat.genes));
             var wanderer = go.AddComponent<CatWanderer>();
             wanderer.Init(actor, area);
-            var bubble = WorldKit.Label(go.transform, font, "", new Vector2(0, 1.35f), 2.4f, Color.white, 600);
+            var bubble = WorldKit.Label(go.transform, font, "", new Vector2(0, actor.height + 0.3f), 2.4f, Color.white, 600);
             bubble.gameObject.AddComponent<SpeechBubble>();
             wanderer.SetMood(_game.Mood(cat), species.tint, bubble);
             _wanderers[cat.uid] = (cat, wanderer, species.tint, bubble);
             var c = cat;
             var drag = go.AddComponent<CatDrag>();
-            WorldKit.Clickable(go, new Vector2(1f, 1f), () => { if (!drag.TakeLongPress()) PetCat(c, wanderer); })
-                .transform.GetComponent<BoxCollider2D>().offset = new Vector2(0, 0.5f);
+            var hitHeight = Mathf.Max(0.8f, actor.height);
+            WorldKit.Clickable(go, new Vector2(1f, hitHeight), () => { if (!drag.TakeLongPress()) PetCat(c, wanderer); })
+                .transform.GetComponent<BoxCollider2D>().offset = new Vector2(0, hitHeight / 2);
             drag.cam = cam;
             drag.LongPressed = () => CatTapped?.Invoke(c);
             drag.Began = () => Highlight(c);
@@ -268,7 +273,7 @@ namespace YangVil.World
             if (Time.time < _nextInteraction) return;
             _nextInteraction = Time.time + InteractionInterval;
             var pairs = _wanderers.Values
-                .Where(w => w.wanderer != null && !w.wanderer.Busy && w.wanderer.GetComponent<SpriteActor>().Ready && !string.IsNullOrEmpty(w.cat.houseUid))
+                .Where(w => w.wanderer != null && !w.wanderer.Busy && w.wanderer.ActorReady && !string.IsNullOrEmpty(w.cat.houseUid))
                 .GroupBy(w => w.cat.houseUid)
                 .Where(g => g.Count() >= 2)
                 .ToList();

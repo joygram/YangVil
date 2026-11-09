@@ -39,7 +39,7 @@ namespace YangVil.UI
             while (_world.State == null) yield return null;
             OnWave(_world.State.Wave + 1, _world.State.WaveCount);
             _world.WaveStarted += OnWave;
-            status.text = "";
+            status.text = "숲길 모험을 시작해요";
             cutIn.SetActive(false);
             speed.OnClick(_world.ToggleSpeed);
             autoSkill.OnClick(_world.ToggleAutoSkill);
@@ -48,6 +48,8 @@ namespace YangVil.UI
             foreach (var ally in _world.State.Allies)
             {
                 var p = Instantiate(portraitPrefab, portraitRow);
+                var portrait = p.GetComponentInChildren<UnitSprite>();
+                BindUnit(portrait, ally.Sprites, ally.Tint, ally.Genes);
                 var unit = ally;
                 p.OnClick(() => _world.QueueSkill(unit));
                 _portraits[ally] = p;
@@ -105,8 +107,10 @@ namespace YangVil.UI
                 var ready = u.Alive && u.GaugeFull;
                 p.Interactable = ready && !state.AutoSkill;
                 p.Highlight(ready);
+                p.background.color = ready ? VillageIllustration.Sage : Color.white;
+                p.label.color = ready ? VillageIllustration.Cream : VillageIllustration.Ink;
                 var tag = !u.Alive ? "쓰러짐" : state.IsSkillQueued(u) ? "예약됨" : ready ? "필살 준비!" : $"게이지 {u.Gauge}/{BattleUnit.GaugeMax}";
-                p.Text = $"{u.Name}\n{tag}";
+                p.Text = $"{u.Name} · {CatData.StageLabel(u.Level)}\n{tag}";
             }
             autoSkill.Text = state.AutoSkill ? "자동필살 ON" : "자동필살 OFF";
             autoSkill.Highlight(state.AutoSkill);

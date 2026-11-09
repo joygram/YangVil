@@ -8,6 +8,7 @@ namespace YangVil.Battle
         public const int GaugeMax = 3;
 
         public string Name;
+        public int Level;
         public Element Element;
         public bool IsAlly;
         public int MaxHp;
@@ -35,6 +36,7 @@ namespace YangVil.Battle
             return new BattleUnit
             {
                 Genes = genes,
+                Level = level,
                 Name = name ?? species.displayName,
                 Element = species.element,
                 IsAlly = true,
@@ -43,7 +45,7 @@ namespace YangVil.Battle
                 SkillName = species.skillName,
                 Sprites = species.sprites,
                 Tint = species.tint,
-                Scale = (genes?.size ?? 1f) * (0.75f + 0.125f * CatData.GrowthStage(level))
+                Scale = CatData.VisualScaleAt(level, genes)
             };
         }
 
@@ -53,6 +55,7 @@ namespace YangVil.Battle
             return new BattleUnit
             {
                 Name = v.DisplayName,
+                Level = level,
                 Element = v.element,
                 IsAlly = false,
                 MaxHp = s.hp, Hp = s.hp, Atk = s.atk, Def = s.def, Spd = s.spd,

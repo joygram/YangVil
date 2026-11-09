@@ -27,6 +27,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - CuteKitty
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 255209456611a6040b3a6f58612b81e9
+    m_Address: Assets/Art/Enemies/ForestCritters/rat_sheet.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ForestCritters
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 28e3fae11f865d440b3b06440575626e
     m_Address: Assets/Art/ThirdParty/CuteKitty/kitty_attack_06.png
     m_ReadOnly: 0
@@ -116,6 +122,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - CuteKitty
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb9439d8bc9b78344b95df7ac70b4262
+    m_Address: Assets/Art/Enemies/ForestCritters/crow_sheet.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ForestCritters
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 979bbe879c9c76d4799e301dbda9d457, type: 2}

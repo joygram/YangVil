@@ -16,7 +16,7 @@ namespace YangVil.EditorTools
         public const string LayoutPath = "Assets/Data/VillageLayout.asset";
         const string SceneryPath = "Assets/Prefabs/World/VillageScenery.prefab";
         const string Screens = "Assets/Prefabs/UI/Screens/";
-        static Sprite Sprite(VillageMotif motif) => AssetDatabase.LoadAssetAtPath<Sprite>($"{ArtFolder}/{motif.ToString().ToLowerInvariant()}.png");
+        public static Sprite Sprite(VillageMotif motif) => AssetDatabase.LoadAssetAtPath<Sprite>($"{ArtFolder}/{motif.ToString().ToLowerInvariant()}.png");
 
         public static VillageLayout EnsureLayout()
         {
@@ -119,7 +119,7 @@ namespace YangVil.EditorTools
             image.pixelsPerUnitMultiplier = 1; image.color = color;
         }
 
-        static void ButtonStyle(LabeledButton b, bool accent = false)
+        public static void ButtonStyle(LabeledButton b, bool accent = false)
         {
             Skin(b.background, accent ? VillageIllustration.Sage : Color.white);
             b.normalSprite = Sprite(VillageMotif.Panel); b.highlightSprite = b.normalSprite;

@@ -147,7 +147,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.62, g: 0.82, b: 0.95, a: 1}
+  m_BackGroundColor: {r: 0.8862745, g: 0.9137255, b: 0.8352941, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -172,7 +172,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 7.5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -250,16 +250,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YangVil.World.BattleWorld
   cam: {fileID: 1256134563}
   font: {fileID: 11400000, guid: c16dd51d71ed07940859b93aa621f61b, type: 2}
-  unitHeight: 1.7
+  unitHeight: 1.55
   allySlots:
-  - {x: -1.9, y: 0.6}
-  - {x: -2.5, y: -1.2}
-  - {x: -1.9, y: -3}
+  - {x: -2.2, y: 1.2}
+  - {x: -2.65, y: -1.2}
+  - {x: -2.1, y: -3.6}
   enemySlots:
-  - {x: 1.9, y: 0.6}
-  - {x: 2.5, y: -1.2}
-  - {x: 1.9, y: -3}
-  - {x: 1.2, y: -2.1}
+  - {x: 2.2, y: 1.2}
+  - {x: 2.65, y: -1.2}
+  - {x: 2.1, y: -3.6}
+  - {x: 1, y: -2.5}
 --- !u!4 &1336293475
 Transform:
   m_ObjectHideFlags: 0

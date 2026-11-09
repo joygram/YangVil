@@ -26,7 +26,7 @@ namespace YangVil.EditorTools
             importer.crunchedCompression = large;
             importer.compressionQuality = 75;
 
-            importer.isReadable = !large && (assetPath.StartsWith("Assets/Art/ThirdParty/CuteKitty/") || assetPath.StartsWith("Assets/Art/Cats/"));
+            importer.isReadable = !large && (assetPath.StartsWith("Assets/Art/ThirdParty/CuteKitty/") || assetPath.StartsWith("Assets/Art/Cats/") || assetPath.StartsWith("Assets/Art/Enemies/ForestCritters/"));
 
             if (assetPath.StartsWith(VillageVisualBuilder.ArtFolder + "/"))
             {

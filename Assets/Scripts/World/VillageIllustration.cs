@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace YangVil.World
 {
-    public enum VillageMotif { Panel, Disc, Tree, Bush, Flowers, Pond, Basket, Shop, Tower, Gate, Book, House, Bowl, Yarn, Paw, Lock, Flag }
+    public enum VillageMotif { Panel, Disc, Tree, Bush, Flowers, Pond, Basket, Shop, Tower, Gate, Book, House, Bowl, Yarn, Paw, Lock, Flag, Mouse, Crow }
 
     // Native shape art shared by world scenery and the UI asset baker.
     public static class VillageIllustration
@@ -106,6 +106,31 @@ namespace YangVil.World
             {
                 p.Box(29, 12, 5, 77, wood); p.Poly(Peach, 34, 88, 87, 82, 73, 65, 84, 50, 34, 56);
                 p.Oval(31, 89, 5, 5, Hex(0xe8bd74));
+            }
+            else if (motif == VillageMotif.Mouse)
+            {
+                var fur = Hex(0xbcb4aa);
+                p.Line(new Vector2(25, 34), new Vector2(10, 29), 3, Peach);
+                p.Line(new Vector2(10, 29), new Vector2(7, 45), 3, Peach);
+                p.Oval(45, 36, 29, 23, fur); p.Oval(70, 47, 20, 19, fur);
+                p.Oval(60, 69, 12, 14, fur); p.Oval(61, 70, 7, 9, Hex(0xe6b9a8));
+                p.Oval(79, 49, 3, 4, Ink); p.Oval(90, 39, 4, 3, Peach);
+                p.Oval(31, 15, 10, 5, fur); p.Oval(66, 17, 9, 5, fur);
+                p.Line(new Vector2(78, 34), new Vector2(95, 30), 1, Ink);
+                p.Line(new Vector2(78, 37), new Vector2(97, 38), 1, Ink);
+            }
+            else if (motif == VillageMotif.Crow)
+            {
+                var feathers = Hex(0xb7b0c0);
+                p.Line(new Vector2(39, 24), new Vector2(36, 10), 2, wood);
+                p.Line(new Vector2(58, 24), new Vector2(63, 10), 2, wood);
+                p.Line(new Vector2(29, 9), new Vector2(45, 9), 2, wood);
+                p.Line(new Vector2(55, 9), new Vector2(72, 9), 2, wood);
+                p.Poly(feathers, 30, 31, 6, 28, 14, 45, 35, 52);
+                p.Oval(46, 41, 28, 24, feathers); p.Oval(64, 66, 20, 20, feathers);
+                p.Poly(Hex(0x918a9f), 25, 53, 58, 49, 61, 29, 40, 32);
+                p.Poly(Hex(0xe5c684), 78, 69, 98, 60, 77, 55);
+                p.Oval(70, 69, 6, 6, Cream); p.Oval(72, 68, 3, 4, Ink);
             }
             else
             {

@@ -10,6 +10,8 @@ namespace YangVil.World
         public Vector2 idleSeconds = new Vector2(1.2f, 3.5f);
 
         SpriteActor _actor;
+        Transform _visual;
+        public bool ActorReady => _actor != null && _actor.Ready;
         Rect _area;
         Vector2 _target;
         float _waitUntil;
@@ -25,6 +27,7 @@ namespace YangVil.World
         public void Init(SpriteActor actor, Rect area)
         {
             _actor = actor;
+            _visual = actor.transform.parent;
             _area = area;
             _phase = Random.value * 10f;
             transform.localPosition = RandomPoint();
@@ -124,13 +127,13 @@ namespace YangVil.World
         public void Release(float idle = 1.5f)
         {
             _busy = false;
-            _actor.Renderer.transform.localPosition = Vector3.zero;
+            _visual.localPosition = Vector3.zero;
             _waitUntil = Time.time + idle;
         }
 
         public System.Collections.IEnumerator Hop(float height, float seconds, int hops)
         {
-            var sprite = _actor.Renderer.transform;
+            var sprite = _visual;
             for (var k = 0f; k < 1f; k += Time.deltaTime / seconds)
             {
                 sprite.localPosition = new Vector3(0, Mathf.Abs(Mathf.Sin(k * Mathf.PI * hops)) * height, 0);
@@ -141,7 +144,7 @@ namespace YangVil.World
 
         public System.Collections.IEnumerator Scuffle(float seconds)
         {
-            var sprite = _actor.Renderer.transform;
+            var sprite = _visual;
             for (var k = 0f; k < 1f; k += Time.deltaTime / seconds)
             {
                 sprite.localPosition = new Vector3(Mathf.Sin(k * 60f) * 0.12f, Mathf.Abs(Mathf.Sin(k * 23f)) * 0.15f, 0);
@@ -190,7 +193,7 @@ namespace YangVil.World
         void Express()
         {
             var t = Time.time + _phase;
-            var sprite = _actor.Renderer.transform;
+            var sprite = _visual;
             switch (_mood)
             {
                 case CatMood.Hungry:
@@ -228,7 +231,7 @@ namespace YangVil.World
             _petting = true;
             _walking = false;
             _actor.Play(ActorPose.Idle);
-            var sprite = _actor.Renderer.transform;
+            var sprite = _visual;
             Say("냥♡", 1.4f);
             for (var k = 0f; k < 1f; k += Time.deltaTime / 0.6f)
             {

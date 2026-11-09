@@ -112,6 +112,13 @@ namespace YangVil.EditorTools
             yield return Step("부트", () => GameBootstrap.Ready, 15);
             yield return Step("인트로 화면", () => FindAnyObjectByType<IntroScreen>() != null, 15);
             Check("인트로 버전 표시", FindAnyObjectByType<IntroScreen>().versionLabel.text.StartsWith("v"));
+            if (VillageReviewCapture.PresentationEnabled)
+            {
+                yield return Step("인트로 가족 그림 로드", () => FindAnyObjectByType<IntroScreen>().GetComponentsInChildren<UnitSprite>().All(u => u.Image.enabled), 15);
+                yield return new WaitForSecondsRealtime(0.4f);
+                VillageReviewCapture.Save(null, "intro-first");
+                VillageReviewCapture.Save(null, "intro-narrow", 450, 960);
+            }
             GameBootstrap.Game.ResetSave();
 
             SceneFlow.Instance.GoVillage();
@@ -141,7 +148,10 @@ namespace YangVil.EditorTools
             hud.toast.gameObject.SetActive(false);
             VillageReviewCapture.Save(world.cam, "village-first", overview: true);
             VillageReviewCapture.Save(world.cam, "village-narrow", 450, 960, true);
-            var petted = FindObjectsByType<CatWanderer>(FindObjectsSortMode.None).First(w => w.GetComponent<SpriteActor>().Ready);
+            var petted = FindObjectsByType<CatWanderer>(FindObjectsSortMode.None).First(w => w.ActorReady);
+            var petPosition = petted.transform.position;
+            var petSprite = petted.GetComponentInChildren<SpriteActor>();
+            var petHeight = petSprite.Renderer.sprite.bounds.size.y * petSprite.transform.lossyScale.y;
             petted.Pet();
             Check("고양이 쓰담 반응", petted.Petting);
             yield return null;
@@ -151,6 +161,8 @@ namespace YangVil.EditorTools
             var press = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
             UnityEngine.EventSystems.ExecuteEvents.Execute(petted.gameObject, press, UnityEngine.EventSystems.ExecuteEvents.pointerDownHandler);
             yield return new WaitForSecondsRealtime(0.7f);
+            Check("쓰담 후 성장 체격 유지", Mathf.Abs(petSprite.Renderer.sprite.bounds.size.y * petSprite.transform.lossyScale.y - petHeight) < 0.02f);
+            Check("쓰담 후 이동 루트 위치 유지", Vector3.Distance(petted.transform.position, petPosition) < 0.01f);
             UnityEngine.EventSystems.ExecuteEvents.Execute(petted.gameObject, press, UnityEngine.EventSystems.ExecuteEvents.pointerUpHandler);
             Check("길게 누르면 고양이 카드", hud.panel.activeSelf);
             hud.panelClose.button.onClick.Invoke();
@@ -250,7 +262,89 @@ namespace YangVil.EditorTools
                 world.cam.orthographicSize = 5;
                 VillageReviewCapture.Save(world.cam, "village-zoom");
             }
+            if (VillageReviewCapture.PresentationEnabled) yield return CheckPresentation();
             Finish();
+        }
+
+        IEnumerator CheckPresentation()
+        {
+            var game = GameBootstrap.Game;
+            foreach (var cat in game.Data.cats) cat.inParty = false;
+            var species = game.Config.starterCat;
+            var genes = Genetics.FromSpecies(species, new System.Random(17));
+            genes.size = 1;
+            var levels = new[] { 1, CatData.TeenLevel, CatData.AdultLevel };
+            for (var i = 0; i < levels.Length; i++)
+                game.Data.cats.Add(new OwnedCat { uid = $"presentation_{i}", speciesId = species.id, genes = genes.Clone(), level = levels[i],
+                    inParty = true, houseUid = game.Data.houses[0].uid, careUnix = Game.Now, bondUnix = Game.Now, personality = 0 });
+            SceneFlow.Instance.GoBattle(game.Config.stages[2]);
+            yield return Step("혼합 성장 전투 로드", () => FindAnyObjectByType<BattleWorld>() != null && FindAnyObjectByType<BattleWorld>().State != null && FindAnyObjectByType<BattleHud>() != null, 30);
+            var battle = FindAnyObjectByType<BattleWorld>();
+            battle.TogglePause();
+            yield return Step("혼합 성장 그림 로드", () => FindObjectsByType<SpriteActor>(FindObjectsSortMode.None).All(a => a.Ready), 15);
+            yield return new WaitForSecondsRealtime(0.5f);
+            var actors = FindObjectsByType<SpriteActor>(FindObjectsSortMode.None).Where(a => a.transform.parent.localPosition.x < 0).OrderBy(a => a.height).ToArray();
+            Check("아기·청소년·성묘 전투 3마리", actors.Length == 3);
+            if (actors.Length == 3)
+            {
+                var heights = actors.Select(a => a.Renderer.bounds.size.y).ToArray();
+                Check("성묘 실제 표시 높이 아기의 2배", Mathf.Abs(heights[2] / heights[0] - 2) < 0.02f && heights[1] > heights[0] && heights[1] < heights[2]);
+                Check("성장별 HP바가 그림 위에 위치", actors.All(a => a.transform.parent.Find("Bar").position.y > a.transform.position.y + a.VisibleTop));
+                Debug.Log($"PresentationReview: 전투 성장 높이 {heights[0]:0.000}/{heights[1]:0.000}/{heights[2]:0.000}");
+            }
+            Check("전투 초상화 그림 표시", FindAnyObjectByType<BattleHud>().portraitRow.GetComponentsInChildren<UnitSprite>().Count(u => u.Image.enabled) == 3);
+            VillageReviewCapture.Save(battle.cam, "battle-growth");
+            VillageReviewCapture.Save(battle.cam, "battle-growth-narrow", 450, 960);
+            var hud = FindAnyObjectByType<BattleHud>();
+            battle.State.Allies[2].Gauge = Battle.BattleUnit.GaugeMax;
+            battle.ToggleAutoSkill();
+            hud.portraitRow.GetChild(2).GetComponent<LabeledButton>().button.onClick.Invoke();
+            battle.TogglePause();
+            yield return Step("수동 필살 컷인", () => hud != null && hud.cutIn.activeSelf, 20);
+            yield return new WaitForSecondsRealtime(0.22f);
+            VillageReviewCapture.Save(battle.cam, "battle-skill");
+            SceneFlow.Instance.GoVillage();
+            yield return Step("혼합 성장 마을 복귀", () => FindAnyObjectByType<VillageWorld>() != null && FindAnyObjectByType<VillageHud>() != null, 30);
+            yield return new WaitForSecondsRealtime(1);
+            var world = FindAnyObjectByType<VillageWorld>();
+            var villagers = FindObjectsByType<CatWanderer>(FindObjectsSortMode.None).Where(w => w.name.StartsWith("presentation_")).OrderBy(w => w.name).ToArray();
+            for (var i = 0; i < villagers.Length; i++)
+            {
+                villagers[i].enabled = false;
+                villagers[i].StopAllCoroutines();
+                villagers[i].Hush();
+                var visual = villagers[i].GetComponentInChildren<SpriteActor>().transform.parent;
+                visual.localRotation = Quaternion.identity;
+                visual.localScale = Vector3.one;
+                visual.localPosition = Vector3.zero;
+                villagers[i].transform.localPosition = new Vector3(-1.1f + i * 1.1f, -0.6f, 0);
+            }
+            var villageHeights = villagers.Select(v => v.GetComponentInChildren<SpriteActor>().Renderer.bounds.size.y).ToArray();
+            Debug.Log($"PresentationReview: 마을 성장 높이 {string.Join("/", villageHeights.Select(h => h.ToString("0.000")))}");
+            Check("마을도 성장별 실제 높이 유지", villageHeights.Length == 3 && Mathf.Abs(villageHeights[2] / villageHeights[0] - 2) < 0.03f);
+            world.cam.orthographicSize = 5;
+            world.FocusOn(world.layout.HousePosition(0));
+            VillageReviewCapture.Save(world.cam, "village-growth");
+            var boss = game.Config.stages.Last();
+            SceneFlow.Instance.GoBattle(boss);
+            yield return Step("보스 전투 화면", () => FindAnyObjectByType<BattleWorld>() != null && FindAnyObjectByType<BattleWorld>().Stage == boss && FindAnyObjectByType<BattleHud>() != null, 30);
+            battle = FindAnyObjectByType<BattleWorld>();
+            battle.TogglePause();
+            yield return Step("보스 전투 그림 로드", () => FindObjectsByType<SpriteActor>(FindObjectsSortMode.None).All(a => a.Ready), 15);
+            yield return new WaitForSecondsRealtime(0.4f);
+            battle.ToggleSpeed();
+            battle.TogglePause();
+            yield return Step("3대3 진형 등장", () => battle.State.Wave == 1 && FindObjectsByType<SpriteActor>(FindObjectsSortMode.None).Count(a => a.Ready && a.transform.parent.localPosition.x > 0 && a.transform.parent.localPosition.x < 3) == 3, 90);
+            battle.TogglePause();
+            VillageReviewCapture.Save(battle.cam, "battle-party");
+            battle.TogglePause();
+            yield return Step("실제 보스 등장", () => FindObjectsByType<SpriteActor>(FindObjectsSortMode.None).Any(a => a.Ready && battle.State.Enemies.Any(e => e.Variant.isBoss && a.transform.parent.name == e.Name)), 90);
+            yield return Step("보스 입장 완료", () => FindObjectsByType<SpriteActor>(FindObjectsSortMode.None).Any(a => a.Ready && a.transform.parent.localPosition.x <= battle.enemySlots[0].x + 0.02f && battle.State.Enemies.Any(e => e.Variant.isBoss && a.transform.parent.name == e.Name)), 15);
+            battle.TogglePause();
+            Check("보스 고유 이름 표시", battle.State.Enemies.Any(e => e.Variant.isBoss && e.Name == GameDataBuilder.RatKingName));
+            VillageReviewCapture.Save(battle.cam, "battle-boss");
+            SceneFlow.Instance.GoVillage();
+            yield return Step("시각 검증 후 마을 복귀", () => FindAnyObjectByType<VillageWorld>() != null && FindAnyObjectByType<VillageHud>() != null, 30);
         }
 
         void CheckCatLife(Game game, OwnedCat starter)

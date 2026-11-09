@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: boss_rat_king
   m_EditorClassIdentifier: Assembly-CSharp::YangVil.Data.EnemyVariant
   id: boss_rat_king
+  displayName: "\uC950 \uB300\uC655"
   enemyBase: {fileID: 11400000, guid: 132876db652d3fe44803fe464a1ca641, type: 2}
   element: 0
   statMultiplier: 2

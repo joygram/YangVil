@@ -232,6 +232,7 @@ namespace YangVil.EditorTools
             UiFactory.Place((RectTransform)s.reset.transform, new Vector2(0.5f, 0.12f), Vector2.zero, new Vector2(320, 90));
             s.versionLabel = ui.Text(root, "v0.1.0", 26, Color.gray);
             UiFactory.Place(s.versionLabel.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, 50), new Vector2(900, 50));
+            PresentationVisualBuilder.StyleIntro(root);
             return root;
         }
 
@@ -351,6 +352,7 @@ namespace YangVil.EditorTools
             s.itemRow = UiFactory.Node("Items", root);
             UiFactory.Place(s.itemRow, new Vector2(0.5f, 0f), new Vector2(0, 100), new Vector2(1040, 120));
             UiFactory.Row(s.itemRow, 16);
+            PresentationVisualBuilder.StyleBattle(root);
             return root;
         }
 

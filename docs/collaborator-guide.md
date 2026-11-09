@@ -41,6 +41,13 @@
 - Assets/Art/UI/Village: 기본 그림 교체, 기존 PNG는 빌더가 보존
 - VillageVisualBuilder.Build: 마을 HUD·스테이지 지도만 갱신, 전체 BuildContent 대신 대상 빌더 사용
 
+## 인트로·전투 편집
+
+- PresentationVisualBuilder.Build: 인트로·전투 HUD·전투 배치 대상 갱신
+- BattlePortraitButton·BattleItemButton 프리팹: 스킬 카드·소모품 공통 모양
+- CatData.VisualScaleAt: 성장 체격 정본, 마을·전투 공통 적용
+- EnemySilhouetteArt: 기본 들쥐·까마귀 시트 생성, 기존 PNG·사용자 연결 그림 보존
+
 ## 스프라이트 9-slice
 - UI 이미지: Texture Type = Sprite (2D and UI), Filter = Point(픽셀아트)
 - Sprite Editor → Border 지정 (Kenney 기본 16px, 자동 적용됨)

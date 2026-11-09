@@ -22,6 +22,21 @@ namespace YangVil.World
 
         public SpriteRenderer Renderer => _renderer != null ? _renderer : _renderer = GetComponent<SpriteRenderer>();
         public bool Ready => _frames != null;
+        public float VisibleTop
+        {
+            get
+            {
+                var sprite = Renderer.sprite;
+                if (sprite == null || !sprite.texture.isReadable) return height;
+                var pixels = sprite.texture.GetPixels32();
+                var rect = sprite.rect;
+                for (var y = (int)rect.yMax - 1; y >= (int)rect.yMin; y--)
+                    for (var x = (int)rect.xMin; x < (int)rect.xMax; x++)
+                        if (pixels[y * sprite.texture.width + x].a > 10)
+                            return (y - rect.yMin + 1 - sprite.pivot.y) / sprite.pixelsPerUnit * transform.localScale.y;
+                return height;
+            }
+        }
 
         public void SetFrames(FrameSet frames)
         {
@@ -41,7 +56,13 @@ namespace YangVil.World
         public void SetHeight(float worldHeight)
         {
             height = worldHeight;
-            transform.localScale = Vector3.one * worldHeight;
+            ApplyHeight();
+        }
+
+        void ApplyHeight()
+        {
+            var sprite = Renderer.sprite;
+            transform.localScale = Vector3.one * (sprite == null ? height : height / Mathf.Max(0.001f, sprite.bounds.size.y));
         }
 
         public void Play(ActorPose pose, Action onceDone = null)
@@ -57,7 +78,7 @@ namespace YangVil.World
                 ActorPose.Hurt => _frames.HurtOrIdle,
                 _ => _frames.Idle
             };
-            if (_current.Length > 0) Renderer.sprite = _current[0];
+            if (_current.Length > 0) { Renderer.sprite = _current[0]; ApplyHeight(); }
         }
 
         void Update()
@@ -74,6 +95,7 @@ namespace YangVil.World
                 return;
             }
             Renderer.sprite = _current[frame % _current.Length];
+            ApplyHeight();
         }
 
         public IEnumerator Flash(Color color, float seconds)

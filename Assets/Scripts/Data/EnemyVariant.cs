@@ -8,6 +8,7 @@ namespace YangVil.Data
     public class EnemyVariant : ScriptableObject
     {
         public string id;
+        public string displayName;
         public EnemyBase enemyBase;
         public Element element;
         public float statMultiplier = 1f;
@@ -17,7 +18,7 @@ namespace YangVil.Data
         public int patternEvery = 3;
         public EnemyVariant summon;
 
-        public string DisplayName => $"{Affinity.Label(element)} {enemyBase.displayName}";
+        public string DisplayName => string.IsNullOrEmpty(displayName) ? $"{Affinity.Label(element)} {enemyBase.displayName}" : displayName;
 
         public Color Tint => enemyBase.baseTint * Affinity.Tint(element);
 

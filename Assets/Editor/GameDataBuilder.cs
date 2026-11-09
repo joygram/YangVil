@@ -11,6 +11,8 @@ namespace YangVil.EditorTools
     public static class GameDataBuilder
     {
         const string DataRoot = "Assets/Data";
+        public const string RatKingId = "boss_rat_king";
+        public const string RatKingName = "쥐 대왕";
         const string ConfigPath = "Assets/Resources/GameConfig.asset";
         const string Kitty = "Assets/Art/ThirdParty/CuteKitty";
         const string Dog = "Assets/Art/ThirdParty/Dog/dog_brown_sheet.png";
@@ -48,6 +50,7 @@ namespace YangVil.EditorTools
             foreach (var id in new[] { "hatchery", "shop", "breed", "dex", "gate" })
                 if (config.presentation.buildings.All(b => b.buildingId != id)) config.presentation.buildings.Add(new BuildingArt { buildingId = id });
             EditorUtility.SetDirty(config);
+            EnemySilhouetteArt.Bake();
             AssetDatabase.SaveAssets();
             Debug.Log($"GameDataBuilder: 고양이 {cats.Count}, 적 {variants.Count}, 스테이지 {stages.Count}, 아이템 {items.Count}, 집 {houses.Count}");
         }
@@ -196,11 +199,19 @@ namespace YangVil.EditorTools
             Add(Variant("crow_moon", crow, Element.Moon));
             Add(Variant("dog_leaf", dog, Element.Leaf));
             Add(Variant("dog_fire", dog, Element.Fire));
-            Add(Variant("boss_rat_king", rat, Element.Fire, 2f, 2.1f, BossPattern.Summon, v["rat_fire"]));
+            Add(Variant(RatKingId, rat, Element.Fire, 2f, 2.1f, BossPattern.Summon, v["rat_fire"]));
             Add(Variant("boss_crow_witch", crow, Element.Moon, 2f, 1.8f, BossPattern.DrainGauge));
             Add(Variant("boss_dog_chief", dog, Element.Fire, 2f, 1.5f, BossPattern.Rage));
             Add(Variant("boss_robot", robot, Element.Water, 2f, 1.5f, BossPattern.ChargeBlast));
             return v;
+        }
+
+        public static void ApplyBossPresentation()
+        {
+            var boss = AssetDatabase.LoadAssetAtPath<EnemyVariant>($"{DataRoot}/Enemies/{RatKingId}.asset");
+            if (boss == null || !string.IsNullOrEmpty(boss.displayName)) return;
+            boss.displayName = RatKingName;
+            EditorUtility.SetDirty(boss);
         }
 
         static List<ItemData> BuildItems()
@@ -254,9 +265,9 @@ namespace YangVil.EditorTools
                 {
                     new[] { "crow_moon", "rat_leaf" }, new[] { "dog_fire", "rat_leaf" }, new[] { "dog_fire", "crow_moon", "rat_leaf" }
                 }, 5, 50, "cat_leaf"),
-                ("stage_1_6", "1-6 보스: 쥐 대왕", new[]
+                ("stage_1_6", $"1-6 보스: {RatKingName}", new[]
                 {
-                    new[] { "rat_fire", "rat_fire" }, new[] { "rat_fire", "rat_water", "rat_leaf" }, new[] { "boss_rat_king" }
+                    new[] { "rat_fire", "rat_fire" }, new[] { "rat_fire", "rat_water", "rat_leaf" }, new[] { RatKingId }
                 }, 6, 120, "cat_fire")
             };
             var list = new List<StageData>();

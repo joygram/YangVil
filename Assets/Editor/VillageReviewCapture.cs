@@ -9,10 +9,18 @@ namespace YangVil.EditorTools
 {
     public static class VillageReviewCapture
     {
-        public static bool Enabled => System.Environment.GetCommandLineArgs().Contains("-villageReview");
+        public static bool PresentationEnabled => System.Environment.GetCommandLineArgs().Contains("-presentationReview");
+        public static bool Enabled => PresentationEnabled || System.Environment.GetCommandLineArgs().Contains("-villageReview");
         public static void Save(Camera camera, string name, int width = 540, int height = 960, bool overview = false)
         {
             if (!Enabled) return;
+            var temporaryCamera = camera == null;
+            if (temporaryCamera)
+            {
+                camera = new GameObject("PresentationCaptureCamera").AddComponent<Camera>();
+                camera.orthographic = true; camera.transform.position = new Vector3(0, 0, -10);
+                camera.clearFlags = CameraClearFlags.SolidColor; camera.backgroundColor = World.VillageIllustration.Cream;
+            }
             var canvas = Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None).First(c => c.isRootCanvas);
             var oldMode = canvas.renderMode;
             var oldCamera = canvas.worldCamera;
@@ -34,6 +42,8 @@ namespace YangVil.EditorTools
                 camera.targetTexture = texture; camera.aspect = width / (float)height;
                 var world = Object.FindAnyObjectByType<World.VillageWorld>();
                 if (overview && world != null) camera.orthographicSize = world.layout.OverviewSize(camera.aspect);
+                if (Object.FindAnyObjectByType<World.BattleWorld>() != null)
+                    camera.orthographicSize = Mathf.Max(World.BattleWorld.ReferenceCameraSize, 4.2f / camera.aspect);
                 canvas.renderMode = RenderMode.ScreenSpaceCamera; canvas.worldCamera = camera; canvas.planeDistance = 1;
                 canvas.sortingOrder = 2000;
                 scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
@@ -61,6 +71,7 @@ namespace YangVil.EditorTools
                 canvas.sortingOrder = oldSorting;
                 Object.DestroyImmediate(image); texture.Release(); Object.DestroyImmediate(texture);
                 Canvas.ForceUpdateCanvases();
+                if (temporaryCamera) Object.DestroyImmediate(camera.gameObject);
             }
         }
     }

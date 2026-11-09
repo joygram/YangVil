@@ -57,7 +57,7 @@ namespace YangVil.World
         void Awake()
         {
             _wanderer = GetComponent<CatWanderer>();
-            _actor = GetComponent<SpriteActor>();
+            _actor = GetComponentInChildren<SpriteActor>();
         }
 
         public void OnPointerEnter(PointerEventData e)

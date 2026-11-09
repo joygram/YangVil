@@ -12,11 +12,12 @@ namespace YangVil.World
 {
     public class BattleWorld : MonoBehaviour
     {
+        public const float ReferenceCameraSize = 7.5f;
         public Camera cam;
         public TMP_FontAsset font;
-        public float unitHeight = 1.7f;
-        public Vector2[] allySlots = { new Vector2(-1.9f, 0.6f), new Vector2(-2.5f, -1.2f), new Vector2(-1.9f, -3.0f) };
-        public Vector2[] enemySlots = { new Vector2(1.9f, 0.6f), new Vector2(2.5f, -1.2f), new Vector2(1.9f, -3.0f), new Vector2(1.2f, -2.1f) };
+        public float unitHeight = 1.55f;
+        public Vector2[] allySlots = { new Vector2(-2.2f, 1.2f), new Vector2(-2.65f, -1.2f), new Vector2(-2.1f, -3.6f) };
+        public Vector2[] enemySlots = { new Vector2(2.2f, 1.2f), new Vector2(2.65f, -1.2f), new Vector2(2.1f, -3.6f), new Vector2(1f, -2.5f) };
 
         public event Action<string> Narrated;
         public event Action Updated;
@@ -36,6 +37,8 @@ namespace YangVil.World
             public WorldBar Hp;
             public WorldBar Gauge;
             public GameObject Focus;
+            public TextMeshPro Name;
+            public float Head;
             public Vector3 Home;
         }
 
@@ -57,6 +60,7 @@ namespace YangVil.World
             _art = _game.Config.presentation;
             _feel = _art.feel;
             Stage = SceneFlow.Instance.PendingStage;
+            cam.orthographicSize = Mathf.Max(ReferenceCameraSize, 4.2f / cam.aspect);
             _camHome = cam.transform.position;
 
             var allies = _game.Party.Select(c => BattleUnit.FromCat(_game.Species(c), c.level, c.genes, _game.DisplayName(c))).ToList();
@@ -73,7 +77,7 @@ namespace YangVil.World
             SpawnWave();
 
             var bgm = PresentationSet.IsSet(Stage.bgm) ? Stage.bgm : _art.bgmBattle;
-            AudioHub.Instance?.PlayBgm(bgm);
+            if (AudioHub.Instance != null) AudioHub.Instance.PlayBgm(bgm);
             StartCoroutine(Run());
         }
 
@@ -114,15 +118,35 @@ namespace YangVil.World
 
         void BuildBackground()
         {
-            var sky = WorldKit.Box(transform, "Sky", new Vector2(0, 2.5f), new Vector2(14, 9), new Color(0.62f, 0.82f, 0.95f), -100);
-            WorldKit.Box(transform, "Ground", new Vector2(0, -3.8f), new Vector2(14, 6), new Color(0.55f, 0.72f, 0.42f), -99);
+            var sky = WorldKit.Box(transform, "Sky", Vector2.zero, Vector2.one * 40, VillageIllustration.Hex(0xe2e9d5), -110);
+            var scenery = new GameObject("ForestBattlefield").transform;
+            scenery.SetParent(transform, false);
+            VillageWorld.Picture(scenery, "DistantHill", VillageMotif.Disc, new Vector2(-4, 3), new Vector2(20, 12), -105, VillageIllustration.Hex(0xb7cdad));
+            VillageWorld.Picture(scenery, "DistantHill", VillageMotif.Disc, new Vector2(5, 2), new Vector2(20, 10), -104, VillageIllustration.Hex(0xa5c09a));
+            for (var i = 0; i < 12; i++)
+                VillageWorld.Picture(scenery, "DistantForest", VillageMotif.Tree, new Vector2(-9 + i * 1.6f, 3.4f + Mathf.Sin(i) * 0.3f), Vector2.one * 3, -100, new Color(0.88f, 0.94f, 0.86f));
+            VillageWorld.Picture(scenery, "Meadow", VillageMotif.Disc, new Vector2(0, -6), new Vector2(30, 19), -95, VillageIllustration.Grass);
+            VillageWorld.Picture(scenery, "TrailEdge", VillageMotif.Disc, new Vector2(0, -1.6f), new Vector2(15.5f, 11.2f), -93, VillageIllustration.Hex(0xc3b38c));
+            VillageWorld.Picture(scenery, "ForestTrail", VillageMotif.Disc, new Vector2(0, -1.4f), new Vector2(15.3f, 11), -92, VillageIllustration.Hex(0xe4d1a6));
+            VillageWorld.Picture(scenery, "TrailLight", VillageMotif.Disc, new Vector2(0, -0.9f), new Vector2(12, 8.8f), -91, VillageIllustration.Hex(0xefdfba));
+            for (var i = 0; i < 6; i++)
+                foreach (var side in new[] { -1f, 1f })
+                {
+                    var y = 4 - i * 2.2f;
+                    VillageWorld.Picture(scenery, "ForestFrame", VillageMotif.Tree, new Vector2(side * 5.4f, y), Vector2.one * 3.5f, -70);
+                    VillageWorld.Picture(scenery, "ForestFlowers", VillageMotif.Flowers, new Vector2(side * 4.5f, y - 0.6f), Vector2.one * 1.2f, -69);
+                }
+            for (var i = 0; i < 18; i++)
+                VillageWorld.Picture(scenery, "Pebble", VillageMotif.Disc, new Vector2(Mathf.Sin(i * 5.3f) * 3.6f, -4.8f + Mathf.Repeat(i * 1.13f, 7.8f)),
+                    new Vector2(0.1f, 0.05f), -89, VillageIllustration.Cream);
             var bg = PresentationSet.IsSet(Stage.background) ? Stage.background : _art.battleBackgroundFallback;
             StartCoroutine(_scope.LoadSprite(bg, new Vector2(0.5f, 0.5f), 100, s =>
             {
                 sky.sprite = s;
+                scenery.gameObject.SetActive(false);
                 sky.color = Color.white;
                 var h = cam.orthographicSize * 2;
-                var k = h / s.bounds.size.y;
+                var k = Mathf.Max(h / s.bounds.size.y, h * cam.aspect / s.bounds.size.x);
                 sky.transform.localPosition = Vector3.zero;
                 sky.transform.localScale = new Vector3(k, k, 1);
             }));
@@ -133,21 +157,23 @@ namespace YangVil.World
             var root = new GameObject(u.Name).transform;
             root.SetParent(transform, false);
             root.localPosition = new Vector3(slot.x, slot.y, slot.y * 0.01f);
+            VillageWorld.Picture(root, "FootShadow", VillageMotif.Disc, Vector2.zero, new Vector2(1.2f * u.Scale, 0.3f * u.Scale), 80, new Color(0.36f, 0.3f, 0.21f, 0.18f));
 
             var spriteGo = new GameObject("Sprite");
             spriteGo.transform.SetParent(root, false);
             var sprite = spriteGo.AddComponent<SpriteActor>();
-            sprite.SetTint(u.Tint);
+            sprite.SetTint(u.IsAlly ? u.Tint : Color.Lerp(Color.white, u.Tint, 0.45f));
             sprite.SetHeight(unitHeight * u.Scale);
             sprite.Face(u.IsAlly);
             sprite.Renderer.sortingOrder = 100 - Mathf.RoundToInt(slot.y * 10);
-            StartCoroutine(_scope.LoadCatFrames(u.Sprites, u.Genes, sprite.SetFrames));
 
             var top = unitHeight * u.Scale + 0.25f;
-            var hp = WorldBar.Create(root, new Vector2(0, top), new Vector2(1.2f, 0.14f), u.IsAlly ? new Color(0.35f, 0.9f, 0.35f) : new Color(0.95f, 0.35f, 0.3f), 200);
+            var hp = WorldBar.Create(root, new Vector2(0, top), new Vector2(1.3f, 0.12f), u.IsAlly ? VillageIllustration.Sage : VillageIllustration.Peach, 200);
             WorldBar gauge = null;
             if (u.IsAlly) gauge = WorldBar.Create(root, new Vector2(0, top - 0.2f), new Vector2(1.2f, 0.08f), new Color(1f, 0.85f, 0.2f), 200);
-            WorldKit.Label(root, font, u.Name, new Vector2(0, top + 0.3f), 2.6f, Color.white, 210);
+            var caption = u.IsAlly ? $"{u.Name} · {CatData.StageLabel(u.Level)}" : u.Variant.isBoss ? $"보스 · {u.Name}" : u.Name;
+            var name = WorldKit.Label(root, font, caption, new Vector2(0, top + 0.3f), 2.3f, VillageIllustration.Ink, 210);
+            name.outlineWidth = 0;
             var focus = WorldKit.Label(root, font, "▼", new Vector2(0, top + 0.75f), 5f, Color.red, 210).gameObject;
             focus.SetActive(false);
 
@@ -158,14 +184,30 @@ namespace YangVil.World
                 c.GetComponent<BoxCollider2D>().offset = new Vector2(0, unitHeight * u.Scale / 2);
             }
 
-            _actors[u] = new Actor { Unit = u, Root = root, Sprite = sprite, Hp = hp, Gauge = gauge, Focus = focus, Home = root.localPosition };
+            var actor = new Actor { Unit = u, Root = root, Sprite = sprite, Hp = hp, Gauge = gauge, Focus = focus, Name = name, Head = unitHeight * u.Scale, Home = root.localPosition };
+            _actors[u] = actor;
+            StartCoroutine(_scope.LoadCatFrames(u.Sprites, u.Genes, frames =>
+            {
+                if (sprite == null) return;
+                sprite.SetFrames(frames);
+                actor.Head = sprite.VisibleTop;
+                actor.Hp.transform.localPosition = new Vector2(0, actor.Head + 0.2f);
+                if (actor.Gauge != null) actor.Gauge.transform.localPosition = new Vector2(0, actor.Head + 0.02f);
+                actor.Name.transform.localPosition = new Vector2(0, actor.Head + 0.52f);
+                actor.Focus.transform.localPosition = new Vector2(0, actor.Head + 0.92f);
+                if (root.TryGetComponent<BoxCollider2D>(out var collider))
+                {
+                    collider.size = new Vector2(1.4f, actor.Head);
+                    collider.offset = new Vector2(0, actor.Head / 2);
+                }
+            }));
             RefreshActor(_actors[u]);
         }
 
         void RefreshActor(Actor a)
         {
             a.Hp.Set((float)a.Unit.Hp / a.Unit.MaxHp);
-            a.Gauge?.Set((float)a.Unit.Gauge / BattleUnit.GaugeMax);
+            if (a.Gauge != null) a.Gauge.Set((float)a.Unit.Gauge / BattleUnit.GaugeMax);
             a.Focus.SetActive(State.FocusTarget == a.Unit);
             if (!a.Unit.Alive) a.Sprite.SetDead(true);
         }
@@ -285,7 +327,7 @@ namespace YangVil.World
             if (skill)
             {
                 SkillCutIn?.Invoke(action.Actor);
-                AudioHub.Instance?.PlaySfx(_art.sfxSkill);
+                if (AudioHub.Instance != null) AudioHub.Instance.PlaySfx(_art.sfxSkill);
                 yield return new WaitForSeconds(_feel.cutInSeconds);
             }
 
@@ -307,10 +349,10 @@ namespace YangVil.World
 
         void Impact(BattleUnit attacker, Actor target, int dmg, float aff, bool skill)
         {
-            AudioHub.Instance?.PlaySfx(_art.sfxHit);
+            if (AudioHub.Instance != null) AudioHub.Instance.PlaySfx(_art.sfxHit);
             var fx = _art.Fx(attacker.Element);
             var fxRef = fx == null ? null : skill && PresentationSet.IsSet(fx.skill) ? fx.skill : fx.hit;
-            var at = target.Root.position + new Vector3(0, unitHeight * target.Unit.Scale * 0.5f, -0.1f);
+            var at = target.Root.position + new Vector3(0, target.Head * 0.5f, -0.1f);
             StartCoroutine(_scope.Spawn(fxRef, at, transform, 2f));
             StartCoroutine(target.Sprite.Flash(Color.white, 0.08f));
             target.Sprite.Play(ActorPose.Hurt);
@@ -360,7 +402,7 @@ namespace YangVil.World
         {
             var tag = aff > 1f ? "\n효과 굉장!" : aff < 1f ? "\n별로…" : "";
             var color = aff > 1f ? new Color(1f, 0.85f, 0.2f) : aff < 1f ? new Color(0.75f, 0.75f, 0.75f) : Color.white;
-            var label = WorldKit.Label(transform, font, $"-{dmg}{tag}", (Vector2)target.Root.localPosition + new Vector2(0, unitHeight * target.Unit.Scale + 0.4f), skill ? 6f : 4.5f, color, 300);
+            var label = WorldKit.Label(transform, font, $"-{dmg}{tag}", (Vector2)target.Root.localPosition + new Vector2(0, target.Head + 0.4f), skill ? 6f : 4.5f, color, 300);
             StartCoroutine(Rise(label));
         }
 
