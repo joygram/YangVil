@@ -14,7 +14,7 @@ CATVILLAGE_BUILD_WEBGL=1 bash "$ROOT/scripts/checks/unity-check.sh" HEAD || { ec
 
 NODE_MAJOR="$(node -v 2>/dev/null | sed 's/^v\([0-9]*\).*/\1/')"
 if [ -z "$NODE_MAJOR" ] || [ "$NODE_MAJOR" -lt 22 ]; then
-  echo "[deploy-web] ✘ Node.js ${NODE_MAJOR:-없음} → wrangler는 22 이상 필요 (리눅스: setup-linux-runner.sh deps)"
+  echo "[deploy-web] ✘ Node.js ${NODE_MAJOR:-없음} → wrangler는 22 이상 필요 (리눅스: setup-linux-runner.sh node → 러너 재등록)"
   exit 1
 fi
 

@@ -36,22 +36,22 @@ need_unity() {
 }
 
 NODE_MIN=22
+NVM_VERSION="v0.40.3"
+NVM_DIR_TARGET="$TARGET_HOME/.nvm"
+
+nvm_run() { as_user bash -c "export NVM_DIR='$NVM_DIR_TARGET'; . \"\$NVM_DIR/nvm.sh\" >/dev/null; $*"; }
 
 ensure_node() {
-  local major
-  major="$(node -v 2>/dev/null | sed 's/^v\([0-9]*\).*/\1/')"
-  [ -n "$major" ] && [ "$major" -ge "$NODE_MIN" ] && return 0
-  echo "  Node.js ${major:-없음} → $NODE_MIN 설치 (wrangler 요구)"
-  sudo apt-get remove -y nodejs npm libnode-dev libnode72 libnode109 >/dev/null 2>&1 || true
-  curl -fsSL "https://deb.nodesource.com/setup_${NODE_MIN}.x" | sudo -E bash - >/dev/null
-  sudo apt-get install -y nodejs
-  hash -r
-  major="$(node -v 2>/dev/null | sed 's/^v\([0-9]*\).*/\1/')"
-  if [ -z "$major" ] || [ "$major" -lt "$NODE_MIN" ]; then
-    echo "  ✘ Node.js 업그레이드 실패 (현재 $(node -v 2>/dev/null || echo 없음)) → 위 apt 출력 확인"
-    return 1
+  if [ ! -s "$NVM_DIR_TARGET/nvm.sh" ]; then
+    echo "  nvm $NVM_VERSION 설치 ($TARGET_USER 계정)"
+    as_user bash -c "curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | PROFILE=/dev/null bash" >/dev/null || { echo "  ✘ nvm 설치 실패"; return 1; }
   fi
-  echo "  ✔ node $(node -v)"
+  nvm_run "nvm ls $NODE_MIN >/dev/null 2>&1 || nvm install $NODE_MIN >/dev/null; nvm alias default $NODE_MIN >/dev/null" || { echo "  ✘ nvm install $NODE_MIN 실패"; return 1; }
+  NODE_BIN="$(nvm_run "dirname \"\$(nvm which $NODE_MIN)\"")"
+  [ -x "$NODE_BIN/node" ] || { echo "  ✘ Node $NODE_MIN 경로 없음"; return 1; }
+  export PATH="$NODE_BIN:$PATH"
+  hash -r
+  echo "  ✔ node $(node -v) ($NODE_BIN, nvm)"
 }
 
 deps() {
@@ -120,11 +120,11 @@ check() {
 cloudflare() {
   echo "[cloudflare] wrangler 로그인 (배포용)"
   ensure_node || return 1
-  if [ -n "${CLOUDFLARE_API_TOKEN:-}" ] || as_user npx --yes wrangler whoami 2>/dev/null | grep -q 'You are logged in'; then
+  if [ -n "${CLOUDFLARE_API_TOKEN:-}" ] || nvm_run "npx --yes wrangler whoami" 2>/dev/null | grep -q 'You are logged in'; then
     echo "  ✔ Cloudflare 인증 있음"
     return 0
   fi
-  echo "  ✘ 인증 없음 → 원격 데스크톱 터미널에서: cd ~/workspace/YangVil && npx wrangler login"
+  echo "  ✘ 인증 없음 → 원격 데스크톱 터미널에서: source ~/.nvm/nvm.sh && cd ~/workspace/YangVil && npx wrangler login"
   echo "    (또는 GitHub 시크릿 CLOUDFLARE_API_TOKEN 등록)"
   return 1
 }
@@ -147,6 +147,9 @@ register() {
   local editor_root
   editor_root="$(dirname "$(dirname "$(dirname "$UNITY_EXE")")")"
   printf 'UNITY_EDITOR_ROOT=%s\nUNITY_EXTRA_ARGS=-nographics\nHOME=%s\nCATVILLAGE_CHECK_DIR=%s\n' "$editor_root" "$TARGET_HOME" "$TARGET_HOME/CatVillage-check" | as_user tee .env >/dev/null
+  [ -n "${NODE_BIN:-}" ] || ensure_node || return 1
+  printf '%s:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n' "$NODE_BIN" | as_user tee .path >/dev/null
+  echo "  러너 PATH에 nvm Node 추가: $NODE_BIN"
   sudo ./svc.sh install "$TARGET_USER" >/dev/null 2>&1 || true
   sudo ./svc.sh start
   sudo ./svc.sh status | grep -m1 -E 'Active:' | sed 's/^ */  /'
