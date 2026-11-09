@@ -5,7 +5,9 @@ namespace CatVillage.Core
 {
     public static class SaveSystem
     {
-        static string FilePath => Path.Combine(Application.persistentDataPath, "save.json");
+        public static string DirectoryOverride;
+
+        static string FilePath => Path.Combine(string.IsNullOrEmpty(DirectoryOverride) ? Application.persistentDataPath : DirectoryOverride, "save.json");
 
         public static SaveData Load()
         {
