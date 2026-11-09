@@ -18,13 +18,14 @@ namespace CatVillage.World
 
         public Camera cam;
         public TMP_FontAsset font;
-        public Rect mapBounds = new Rect(-7, -12, 14, 24);
-        public Vector2 houseSize = new Vector2(3.6f, 3.0f);
-        public float catHeight = 1.1f;
-        public Vector2[] houseSlots =
+        static readonly Rect mapBounds = new Rect(-4.6f, -12.5f, 9.2f, 21.5f);
+        static readonly Vector2 houseSize = new Vector2(2.7f, 2.8f);
+        const float catHeight = 1f;
+        static readonly Vector2[] houseSlots =
         {
-            new Vector2(-3.6f, -1.5f), new Vector2(0f, -1.5f), new Vector2(3.6f, -1.5f),
-            new Vector2(-3.6f, -5.5f), new Vector2(0f, -5.5f), new Vector2(3.6f, -5.5f)
+            new Vector2(-2.9f, -1.6f), new Vector2(2.9f, -1.6f),
+            new Vector2(-2.9f, -5.2f), new Vector2(2.9f, -5.2f),
+            new Vector2(-2.9f, -8.8f), new Vector2(2.9f, -8.8f)
         };
 
         public event Action<string> BuildingTapped;
@@ -33,11 +34,11 @@ namespace CatVillage.World
 
         static readonly (string id, string label, Vector2 pos, Vector2 size, Color color)[] Buildings =
         {
-            (Hatchery, "부화소", new Vector2(0f, 6.5f), new Vector2(3.4f, 2.4f), new Color(0.98f, 0.85f, 0.6f)),
-            (Shop, "상점", new Vector2(-4f, 3f), new Vector2(2.8f, 2.2f), new Color(0.75f, 0.85f, 1f)),
-            (BreedTower, "짝짓기 탑", new Vector2(4f, 3f), new Vector2(2.4f, 2.8f), new Color(1f, 0.75f, 0.85f)),
-            (Dex, "도감", new Vector2(4.2f, 7.5f), new Vector2(2.2f, 1.8f), new Color(0.85f, 0.8f, 1f)),
-            (Gate, "모험 게이트", new Vector2(0f, -10f), new Vector2(4f, 2f), new Color(0.6f, 0.5f, 0.4f))
+            (Hatchery, "부화소", new Vector2(-1.6f, 6.6f), new Vector2(3.0f, 2.2f), new Color(0.98f, 0.85f, 0.6f)),
+            (Dex, "도감", new Vector2(2.6f, 6.6f), new Vector2(2.2f, 1.8f), new Color(0.85f, 0.8f, 1f)),
+            (Shop, "상점", new Vector2(-2.6f, 2.6f), new Vector2(2.4f, 2.0f), new Color(0.75f, 0.85f, 1f)),
+            (BreedTower, "짝짓기 탑", new Vector2(2.6f, 2.6f), new Vector2(2.2f, 2.4f), new Color(1f, 0.75f, 0.85f)),
+            (Gate, "모험 게이트", new Vector2(0f, -11.2f), new Vector2(3.6f, 1.6f), new Color(0.6f, 0.5f, 0.4f))
         };
 
         Game _game;
@@ -79,7 +80,7 @@ namespace CatVillage.World
             camRig.bounds = mapBounds;
             StartCoroutine(_scope.LoadSprite(art.villageBackground, new Vector2(0.5f, 0.5f), 100, s => FitBackground(ground, s)));
 
-            WorldKit.Box(transform, "Road", new Vector2(0, -2f), new Vector2(1.4f, 17f), new Color(0.85f, 0.75f, 0.55f), -90);
+            WorldKit.Box(transform, "Road", new Vector2(0, -2.5f), new Vector2(1.2f, 16f), new Color(0.85f, 0.75f, 0.55f), -90);
 
             foreach (var b in Buildings)
             {

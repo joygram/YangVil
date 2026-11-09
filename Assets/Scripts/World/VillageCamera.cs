@@ -12,6 +12,8 @@ namespace CatVillage.World
 
         Vector3 _lastWorld;
 
+        void Start() => Clamp();
+
         public void OnBeginDrag(PointerEventData e) => _lastWorld = cam.ScreenToWorldPoint(e.position);
 
         public void OnDrag(PointerEventData e)
