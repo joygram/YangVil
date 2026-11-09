@@ -35,14 +35,24 @@ need_unity() {
   return 1
 }
 
+NODE_MIN=22
+
+ensure_node() {
+  local major
+  major="$(node -v 2>/dev/null | sed 's/^v\([0-9]*\).*/\1/')"
+  [ -n "$major" ] && [ "$major" -ge "$NODE_MIN" ] && return 0
+  echo "  Node.js ${major:-없음} → $NODE_MIN 설치 (wrangler 요구)"
+  curl -fsSL "https://deb.nodesource.com/setup_${NODE_MIN}.x" | sudo -E bash - >/dev/null
+  sudo apt-get install -y nodejs >/dev/null
+  hash -r
+  echo "  node $(node -v)"
+}
+
 deps() {
   echo "[deps] 기본 패키지"
   sudo apt-get update -qq
   sudo apt-get install -y git curl ca-certificates gnupg tar unzip libglu1-mesa >/dev/null
-  if ! command -v node >/dev/null; then
-    curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - >/dev/null
-    sudo apt-get install -y nodejs >/dev/null
-  fi
+  ensure_node
   if ! command -v gh >/dev/null; then
     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg status=none
     echo "deb [signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
@@ -103,6 +113,7 @@ check() {
 
 cloudflare() {
   echo "[cloudflare] wrangler 로그인 (배포용)"
+  ensure_node
   if [ -n "${CLOUDFLARE_API_TOKEN:-}" ] || as_user npx --yes wrangler whoami 2>/dev/null | grep -q 'You are logged in'; then
     echo "  ✔ Cloudflare 인증 있음"
     return 0
