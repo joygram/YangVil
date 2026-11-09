@@ -137,6 +137,19 @@ namespace YangVil.Core
             done(s);
         }
 
+        public IEnumerator LoadSlicedSprite(AssetReferenceTexture2D reference, Vector2 pivot, float pixelsPerUnit, int border, Action<Sprite> done)
+        {
+            if (reference == null || !reference.RuntimeKeyIsValid()) yield break;
+            var h = Load<Texture2D>(reference);
+            yield return h;
+            if (Disposed || h.Status != AsyncOperationStatus.Succeeded) yield break;
+            var t = h.Result;
+            var s = UnityEngine.Sprite.Create(t, new Rect(0, 0, t.width, t.height), pivot, pixelsPerUnit, 0,
+                SpriteMeshType.FullRect, new Vector4(border, border, border, border));
+            _looseSprites.Add(s);
+            done(s);
+        }
+
         public IEnumerator LoadClip(AssetReference reference, Action<AudioClip> done)
         {
             if (reference == null || !reference.RuntimeKeyIsValid()) yield break;

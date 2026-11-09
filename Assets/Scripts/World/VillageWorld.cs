@@ -70,6 +70,7 @@ namespace YangVil.World
         void OnDestroy()
         {
             if (_game != null) _game.Changed -= Rebuild;
+            SpeechBubble.ClearArt();
             _scope?.Dispose();
         }
 
@@ -82,6 +83,11 @@ namespace YangVil.World
             camRig.cam = cam;
             camRig.bounds = mapBounds;
             StartCoroutine(_scope.LoadSprite(art.villageBackground, new Vector2(0.5f, 0.5f), 100, s => FitBackground(ground, s)));
+
+            var speech = art.speech;
+            StartCoroutine(_scope.LoadSlicedSprite(speech.body, new Vector2(0.5f, 0.5f), speech.pixelsPerUnit, speech.sliceBorder,
+                s => SpeechBubble.UseArt(speech, s, null)));
+            StartCoroutine(_scope.LoadSprite(speech.tail, new Vector2(0.5f, 1f), speech.pixelsPerUnit, s => SpeechBubble.UseArt(speech, null, s)));
 
             WorldKit.Box(transform, "Road", new Vector2(0, -2.5f), new Vector2(1.2f, 16f), new Color(0.85f, 0.75f, 0.55f), -90);
 

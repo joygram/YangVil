@@ -15,7 +15,9 @@ MonoBehaviour:
   m_DefaultGroup: 15d28ec7524f9144990fc1cf87e63bca
   m_currentHash:
     serializedVersion: 2
-    Hash: 37ff0857fa65d3a53018ebe2491487e7
+    Hash: 00000000000000000000000000000000
+  m_ExtractTypeTreeData: 0
+  m_DisableWriteTypeTree: 0
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -108,6 +110,7 @@ MonoBehaviour:
     - default
     - CuteKitty
     - Dog
+    - Speech
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 70c1a79f56068c14b9120bb1f66e4790, type: 2}

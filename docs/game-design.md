@@ -224,6 +224,7 @@
 - 피벗 발밑 중앙, 픽셀아트 Filter Point (Assets/Art 아래 자동)
 - 이펙트: 프리팹 납품, 2초 내 자동 소멸
 - 플레이스홀더 먼저 → 같은 이름으로 실제 에셋 교체
+- 말풍선: Assets/Art/Speech/speech_body.png(9-slice, 테두리 px = GameConfig speech.sliceBorder)·speech_tail.png(피벗 위 중앙)
 
 ## UI/UX는 골격 위에서 디자이너가 바꾼다
 - 아래 UI 요소는 골격 기준 초안 → 배치·크기·흐름 변경 자유

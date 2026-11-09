@@ -40,8 +40,21 @@ namespace YangVil.Data
     }
 
     [Serializable]
+    public class SpeechArt
+    {
+        public AssetReferenceTexture2D body;
+        public AssetReferenceTexture2D tail;
+        public int sliceBorder = 12;
+        public float pixelsPerUnit = 100f;
+        public Color ink = new Color(0.17f, 0.12f, 0.09f);
+        public Vector2 padding = new Vector2(0.32f, 0.22f);
+        public float tailOverlap = 0.02f;
+    }
+
+    [Serializable]
     public class PresentationSet
     {
+        public SpeechArt speech = new SpeechArt();
         public AssetReferenceTexture2D villageBackground;
         public AssetReferenceTexture2D basketIcon;
         public AssetReferenceTexture2D battleBackgroundFallback;

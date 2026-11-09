@@ -14,7 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: WorldArt
   m_GUID: 8436f13788109fd4ab108c3451161c30
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 2aa19785ac10b10478161bd669b8f1c2
+    m_Address: Assets/Art/Speech/speech_body.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Speech
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 373c38d522a20bf40b757b7a356752fb
+    m_Address: Assets/Art/Speech/speech_tail.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Speech
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 979bbe879c9c76d4799e301dbda9d457, type: 2}
   m_SchemaSet:

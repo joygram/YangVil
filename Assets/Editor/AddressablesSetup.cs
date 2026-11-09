@@ -24,7 +24,7 @@ namespace YangVil.EditorTools
 
         public static readonly string[] ArtFolders =
         {
-            "Assets/Art/Backgrounds", "Assets/Art/Buildings", "Assets/Art/FX"
+            "Assets/Art/Backgrounds", "Assets/Art/Buildings", "Assets/Art/FX", "Assets/Art/Speech"
         };
 
         public const string AudioFolder = "Assets/Audio";

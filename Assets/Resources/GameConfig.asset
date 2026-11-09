@@ -97,6 +97,24 @@ MonoBehaviour:
     collectGarbageOnUnload: 1
     releaseOnLowMemory: 1
   presentation:
+    speech:
+      body:
+        m_AssetGUID: 2aa19785ac10b10478161bd669b8f1c2
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      tail:
+        m_AssetGUID: 373c38d522a20bf40b757b7a356752fb
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      sliceBorder: 12
+      pixelsPerUnit: 100
+      ink: {r: 0.17, g: 0.12, b: 0.09, a: 1}
+      padding: {x: 0.32, y: 0.22}
+      tailOverlap: 0.02
     villageBackground:
       m_AssetGUID: 
       m_SubObjectName: 
