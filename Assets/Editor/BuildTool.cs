@@ -20,6 +20,7 @@ namespace CatVillage.EditorTools
 
         public static void BuildWebGL()
         {
+            PlayerSettings.WebGL.template = "PROJECT:CatVillage";
             PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
             PlayerSettings.WebGL.decompressionFallback = false;
             PlayerSettings.WebGL.dataCaching = true;

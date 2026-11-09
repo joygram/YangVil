@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#f9efdc">
+  <title>{{{ PRODUCT_NAME }}}</title>
+  <style>
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #2b211b; touch-action: none; }
+    #stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+    #unity-canvas { display: block; background: #f9efdc; outline: none; -webkit-tap-highlight-color: transparent; }
+    #loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; color: #3a2a1e; font: 600 18px system-ui, sans-serif; pointer-events: none; }
+    #bar { width: 60%; max-width: 280px; height: 12px; border: 2px solid #3a2a1e; border-radius: 8px; overflow: hidden; }
+    #bar-fill { width: 0; height: 100%; background: #6bbf59; transition: width .2s; }
+    #error { position: absolute; left: 12px; right: 12px; bottom: 12px; padding: 12px; border-radius: 8px; background: #c0392b; color: #fff; font: 14px system-ui, sans-serif; display: none; }
+  </style>
+</head>
+<body>
+  <div id="stage">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+  </div>
+  <div id="loading"><div>고양이 마을 불러오는 중…</div><div id="bar"><div id="bar-fill"></div></div></div>
+  <div id="error"></div>
+  <script>
+    var ASPECT = 9 / 16;
+    var canvas = document.getElementById("unity-canvas");
+
+    function fit() {
+      var w = window.innerWidth, h = window.innerHeight;
+      var cw = Math.min(w, h * ASPECT), ch = cw / ASPECT;
+      canvas.style.width = Math.floor(cw) + "px";
+      canvas.style.height = Math.floor(ch) + "px";
+    }
+    window.addEventListener("resize", fit);
+    window.addEventListener("orientationchange", fit);
+    fit();
+
+    function showError(message) {
+      var box = document.getElementById("error");
+      box.textContent = message;
+      box.style.display = "block";
+    }
+
+    var config = {
+      arguments: [],
+      dataUrl: "Build/{{{ DATA_FILENAME }}}",
+      frameworkUrl: "Build/{{{ FRAMEWORK_FILENAME }}}",
+#if USE_WASM
+      codeUrl: "Build/{{{ CODE_FILENAME }}}",
+#endif
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
+      productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
+      productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
+      matchWebGLToCanvasSize: true,
+      devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+      showBanner: function (msg, type) { if (type === "error") showError(msg); }
+    };
+
+    var script = document.createElement("script");
+    script.src = "Build/{{{ LOADER_FILENAME }}}";
+    script.onload = function () {
+      createUnityInstance(canvas, config, function (progress) {
+        document.getElementById("bar-fill").style.width = (100 * progress) + "%";
+      }).then(function () {
+        document.getElementById("loading").style.display = "none";
+        canvas.focus();
+      }).catch(showError);
+    };
+    document.body.appendChild(script);
+  </script>
+</body>
+</html>
