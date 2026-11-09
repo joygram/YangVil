@@ -14,7 +14,25 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - uses: jlumbroso/free-disk-space@v1.3.1
+      - id: secrets
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          missing=""
+          [ -z "$UNITY_LICENSE$UNITY_SERIAL" ] && missing="$missing UNITY_LICENSE"
+          [ -z "$CLOUDFLARE_API_TOKEN" ] && missing="$missing CLOUDFLARE_API_TOKEN"
+          echo "missing=$missing" >> "$GITHUB_OUTPUT"
+          if [ -n "$missing" ]; then
+            echo "::warning::시크릿 없음:$missing → 빌드·배포 건너뜀"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.secrets.outputs.ready == 'true'
+        uses: jlumbroso/free-disk-space@v1.3.1
         with:
           tool-cache: false
           android: true
@@ -22,17 +40,21 @@ jobs:
           haskell: true
           large-packages: false
 
-      - uses: actions/checkout@v4
+      - if: steps.secrets.outputs.ready == 'true'
+        uses: actions/checkout@v4
 
-      - uses: actions/cache@v4
+      - if: steps.secrets.outputs.ready == 'true'
+        uses: actions/cache@v4
         with:
           path: Library
           key: Library-WebGL-${{ hashFiles('Packages/packages-lock.json', 'ProjectSettings/ProjectVersion.txt') }}
           restore-keys: Library-WebGL-
 
-      - uses: game-ci/unity-builder@v4
+      - if: steps.secrets.outputs.ready == 'true'
+        uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
@@ -40,8 +62,27 @@ jobs:
           unityVersion: 6000.4.7f1
           buildMethod: CatVillage.EditorTools.BuildTool.BuildWebGL
 
-      - uses: cloudflare/wrangler-action@v3
+      - if: steps.secrets.outputs.ready == 'true'
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy
+
+      - if: always()
+        env:
+          WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          STATUS: ${{ job.status }}
+          READY: ${{ steps.secrets.outputs.ready }}
+          MISSING: ${{ steps.secrets.outputs.missing }}
+          COMMIT: ${{ github.event.head_commit.message || github.sha }}
+          ACTOR: ${{ github.actor }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          [ -z "$WEBHOOK" ] && exit 0
+          if [ "$READY" != "true" ]; then result="⏭ 건너뜀 (시크릿 없음:$MISSING)"
+          elif [ "$STATUS" = "success" ]; then result="✅ 배포 완료 → https://yangvil.deuklab.workers.dev"
+          else result="❌ 실패"; fi
+          title=$(printf '%s' "$COMMIT" | head -n1)
+          text=$(printf '*YangVil WebGL* %s\n%s · %s\n%s' "$result" "$ACTOR" "$title" "$RUN_URL")
+          jq -n --arg text "$text" '{text: $text}' | curl -sS -X POST -H 'Content-Type: application/json; charset=UTF-8' -d @- "$WEBHOOK"

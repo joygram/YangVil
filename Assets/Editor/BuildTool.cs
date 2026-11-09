@@ -21,14 +21,21 @@ namespace CatVillage.EditorTools
         public static void BuildWebGL()
         {
             PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Brotli;
-            PlayerSettings.WebGL.decompressionFallback = true;
+            PlayerSettings.WebGL.decompressionFallback = false;
             PlayerSettings.WebGL.dataCaching = true;
             PlayerSettings.WebGL.memoryGrowthMode = WebGLMemoryGrowthMode.Geometric;
             PlayerSettings.WebGL.initialMemorySize = WebGLInitialMemoryMB;
             PlayerSettings.WebGL.maximumMemorySize = WebGLMaximumMemoryMB;
             PlayerSettings.SetManagedStrippingLevel(NamedBuildTarget.WebGL, ManagedStrippingLevel.High);
-            Build(BuildTargetGroup.WebGL, BuildTarget.WebGL, Path.Combine(BuildRoot, "WebGL"));
+            var output = Path.Combine(BuildRoot, "WebGL");
+            if (Build(BuildTargetGroup.WebGL, BuildTarget.WebGL, output))
+                File.WriteAllText(Path.Combine(output, "_headers"), WebGLHeaders);
         }
+
+        const string WebGLHeaders =
+            "/Build/*.js.br\n  Content-Type: application/javascript\n  Content-Encoding: br\n" +
+            "/Build/*.wasm.br\n  Content-Type: application/wasm\n  Content-Encoding: br\n" +
+            "/Build/*.data.br\n  Content-Type: application/octet-stream\n  Content-Encoding: br\n";
 
         public static void BuildAll()
         {
@@ -36,13 +43,13 @@ namespace CatVillage.EditorTools
             BuildWebGL();
         }
 
-        static void Build(BuildTargetGroup group, BuildTarget target, string outputPath)
+        static bool Build(BuildTargetGroup group, BuildTarget target, string outputPath)
         {
             var scenes = EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray();
             if (scenes.Length == 0)
             {
                 Fail("Build Settings에 활성 씬이 없습니다.");
-                return;
+                return false;
             }
 
             if (EditorUserBuildSettings.activeBuildTarget != target)
@@ -51,7 +58,7 @@ namespace CatVillage.EditorTools
             if (!AddressablesSetup.BuildContent())
             {
                 Fail("Addressables 빌드 실패");
-                return;
+                return false;
             }
 
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
@@ -63,7 +70,9 @@ namespace CatVillage.EditorTools
             });
 
             Debug.Log($"BuildTool: {target} → {report.summary.result}, {report.summary.totalSize} bytes, {outputPath}");
-            if (report.summary.result != BuildResult.Succeeded) Fail("플레이어 빌드 실패");
+            if (report.summary.result == BuildResult.Succeeded) return true;
+            Fail("플레이어 빌드 실패");
+            return false;
         }
 
         static void Fail(string message)

@@ -58,6 +58,14 @@
 - 시트 1장: sprites.sheet 연결 + cellSize(16·32·64·128) + 행 번호·프레임 수 지정
 - 픽셀아트는 Filter Point 유지 (Assets/Art 아래는 자동)
 
+## 배포·알림
+- main 푸시 → GitHub Actions: WebGL 빌드 → Cloudflare Worker `yangvil` 배포 → Google Chat 알림
+- 플레이 주소: https://yangvil.deuklab.workers.dev
+- 필요 시크릿: UNITY_LICENSE(또는 UNITY_SERIAL)·UNITY_EMAIL·UNITY_PASSWORD·CLOUDFLARE_API_TOKEN·CLOUDFLARE_ACCOUNT_ID
+- 알림 시크릿: GOOGLE_CHAT_WEBHOOK (스페이스 → 앱 및 통합 → 웹훅 추가 → URL)
+- 시크릿 없으면 빌드·배포 건너뛰고 경고만 남김
+- 웹 빌드: Brotli 압축 + `_headers`로 Content-Encoding 지정 (Worker 정적 에셋)
+
 ## 에셋 분산 로딩 (Addressables)
 - 시작 다운로드 = 엔진·Intro 씬만, 나머지는 필요할 때 번들로 받음
 - UI 그룹: 화면 프리팹·컴포넌트·폰트·UI 스프라이트 → 번들 1개
