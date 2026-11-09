@@ -59,8 +59,14 @@ namespace CatVillage.EditorTools
 
         void OnLog(string message, string stack, LogType type)
         {
-            if (type == LogType.Error || type == LogType.Exception || type == LogType.Assert)
-                _errors.Add($"{type}: {message}\n{stack.Split('\n').FirstOrDefault()}");
+            if (type != LogType.Error && type != LogType.Exception && type != LogType.Assert) return;
+            if (IsEditorInternal(stack)) return;
+            _errors.Add($"{type}: {message}\n{stack.Split('\n').FirstOrDefault()}");
+        }
+
+        static bool IsEditorInternal(string stack)
+        {
+            return !string.IsNullOrEmpty(stack) && stack.Contains("UnityEditor.") && !stack.Contains("CatVillage.");
         }
 
         IEnumerator Start()
