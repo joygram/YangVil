@@ -23,8 +23,9 @@
 
 ## 동시 작업
 - 같은 프로젝트 폴더는 Unity 1개만 열림 (Temp/UnityLockfile)
-- 에디터 열린 상태의 CLI 작업 → 빌드 전용 클론 `D:/workspace/CatVillage-build`에서 실행
-- 클론 반영: `git -C <클론> pull <원본> main` → 작업 → 클론 커밋 → 원본에서 `pull --ff-only <클론> main`
+- CLI 점검·빌드는 점검 폴더 `../CatVillage-check` 하나에서만 (git 저장소 아님, 트리를 풀어 씀)
+- 점검 폴더 Library 캐시(약 2.4GB)는 최초 1회 생성 후 재사용 → 지우지 않음
+- 빌더(GameDataBuilder 등)로 콘텐츠 생성은 원본 에디터 메뉴 `CatVillage/…`에서 실행 → 결과를 원본에서 커밋
 
 ## 빌드 규칙
 - 🚫 컴파일 확인 없이 빌드 금지: 먼저 `-batchmode -quit`(executeMethod 없이) → `error CS` 0건 확인 후 빌드
