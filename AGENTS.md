@@ -47,6 +47,8 @@
 - 🚫 `--no-verify`·`SKIP_UNITY_CHECK=1` 사용 금지 (사용자가 지시한 경우만)
 - 웹 배포: `bash scripts/deploy-web.sh` → HEAD 검증 통과 시에만 WebGL 빌드 → Cloudflare 배포
 - 웹 빌드는 Unity 설치 PC에서만 가능 (CI는 Unity 라이선스 등록 후 수동 실행만)
+- 자동 배포: 셀프 호스티드 러너(라벨 self-hosted·windows·unity) → main 푸시 시 `deploy-self-hosted.yml`이 deploy-web.sh 실행
+- 러너 PC 조건: Unity 6000.4.7f1 활성화, Git Bash, Node, 시크릿 CLOUDFLARE_API_TOKEN·CLOUDFLARE_ACCOUNT_ID
 - 어느 씬에서 Play 해도 Intro(빌드 0번)부터 시작됨
 
 ## 커밋 전 체크 (하나라도 실패하면 커밋 금지)
