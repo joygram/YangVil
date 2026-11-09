@@ -3,7 +3,7 @@ using CatVillage.Data;
 
 namespace CatVillage.Core
 {
-    public enum GuideTarget { None, Hatchery, Shop, Collect, Party, Adventure }
+    public enum GuideTarget { None, Hatchery, Shop, ShopHouse, Collect, Party, Adventure }
 
     public readonly struct GuideStep
     {
@@ -38,7 +38,7 @@ namespace CatVillage.Core
                     return new GuideStep($"부화소 앞 {species.displayName}을(를) 끌어서 초록색 집에 놓아요", GuideTarget.Hatchery);
                 var house = game.Config.houses.FirstOrDefault(h => h.price > 0 && h.Accepts(species.element));
                 if (house != null)
-                    return new GuideStep($"{species.displayName}({Affinity.Label(species.element)})이 살 {house.displayName}을 지어요 ({house.price}코인) → 상점", GuideTarget.Shop);
+                    return new GuideStep($"{species.displayName}({Affinity.Label(species.element)})이 살 {house.displayName}을 지어요 ({house.price}코인) → 상점", GuideTarget.ShopHouse);
             }
 
             var rich = data.houses.FirstOrDefault(h => game.Pending(h) >= CollectThreshold);

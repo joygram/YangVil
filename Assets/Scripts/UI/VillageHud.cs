@@ -133,7 +133,8 @@ namespace CatVillage.UI
             switch (step.Target)
             {
                 case GuideTarget.Hatchery: OnBuilding(VillageWorld.Hatchery); break;
-                case GuideTarget.Shop: OnBuilding(VillageWorld.Shop); break;
+                case GuideTarget.Shop: _shopTab = ShopTab.Basket; OnBuilding(VillageWorld.Shop); break;
+                case GuideTarget.ShopHouse: _shopTab = ShopTab.House; OnBuilding(VillageWorld.Shop); break;
                 case GuideTarget.Collect: toast.Show($"코인 +{Game.CollectAndSave(step.House)}"); break;
                 case GuideTarget.Party: Open("내 고양이", () => RenderCats(Game.Data.cats)); break;
                 case GuideTarget.Adventure: OnBuilding(VillageWorld.Gate); break;
