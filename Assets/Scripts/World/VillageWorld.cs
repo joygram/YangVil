@@ -208,9 +208,23 @@ namespace YangVil.World
         {
             if (!_wanderers.TryGetValue(a.uid, out var wa) || !_wanderers.TryGetValue(b.uid, out var wb)) return null;
             var result = _game.Interact(a, b);
+            _nextInteraction = Time.time + InteractionLock;
             wa.wanderer.StartCoroutine(PlayInteraction(wa.wanderer, wb.wanderer, result));
             return result;
         }
+
+        const float InteractionLock = 12f;
+        const float ReplyDelay = 1.8f;
+
+        static System.Collections.IEnumerator Reply(CatWanderer speaker, CatWanderer listener, string text)
+        {
+            yield return new WaitForSeconds(ReplyDelay);
+            if (speaker == null || listener == null) yield break;
+            speaker.Hush();
+            listener.Say(text);
+        }
+
+        void EndInteraction() => _nextInteraction = Time.time + InteractionInterval;
 
         System.Collections.IEnumerator PlayInteraction(CatWanderer a, CatWanderer b, InteractionResult r)
         {
@@ -231,8 +245,8 @@ namespace YangVil.World
                     yield return a.Hop(0.08f, 1.2f, 4);
                     break;
                 case Interaction.Nap:
-                    b.Say("Zzz…");
-                    yield return new WaitForSeconds(2.5f);
+                    yield return Reply(a, b, "Zzz…");
+                    yield return new WaitForSeconds(1.5f);
                     break;
                 case Interaction.Chase:
                     StartCoroutine(b.Hop(0.2f, 0.6f, 2));
@@ -240,16 +254,15 @@ namespace YangVil.World
                     yield return a.WalkTo(b.Spot + new Vector2(side, 0f));
                     break;
                 case Interaction.Reject:
-                    yield return new WaitForSeconds(0.8f);
-                    b.Say(r.BarkB);
+                    yield return Reply(a, b, r.BarkB);
                     yield return b.WalkTo(b.Spot + new Vector2(-side * 1.5f, 0f));
                     break;
                 case Interaction.Hiss:
-                    b.Say("하악!");
+                    yield return Reply(a, b, "하악!");
                     yield return b.Hop(0.12f, 0.5f, 3);
                     break;
                 case Interaction.Fight:
-                    b.Say(r.BarkB);
+                    yield return Reply(a, b, r.BarkB);
                     yield return a.WalkTo(b.Spot + new Vector2(side * 0.3f, 0f));
                     StartCoroutine(b.Scuffle(1.6f));
                     yield return a.Scuffle(1.6f);
@@ -258,6 +271,7 @@ namespace YangVil.World
             yield return new WaitForSeconds(0.6f);
             if (a != null) a.Release();
             if (b != null) b.Release(2.5f);
+            EndInteraction();
         }
 
         void HoverDrop(OwnedCat cat, Vector2 worldPoint)

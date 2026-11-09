@@ -78,6 +78,11 @@ namespace YangVil.World
             _sayUntil = Time.time + seconds;
         }
 
+        public void Hush()
+        {
+            if (_sayUntil > 0) _sayUntil = Time.time;
+        }
+
         public bool TryAmbientBark(string text)
         {
             if (Time.time < _nextAmbientBark || Busy) return false;

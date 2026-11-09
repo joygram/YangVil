@@ -85,7 +85,7 @@ namespace YangVil.UI
                 case VillageWorld.Shop: Open("상점", RenderShop); break;
                 case VillageWorld.BreedTower: Open("짝짓기 탑", RenderBreed); break;
                 case VillageWorld.Dex: Open("도감", RenderDex); break;
-                case VillageWorld.Gate: Open("모험 게이트", RenderGate); break;
+                case VillageWorld.Gate: Screens.Show<StageSelectScreen>(); break;
             }
         }
 
@@ -374,33 +374,6 @@ namespace YangVil.UI
             }
         }
 
-        void RenderGate()
-        {
-            var stage = Game.BestClearedStage();
-            if (Game.OnExpedition)
-            {
-                var names = string.Join(", ", Game.Data.expedition.cats.Select(Game.Cat).Where(c => c != null).Select(Game.DisplayName));
-                var seconds = Game.ExpeditionSeconds;
-                Row($"산책 중: {names}\n{Ui.Clock(seconds)} 경과 (최대 {CatLife.ExpeditionCapSeconds / 3600}시간 · 전투 {seconds / CatLife.ExpeditionRunSeconds}회)",
-                    "귀가", () =>
-                    {
-                        var r = Game.ReturnExpedition();
-                        Open("산책 결과", () =>
-                        {
-                            Row($"\"{r.Bark}\"", null, null);
-                            Row($"전투 {r.Runs}회 · 코인 +{r.Coins} · 츄르 +{r.Treats} · EXP +{r.Exp}", "닫기", Close);
-                        });
-                    });
-            }
-            else
-            {
-                Row(stage == null
-                        ? "산책 보내기: 스테이지를 하나 클리어하면 열려요"
-                        : $"산책 보내기: 파티가 {stage.displayName}를 알아서 반복해요\n방치해도 최대 {CatLife.ExpeditionCapSeconds / 3600}시간 · 효율 {CatLife.ExpeditionEfficiency * 100:0}% · 배고프면 효율↓",
-                    stage == null ? null : "출발", () => toast.Show(Game.StartExpedition() ?? "파티가 산책을 떠났어요"));
-            }
-            Row("직접 모험: 스테이지를 골라 전투", Game.OnExpedition ? null : "입장", () => Screens.Show<StageSelectScreen>());
-        }
 
         void RenderDex()
         {
