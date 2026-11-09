@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 631ef3a78f4c10046b7487c56754d3a1, type: 3}
+  m_Name: base_robot
+  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.EnemyBase
+  id: robot
+  displayName: "\uB85C\uBD07 \uCCAD\uC18C\uAE30"
+  role: 2
+  baseStats:
+    hp: 130
+    atk: 16
+    def: 14
+    spd: 6
+  growth:
+    hp: 16
+    atk: 3
+    def: 2
+    spd: 1
+  sprites:
+    idle: []
+    attack: []
+    sheet: {fileID: 2800000, guid: 146dd9b5f05d5dc4ea0bad5691bfa229, type: 3}
+    cellSize: 16
+    idleRow: 0
+    attackRow: 4
+    framesPerRow: 6
+    idleFrames: 4
+    attackFrames: 6
+  baseTint: {r: 0.6, g: 0.65, b: 0.7, a: 1}
+  scale: 1

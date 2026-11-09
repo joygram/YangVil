@@ -1,0 +1,32 @@
+using System.Linq;
+using UnityEngine;
+
+namespace CatVillage.UI
+{
+    public class StageSelectScreen : GameScreen
+    {
+        public RectTransform listContent;
+        public LabeledButton stageButtonPrefab;
+        public GameObject partyWarning;
+        public LabeledButton back;
+
+        protected override void Build()
+        {
+            var hasParty = Game.Party.Any();
+            partyWarning.SetActive(!hasParty);
+            back.OnClick(() => Screens.Show<VillageScreen>());
+
+            for (var i = 0; i < Game.Config.stages.Count; i++)
+            {
+                var stage = Game.Config.stages[i];
+                var unlocked = Game.IsUnlocked(i);
+                var b = Instantiate(stageButtonPrefab, listContent);
+                b.Text = unlocked ? $"{stage.displayName}  {Ui.Stars(Game.Stars(stage))}" : $"{stage.displayName}  (잠김)";
+                b.Highlight(stage.enemies.Any(e => e.isBoss));
+                b.Interactable = unlocked && hasParty;
+                var s = stage;
+                b.OnClick(() => Screens.Show<BattleScreen>(screen => screen.Stage = s));
+            }
+        }
+    }
+}

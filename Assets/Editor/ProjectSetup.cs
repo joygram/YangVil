@@ -1,23 +1,30 @@
 using System.IO;
+using CatVillage.Core;
+using CatVillage.Data;
+using CatVillage.UI;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 namespace CatVillage.EditorTools
 {
     public static class ProjectSetup
     {
-        const string BootScenePath = "Assets/Scenes/Boot.unity";
+        const string IntroScenePath = "Assets/Scenes/Intro.unity";
+        const string LegacyBootScenePath = "Assets/Scenes/Boot.unity";
         const string RendererPath = "Assets/Settings/Renderer2D.asset";
         const string PipelinePath = "Assets/Settings/URP2D.asset";
 
         static readonly string[] Folders =
         {
             "Assets/Scenes", "Assets/Settings", "Assets/Scripts/Core", "Assets/Scripts/Data",
-            "Assets/Scripts/Cat", "Assets/Scripts/House", "Assets/Scripts/Battle", "Assets/Scripts/UI",
-            "Assets/Art/Cats", "Assets/Art/Enemies", "Assets/Art/UI", "Assets/Art/FX", "Assets/Data", "Assets/Prefabs"
+            "Assets/Scripts/Battle", "Assets/Scripts/UI", "Assets/Art/Cats", "Assets/Art/Enemies",
+            "Assets/Art/UI", "Assets/Art/FX", "Assets/Data", "Assets/Prefabs"
         };
 
         public static void Run()
@@ -25,18 +32,23 @@ namespace CatVillage.EditorTools
             CreateFolders();
             SetupUrp2D();
             SetupPlayer();
-            CreateBootScene();
             AssetDatabase.SaveAssets();
             Debug.Log("ProjectSetup: 완료");
         }
 
+        [MenuItem("CatVillage/Build All Content")]
+        public static void BuildContent()
+        {
+            GameDataBuilder.Build();
+            UiPrefabBuilder.Build();
+            BuildIntroScene();
+            AssetDatabase.SaveAssets();
+            Debug.Log("ProjectSetup: 콘텐츠 빌드 완료");
+        }
+
         static void CreateFolders()
         {
-            foreach (var folder in Folders)
-            {
-                Directory.CreateDirectory(folder);
-                File.WriteAllText(Path.Combine(folder, ".keep"), string.Empty);
-            }
+            foreach (var folder in Folders) Directory.CreateDirectory(folder);
             AssetDatabase.Refresh();
         }
 
@@ -73,18 +85,35 @@ namespace CatVillage.EditorTools
             PlayerSettings.runInBackground = true;
         }
 
-        static void CreateBootScene()
+        [MenuItem("CatVillage/Build Intro Scene")]
+        public static void BuildIntroScene()
         {
-            if (!File.Exists(BootScenePath))
-            {
-                var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
-                var camera = Camera.main;
-                camera.orthographic = true;
-                camera.orthographicSize = 9.6f;
-                camera.backgroundColor = new Color(0.98f, 0.94f, 0.88f);
-                EditorSceneManager.SaveScene(scene, BootScenePath);
-            }
-            EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(BootScenePath, true) };
+            if (File.Exists(LegacyBootScenePath)) AssetDatabase.DeleteAsset(LegacyBootScenePath);
+
+            var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
+            var camera = Camera.main;
+            camera.orthographic = true;
+            camera.clearFlags = CameraClearFlags.SolidColor;
+            camera.backgroundColor = new Color(0.98f, 0.94f, 0.86f);
+
+            new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
+
+            var canvasGo = new GameObject("Canvas", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+            canvasGo.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+            var scaler = canvasGo.GetComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1080, 1920);
+            scaler.matchWidthOrHeight = 1f;
+            var layer = UiFactory.Stretch(UiFactory.Node("Screens", canvasGo.transform));
+            var screens = canvasGo.AddComponent<ScreenManager>();
+
+            var boot = new GameObject("GameBootstrap").AddComponent<GameBootstrap>();
+            boot.config = AssetDatabase.LoadAssetAtPath<GameConfig>("Assets/Resources/GameConfig.asset");
+            boot.screens = screens;
+            boot.screenLayer = layer;
+
+            EditorSceneManager.SaveScene(scene, IntroScenePath);
+            EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(IntroScenePath, true) };
         }
     }
 }

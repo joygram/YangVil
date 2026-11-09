@@ -1,0 +1,44 @@
+using System.IO;
+using UnityEngine;
+
+namespace CatVillage.Core
+{
+    public static class SaveSystem
+    {
+        static string FilePath => Path.Combine(Application.persistentDataPath, "save.json");
+
+        public static SaveData Load()
+        {
+            if (!File.Exists(FilePath)) return null;
+            try
+            {
+                return JsonUtility.FromJson<SaveData>(File.ReadAllText(FilePath));
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"SaveSystem: 저장 파일을 읽지 못해 새로 시작합니다. {e.Message}");
+                return null;
+            }
+        }
+
+        public static void Save(SaveData data)
+        {
+            File.WriteAllText(FilePath, JsonUtility.ToJson(data));
+            WebGLSync();
+        }
+
+        public static void Delete()
+        {
+            if (File.Exists(FilePath)) File.Delete(FilePath);
+            WebGLSync();
+        }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        [System.Runtime.InteropServices.DllImport("__Internal")]
+        static extern void SyncFileSystem();
+        static void WebGLSync() => SyncFileSystem();
+#else
+        static void WebGLSync() { }
+#endif
+    }
+}

@@ -7,7 +7,10 @@
 - CLI 실행 전 열린 Unity 에디터 없는지 확인, 종료 코드 0 아니면 로그 읽고 수정
 - 네임스페이스: CatVillage.*, 에디터 도구는 CatVillage.EditorTools
 - 에셋 위치: Assets/Art/{Cats,UI,FX}/, 파일명 소문자·언더바
-- 스프라이트: PPU 100, 피벗 발밑 중앙
+- 스프라이트: 원본 16·32·64·128px 자유, 표시 크기는 프리팹이 결정, Filter Point
+- UI: 화면별 프리팹(Assets/Prefabs/UI), 9-slice 스프라이트, TextMeshPro, public 필드 연결 유지
+- BuildContent·UiPrefabBuilder는 프리팹을 덮어씀 → 디자이너 작업 후 실행 금지
+- 빌드 확인은 WebGL, PC 빌드는 배포 때만
 - 이펙트 프리팹: 2초 내 자동 소멸, 루프 금지(오라 제외)
 - 디자이너 작업 범위: Assets/Art, UI 프리팹·레이아웃, FX 프리팹, 연출 컴포넌트
 - UI 변경 시 데이터 바인딩 이름·버튼 이벤트 연결 유지

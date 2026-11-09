@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad3285255958e9b4b86b09dc4107365c, type: 3}
+  m_Name: boss_dog_chief
+  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.EnemyVariant
+  id: boss_dog_chief
+  enemyBase: {fileID: 11400000, guid: 0be7f221380fbcb47a81c91ca75e10a3, type: 2}
+  element: 0
+  statMultiplier: 2
+  scale: 1.5
+  isBoss: 1
+  pattern: 2
+  patternEvery: 3
+  summon: {fileID: 0}

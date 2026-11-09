@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd4a60f77dffa4489c5d6959f7cd0a1, type: 3}
+  m_Name: stage_1_5
+  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.StageData
+  id: stage_1_5
+  displayName: "1-5 \uACF5\uC0AC\uC7A5"
+  enemies:
+  - {fileID: 11400000, guid: 6757377ce05ce524cb81160564294496, type: 2}
+  - {fileID: 11400000, guid: 4ab14b2078de40d41a4ee33bc02cdbd3, type: 2}
+  - {fileID: 11400000, guid: 1a8159e470fa3024484e172f00f0bc24, type: 2}
+  enemyLevel: 5
+  rewardCoins: 50
+  rewardTreats: 2
+  firstClearBasket: {fileID: 11400000, guid: dacfd9cb0e819004cb3c8fd9849d8924, type: 2}

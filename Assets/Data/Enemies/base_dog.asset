@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 631ef3a78f4c10046b7487c56754d3a1, type: 3}
+  m_Name: base_dog
+  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.EnemyBase
+  id: dog
+  displayName: "\uB4E4\uAC1C"
+  role: 2
+  baseStats:
+    hp: 110
+    atk: 14
+    def: 10
+    spd: 7
+  growth:
+    hp: 14
+    atk: 2
+    def: 2
+    spd: 1
+  sprites:
+    idle: []
+    attack: []
+    sheet: {fileID: 2800000, guid: 146dd9b5f05d5dc4ea0bad5691bfa229, type: 3}
+    cellSize: 16
+    idleRow: 0
+    attackRow: 4
+    framesPerRow: 6
+    idleFrames: 4
+    attackFrames: 6
+  baseTint: {r: 1, g: 1, b: 1, a: 1}
+  scale: 1

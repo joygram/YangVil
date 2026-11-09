@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad3285255958e9b4b86b09dc4107365c, type: 3}
+  m_Name: boss_crow_witch
+  m_EditorClassIdentifier: Assembly-CSharp::CatVillage.Data.EnemyVariant
+  id: boss_crow_witch
+  enemyBase: {fileID: 11400000, guid: 824d48f5336f9c54095d0855b75eddbb, type: 2}
+  element: 5
+  statMultiplier: 2
+  scale: 1.8
+  isBoss: 1
+  pattern: 3
+  patternEvery: 3
+  summon: {fileID: 0}

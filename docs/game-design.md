@@ -3,7 +3,9 @@
 - 작성일: 2026-11-09
 - 엔진: Unity 6000.4.7f1, 2D URP, 세로 1080×1920 기준 UI
 - 빌드 타깃: PC(Windows 64bit) + 웹앱(WebGL), 창 기본 540×960
-- 빌드: `BuildTool.BuildWindows` → Builds/Windows, `BuildTool.BuildWebGL` → Builds/WebGL
+- 빌드: 평소 `BuildTool.BuildWebGL` → Builds/WebGL, 배포 때만 `BuildTool.BuildWindows`
+- 시작 씬: Assets/Scenes/Intro.unity → 화면 프리팹 전환 (Intro·Village·StageSelect·Battle·Result)
+- 기본 에셋: Kenney Pixel UI(CC0)·고양이/개 도트(CC0)·Galmuri11 한글 픽셀 폰트(OFL) → Credits.md
 - 웹앱 배포: Builds/WebGL 폴더를 정적 호스팅에 업로드 (압축 꺼둠)
 - 레퍼런스: 드래곤빌리지 계열(알 부화·육성·수집·속성 턴제 전투) → 장르만 참고, 이름·캐릭터·아트 차용 금지
 
@@ -142,13 +144,16 @@
 ## 역할 분담
 - 프로그래머: 게임 골격 전부 — 데이터·시스템·전투·저장·화면 전환·플레이스홀더 UI
 - 디자이너(협업자): UI/UX·고양이 에셋·이펙트 — 골격 위에서 직접 해보며 변경·재구성
-- 골격 UI = 동작 확인용 회색 박스, 레이아웃·흐름·연출은 디자이너가 확정
+- 골격 UI = 무료 픽셀 UI로 조립한 화면 프리팹, 레이아웃·흐름·연출은 디자이너가 확정
 - 디자이너는 Codex + Unity CLI로 프리팹·연출 직접 수정 → docs/collaborator-guide.md
 
 ## 에셋 제작 방식
-- 고양이: 512×512 PNG 투명, 단계별 idle 4프레임 + 공격 4프레임
+- 고양이: 도트 16·32·64·128px 중 자유, idle 4프레임 + 공격 6프레임
+- 표시 크기는 프리팹 Unit 크기로 고정 → 원본 해상도와 무관
+- 프레임 PNG 여러 장 또는 시트 1장(cellSize 지정) 둘 다 지원
 - 대안: 파츠 분리 + Unity 2D Animation 본 리깅
-- UI: 9-slice 패널·버튼, 아이콘 128×128, 무료 상업용 폰트
+- UI: 9-slice 스프라이트(Border 지정)·스프라이트 아틀라스·화면별 프리팹
+- 폰트: 한글 포함 폰트 필수(WebGL), 픽셀 폰트는 선택 → TMP 폰트 에셋으로 교체
 - 이펙트: Particle System + 텍스처 시트 → 속성별 타격 6종·성장·부화·레벨업
 - 도구: Aseprite/Krita, AI 이미지 생성 시 상업 이용 약관 확인
 - 외부 무료 에셋은 출처·라이선스 Credits.md 기록
@@ -156,7 +161,7 @@
 ## 에셋 납품 규격
 - 파일명: cat_fire_stage2_idle_01.png, 소문자·언더바
 - 위치: Assets/Art/{Cats,UI,FX}/
-- 피벗 발밑 중앙, PPU 100
+- 피벗 발밑 중앙, 픽셀아트 Filter Point (Assets/Art 아래 자동)
 - 이펙트: 프리팹 납품, 2초 내 자동 소멸
 - 플레이스홀더 먼저 → 같은 이름으로 실제 에셋 교체
 
