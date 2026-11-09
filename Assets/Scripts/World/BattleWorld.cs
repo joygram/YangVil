@@ -51,6 +51,7 @@ namespace CatVillage.World
 
         void Start()
         {
+            if (!GameBootstrap.Ready || SceneFlow.Instance.PendingStage == null) return;
             _game = GameBootstrap.Game;
             _scope = new AssetScope();
             _art = _game.Config.presentation;

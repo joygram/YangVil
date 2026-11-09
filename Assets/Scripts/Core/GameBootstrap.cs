@@ -13,7 +13,9 @@ namespace CatVillage.Core
 
         public static Game Game { get; private set; }
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        public static bool Ready => Game != null && SceneFlow.Instance != null;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void StartFromBoot()
         {
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex != 0)

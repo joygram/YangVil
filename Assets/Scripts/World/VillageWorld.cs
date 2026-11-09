@@ -52,6 +52,7 @@ namespace CatVillage.World
 
         void Start()
         {
+            if (!GameBootstrap.Ready) return;
             _game = GameBootstrap.Game;
             _scope = new AssetScope();
             BuildStatic();
