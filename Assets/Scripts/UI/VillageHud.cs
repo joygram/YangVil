@@ -55,7 +55,8 @@ namespace CatVillage.UI
 
         void OnDestroy()
         {
-            if (Screens != null) Game.Changed -= Refresh;
+            var game = Screens == null ? null : Screens.Game;
+            if (game != null) game.Changed -= Refresh;
             if (_world == null) return;
             _world.BuildingTapped -= OnBuilding;
             _world.HouseTapped -= OnHouse;

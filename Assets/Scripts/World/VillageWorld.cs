@@ -185,6 +185,7 @@ namespace CatVillage.World
         public void EndMove()
         {
             _moving = null;
+            if (_game == null) return;
             foreach (var house in _game.Data.houses)
                 if (_houses.TryGetValue(house.uid, out var v))
                     v.yard.color = Color.Lerp(_game.HouseDef(house).tint, Color.white, 0.55f);
