@@ -49,6 +49,9 @@ deps() {
     sudo apt-get update -qq && sudo apt-get install -y gh >/dev/null
   fi
   echo "  node $(node -v), gh $(gh --version | head -1 | awk '{print $3}')"
+  git -C "$REPO_ROOT" config alias.sync '!SYNC_FOLLOW_REMOTE=1 bash scripts/tools/sync.sh'
+  git -C "$REPO_ROOT" config pull.ff only
+  echo "  git sync 등록 (git pull 대신 사용: 에디터 자동 변경 정리 + 원격 추종)"
 }
 
 hub() {
@@ -141,7 +144,9 @@ case "${1:-all}" in
   cloudflare) cloudflare ;;
   register) shift; register "${1:-}" ;;
   install) deps && hub && editor && license && check ;;
-  sync) SYNC_FOLLOW_REMOTE=1 bash "$(dirname "$0")/sync.sh" ;;
+  sync) SYNC_FOLLOW_REMOTE=1 bash "$(dirname "$0")/sync.sh"
+        git -C "$REPO_ROOT" config alias.sync '!SYNC_FOLLOW_REMOTE=1 bash scripts/tools/sync.sh'
+        git -C "$REPO_ROOT" config pull.ff only ;;
   ci) SYNC_FOLLOW_REMOTE=1 bash "$(dirname "$0")/sync.sh"; license && check && cloudflare && register "${2:-}" ;;
   all) SYNC_FOLLOW_REMOTE=1 bash "$(dirname "$0")/sync.sh"; deps && hub && editor && license && check && cloudflare && register "${2:-}" ;;
   *) echo "사용법: bash $0 [install|license|check|cloudflare|register [토큰]|ci|all]"; exit 1 ;;
