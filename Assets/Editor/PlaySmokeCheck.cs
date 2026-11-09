@@ -117,6 +117,7 @@ namespace CatVillage.EditorTools
             Check("마을 건물 5종", world.transform.Cast<Transform>().Count(t => t.GetComponent<Clickable>() != null) >= 5);
             Check("마을 고양이 생성", FindObjectsByType<SpriteActor>(FindObjectsSortMode.None).Length >= 1);
             Check("고양이 프레임 로드", FindObjectsByType<SpriteActor>(FindObjectsSortMode.None).All(a => a.Ready));
+            Check("가이드 안내 표시", !string.IsNullOrEmpty(FindAnyObjectByType<VillageHud>().guideLabel.text));
 
             SceneFlow.Instance.GoBattle(GameBootstrap.Game.Config.stages[0]);
             yield return Step("전투 로드", () => FindAnyObjectByType<BattleWorld>() != null && FindAnyObjectByType<BattleHud>() != null, 30);
@@ -124,6 +125,12 @@ namespace CatVillage.EditorTools
             yield return Step("전투 상태", () => battle.State != null, 10);
             battle.ToggleSpeed();
             yield return Step("전투 종료→결과", () => FindAnyObjectByType<ResultScreen>() != null, 180);
+            var result = FindAnyObjectByType<ResultScreen>();
+            Check("1-1 승리", result.Victory);
+            Check("결과 '다음 스테이지' 버튼", result.next.gameObject.activeSelf);
+
+            result.stages.button.onClick.Invoke();
+            yield return Step("결과→모험 목록", () => FindAnyObjectByType<StageSelectScreen>() != null && FindAnyObjectByType<VillageWorld>() != null, 30);
 
             SceneFlow.Instance.GoVillage();
             yield return Step("마을 복귀", () => FindAnyObjectByType<VillageWorld>() != null && FindAnyObjectByType<VillageHud>() != null, 30);

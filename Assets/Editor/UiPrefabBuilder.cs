@@ -238,7 +238,7 @@ namespace CatVillage.EditorTools
             UiFactory.Stretch((RectTransform)s.panelContent.parent, 20, 20, 20, 120);
 
             var banner = ui.Sliced(root, "MoveBanner", ui.Panel, new Color(0.85f, 1f, 0.8f));
-            UiFactory.Place(banner.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -200), new Vector2(1040, 120));
+            UiFactory.Place(banner.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -320), new Vector2(1040, 120));
             s.moveBanner = banner.gameObject;
             s.moveLabel = ui.Text(banner.transform, "옮길 집을 누르세요", 28, Ink, TextAlignmentOptions.MidlineLeft);
             UiFactory.Stretch(s.moveLabel.rectTransform, 30, 10, 200, 10);
@@ -251,6 +251,14 @@ namespace CatVillage.EditorTools
             s.toast = toastBg.gameObject.AddComponent<Toast>();
             s.toast.label = ui.Text(toastBg.transform, "알림", 34, Color.white);
             UiFactory.Stretch(s.toast.label.rectTransform);
+
+            var guide = ui.Sliced(root, "Guide", ui.Panel, new Color(1f, 0.95f, 0.75f));
+            UiFactory.Place(guide.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -190), new Vector2(1040, 110));
+            s.guideLabel = ui.Text(guide.transform, "할 일", 28, Ink, TextAlignmentOptions.MidlineLeft);
+            UiFactory.Stretch(s.guideLabel.rectTransform, 26, 8, 190, 8);
+            s.guideGo = ui.GreenButton(guide.transform, "GuideGo", "가기 ▶", 30);
+            UiFactory.Place((RectTransform)s.guideGo.transform, new Vector2(1f, 0.5f), new Vector2(-95, 0), new Vector2(160, 84));
+            guide.transform.SetSiblingIndex(1);
             return root;
         }
 
@@ -319,15 +327,21 @@ namespace CatVillage.EditorTools
             UiFactory.Background(root, Paper);
             var s = root.gameObject.AddComponent<ResultScreen>();
             var panel = ui.Sliced(root, "Panel", ui.Panel);
-            UiFactory.Place(panel.rectTransform, new Vector2(0.5f, 0.55f), Vector2.zero, new Vector2(900, 900));
+            UiFactory.Place(panel.rectTransform, new Vector2(0.5f, 0.62f), Vector2.zero, new Vector2(900, 860));
             s.title = ui.Text(panel.transform, "승리!", 96, Ink);
-            UiFactory.Place(s.title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -130), new Vector2(800, 150));
+            UiFactory.Place(s.title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -120), new Vector2(800, 150));
             s.body = ui.Text(panel.transform, "보상", 44, Ink);
-            UiFactory.Place(s.body.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0, -20), new Vector2(800, 500));
-            s.retry = ui.BlueButton(root, "Retry", "다시 도전", 40);
-            UiFactory.Place((RectTransform)s.retry.transform, new Vector2(0.5f, 0f), new Vector2(-260, 150), new Vector2(480, 140));
-            s.home = ui.GreenButton(root, "Home", "마을로", 40);
-            UiFactory.Place((RectTransform)s.home.transform, new Vector2(0.5f, 0f), new Vector2(260, 150), new Vector2(480, 140));
+            UiFactory.Place(s.body.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0, -10), new Vector2(800, 420));
+            s.hint = ui.Text(panel.transform, "", 28, Color.gray);
+            UiFactory.Place(s.hint.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, 90), new Vector2(820, 120));
+            s.next = ui.GreenButton(root, "Next", "다음 스테이지", 44);
+            UiFactory.Place((RectTransform)s.next.transform, new Vector2(0.5f, 0f), new Vector2(0, 360), new Vector2(980, 150));
+            s.retry = ui.BlueButton(root, "Retry", "다시 도전", 34);
+            UiFactory.Place((RectTransform)s.retry.transform, new Vector2(0.5f, 0f), new Vector2(-330, 160), new Vector2(310, 130));
+            s.stages = ui.BlueButton(root, "Stages", "모험 목록", 34);
+            UiFactory.Place((RectTransform)s.stages.transform, new Vector2(0.5f, 0f), new Vector2(0, 160), new Vector2(310, 130));
+            s.home = ui.BlueButton(root, "Home", "마을로", 34);
+            UiFactory.Place((RectTransform)s.home.transform, new Vector2(0.5f, 0f), new Vector2(330, 160), new Vector2(310, 130));
             return root;
         }
     }

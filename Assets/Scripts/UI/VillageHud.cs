@@ -24,6 +24,8 @@ namespace CatVillage.UI
         public TMP_Text moveLabel;
         public LabeledButton moveCancel;
         public Toast toast;
+        public TMP_Text guideLabel;
+        public LabeledButton guideGo;
         public CatCard catCardPrefab;
         public RowCard rowCardPrefab;
 
@@ -45,6 +47,7 @@ namespace CatVillage.UI
             dex.OnClick(() => OnBuilding(VillageWorld.Dex));
             adventure.OnClick(() => OnBuilding(VillageWorld.Gate));
             panelClose.OnClick(Close);
+            guideGo.OnClick(FollowGuide);
             moveCancel.OnClick(CancelMove);
             panel.SetActive(false);
             moveBanner.SetActive(false);
@@ -98,15 +101,35 @@ namespace CatVillage.UI
 
         void Refresh()
         {
-            wallet.text = $"생선 코인 {Game.Data.coins}   츄르 {Game.ItemCount(Game.Config.Item(ItemKind.Exp))}   담요 {Game.ItemCount(Game.Config.Item(ItemKind.HatchNow))}";
+            guideLabel.text = Guide.Next(Game).Text;
+            wallet.text =$"생선 코인 {Game.Data.coins}   츄르 {Game.ItemCount(Game.Config.Item(ItemKind.Exp))}   담요 {Game.ItemCount(Game.Config.Item(ItemKind.HatchNow))}";
             if (_render == null) return;
             Ui.Clear(panelContent);
             _render();
         }
 
+        float _nextGuide;
+
         void Update()
         {
+            if (Screens == null) return;
             if (_render == RenderHatchery) RefreshTimers();
+            if (Time.unscaledTime < _nextGuide) return;
+            _nextGuide = Time.unscaledTime + 1f;
+            guideLabel.text = Guide.Next(Game).Text;
+        }
+
+        void FollowGuide()
+        {
+            var step = Guide.Next(Game);
+            switch (step.Target)
+            {
+                case GuideTarget.Hatchery: OnBuilding(VillageWorld.Hatchery); break;
+                case GuideTarget.Shop: OnBuilding(VillageWorld.Shop); break;
+                case GuideTarget.Collect: toast.Show($"코인 +{Game.CollectAndSave(step.House)}"); break;
+                case GuideTarget.Party: Open("내 고양이", () => RenderCats(Game.Data.cats)); break;
+                case GuideTarget.Adventure: OnBuilding(VillageWorld.Gate); break;
+            }
         }
 
         RowCard Row(string label, string action, Action onClick)

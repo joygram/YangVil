@@ -48,10 +48,10 @@ namespace CatVillage.Core
     [Serializable]
     public class SaveData
     {
-        public const int CurrentVersion = 2;
+        public const int CurrentVersion = 3;
 
         public int version = CurrentVersion;
-        public int coins = 100;
+        public int coins = 250;
         public List<OwnedCat> cats = new List<OwnedCat>();
         public List<OwnedHouse> houses = new List<OwnedHouse>();
         public List<Basket> baskets = new List<Basket>();

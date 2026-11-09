@@ -28,7 +28,13 @@ namespace CatVillage.Core
             _screens = screens;
         }
 
-        public void GoVillage() => Go(_config.villageScene, () => _screens.Show<VillageHud>());
+        public void GoVillage() => GoVillage(false);
+
+        public void GoVillage(bool openStages) => Go(_config.villageScene, () =>
+        {
+            if (openStages) _screens.Show<StageSelectScreen>();
+            else _screens.Show<VillageHud>();
+        });
 
         public void GoBattle(StageData stage)
         {
