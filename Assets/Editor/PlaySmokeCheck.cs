@@ -135,6 +135,12 @@ namespace CatVillage.EditorTools
             var petted = FindObjectsByType<CatWanderer>(FindObjectsSortMode.None).First(w => w.GetComponent<SpriteActor>().Ready);
             petted.Pet();
             Check("고양이 쓰담 반응", petted.Petting);
+            var press = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
+            UnityEngine.EventSystems.ExecuteEvents.Execute(petted.gameObject, press, UnityEngine.EventSystems.ExecuteEvents.pointerDownHandler);
+            yield return new WaitForSecondsRealtime(0.7f);
+            UnityEngine.EventSystems.ExecuteEvents.Execute(petted.gameObject, press, UnityEngine.EventSystems.ExecuteEvents.pointerUpHandler);
+            Check("길게 누르면 고양이 카드", hud.panel.activeSelf);
+            hud.panelClose.button.onClick.Invoke();
             starter.cleanliness = 10f;
             Check("더러우면 꼬질꼬질 상태", GameBootstrap.Game.Mood(starter) == CatMood.Dirty);
             GameBootstrap.Game.Wash(starter);
