@@ -33,12 +33,32 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9f35664bef2d71242b7eefe3236b090f, type: 2}
   - {fileID: 11400000, guid: 6de373265d50c924bb9000d083c4ce72, type: 2}
   - {fileID: 11400000, guid: d647fc1f395da0a4a986b75e7ae32752, type: 2}
+  houses:
+  - {fileID: 11400000, guid: e763beeb777c81a46814e13d8c409dcc, type: 2}
+  - {fileID: 11400000, guid: c5b07346f1984e94eac4e6292c6f33b6, type: 2}
+  - {fileID: 11400000, guid: cfc731387b78799478254c54b787e4c4, type: 2}
+  - {fileID: 11400000, guid: d1f409a5f5d61f3488937d7ced567d0e, type: 2}
+  - {fileID: 11400000, guid: 6281ab87453aab943bab83abda9779ea, type: 2}
+  - {fileID: 11400000, guid: 4937bb6afb87c7d4c86b5d181c3f2b79, type: 2}
   starterCat: {fileID: 11400000, guid: 36ceacb509fbbc84599e87831be2b2ae, type: 2}
   starterBasket: {fileID: 11400000, guid: dacfd9cb0e819004cb3c8fd9849d8924, type: 2}
+  starterHouse: {fileID: 11400000, guid: e763beeb777c81a46814e13d8c409dcc, type: 2}
+  villageScene:
+    m_AssetGUID: fe856b150e2371c4a961cce6b0f6f171
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  battleScene:
+    m_AssetGUID: ba4acd691e6601c46bc35b0851178bd1
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
   screens:
-  - screenType: BattleScreen
+  - screenType: BattleHud
     prefab:
-      m_AssetGUID: f309dbb851824314290bbadf0e2bca85
+      m_AssetGUID: e7e363eafe7d2174a97ec3745b7becbb
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -64,9 +84,9 @@ MonoBehaviour:
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
-  - screenType: VillageScreen
+  - screenType: VillageHud
     prefab:
-      m_AssetGUID: 83dbcd892e92a5f49a3445bdc1853c1f
+      m_AssetGUID: 80b1a171d363eb04b9bebfc55c9b93d5
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -76,12 +96,200 @@ MonoBehaviour:
     unloadEveryNScreens: 1
     collectGarbageOnUnload: 1
     releaseOnLowMemory: 1
+  presentation:
+    villageBackground:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    battleBackgroundFallback:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    buildings:
+    - buildingId: hatchery
+      sprite:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+    - buildingId: shop
+      sprite:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+    - buildingId: breed
+      sprite:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+    - buildingId: dex
+      sprite:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+    - buildingId: gate
+      sprite:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+    elementFx:
+    - element: 0
+      hit:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      skill:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+    - element: 1
+      hit:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      skill:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+    - element: 2
+      hit:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      skill:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+    - element: 3
+      hit:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      skill:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+    - element: 4
+      hit:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      skill:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+    - element: 5
+      hit:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      skill:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+    hatchFx:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    levelUpFx:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    bgmVillage:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    bgmBattle:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    sfxHit:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    sfxSkill:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    sfxButton:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    sfxCoin:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    feel:
+      hitStopSeconds: 0.06
+      skillHitStopSeconds: 0.12
+      shakeStrength: 14
+      skillShakeStrength: 28
+      shakeSeconds: 0.18
+      knockbackDistance: 28
+      lungeRatio: 0.55
+      cutInSeconds: 0.7
   basketPrice: 100
+  hatcherySlots: 2
+  villageSlots: 6
   firstHatchSeconds: 30
   hatchSeconds: 300
+  breedSeconds: 600
+  breedPrice: 50
   expPerLevel: 50
   coinsPerLevelPerMinute: 1
-  coinCap: 300
   maxBattleTurns: 30
   fastClearTurns: 10
   battleItemLimit: 3

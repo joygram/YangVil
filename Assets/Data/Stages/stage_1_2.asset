@@ -21,3 +21,15 @@ MonoBehaviour:
   rewardCoins: 35
   rewardTreats: 2
   firstClearBasket: {fileID: 11400000, guid: 679048c2415e71f428e135904699b6fe, type: 2}
+  background:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  bgm:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

@@ -47,6 +47,22 @@ MonoBehaviour:
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
+    walk:
+    - m_AssetGUID: b2ed9831ae93d6a4aa1da35f3a7ea8f2
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: 87a78a1137adfff4f82510fdad98aa0e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    - m_AssetGUID: 4bd71ab5bf9daf844a03f829cee9b097
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
     attack:
     - m_AssetGUID: 2cd9efada95a13b43ba1ca668af3b0a3
       m_SubObjectName: 
@@ -78,6 +94,12 @@ MonoBehaviour:
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
+    hurt:
+    - m_AssetGUID: 73fb8fb63f9f0964fa91f234277fb7cf
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
     sheet:
       m_AssetGUID: 
       m_SubObjectName: 
@@ -85,10 +107,15 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     cellSize: 16
-    idleRow: 0
-    attackRow: 4
     framesPerRow: 6
+    idleRow: 0
     idleFrames: 4
+    walkRow: 1
+    walkFrames: 6
+    attackRow: 4
     attackFrames: 6
+    hurtRow: -1
+    hurtFrames: 0
+    fps: 8
   baseTint: {r: 0.75, g: 0.75, b: 0.75, a: 1}
   scale: 0.7

@@ -27,7 +27,9 @@ MonoBehaviour:
     spd: 1
   sprites:
     idle: []
+    walk: []
     attack: []
+    hurt: []
     sheet:
       m_AssetGUID: 146dd9b5f05d5dc4ea0bad5691bfa229
       m_SubObjectName: 
@@ -35,10 +37,15 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     cellSize: 16
-    idleRow: 0
-    attackRow: 4
     framesPerRow: 6
+    idleRow: 0
     idleFrames: 4
+    walkRow: 1
+    walkFrames: 6
+    attackRow: 4
     attackFrames: 6
+    hurtRow: -1
+    hurtFrames: 0
+    fps: 8
   baseTint: {r: 0.6, g: 0.65, b: 0.7, a: 1}
   scale: 1

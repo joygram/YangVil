@@ -25,8 +25,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 83dbcd892e92a5f49a3445bdc1853c1f
-    m_Address: Assets/Prefabs/UI/Screens/VillageScreen.prefab
+  - m_GUID: 80b1a171d363eb04b9bebfc55c9b93d5
+    m_Address: Assets/Prefabs/UI/Screens/VillageHud.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c16dd51d71ed07940859b93aa621f61b
+    m_Address: Assets/Art/UI/Fonts/Galmuri11 SDF.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -35,8 +40,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f309dbb851824314290bbadf0e2bca85
-    m_Address: Assets/Prefabs/UI/Screens/BattleScreen.prefab
+  - m_GUID: e7e363eafe7d2174a97ec3745b7becbb
+    m_Address: Assets/Prefabs/UI/Screens/BattleHud.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
