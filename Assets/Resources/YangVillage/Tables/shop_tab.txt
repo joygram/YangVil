@@ -1,0 +1,8 @@
+tab_id	text_id	order	wallet_id	icon_id
+shop_tab_1	shop_tab_1_name	1	money	icon_0748
+shop_tab_2	shop_tab_2_name	2	pvp	icon_0749
+shop_tab_3	shop_tab_3_name	3	money	icon_0750
+shop_tab_4	shop_tab_4_name	4	money	icon_0751
+shop_tab_5	shop_tab_5_name	5	element	icon_0752
+shop_tab_6	shop_tab_6_name	6	money	icon_0753
+shop_tab_7	shop_tab_7_name	7	money	icon_0754

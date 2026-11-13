@@ -1,0 +1,137 @@
+table	column	type	key	optional	ref
+cat	cat_id	id	true	false	
+cat	text_id	id	false	false	text.text_id
+cat	element_id	id	false	false	element.element_id
+cat	role_id	id	false	false	role.role_id
+cat	star	int	false	false	
+cat	stat_tier	id	false	false	
+cat	awaken_skill_id	int	false	true	
+cat	acquire_locked	bool	false	false	
+cat	dex_hidden	bool	false	false	
+cat	dv2_id	int	false	false	
+element	element_id	id	true	false	
+element	text_id	id	false	false	text.text_id
+element	dv2_element	id	false	true	
+element	beats	id	false	true	element.element_id
+role	role_id	id	true	false	
+role	text_id	id	false	false	text.text_id
+role	spd	int	false	false	
+region	region_id	id	true	false	
+region	text_id	id	false	false	text.text_id
+region	act	int	false	false	
+enemy	enemy_id	id	true	false	
+enemy	text_id	id	false	false	text.text_id
+enemy	region_id	id	false	false	region.region_id
+enemy	element_id	id	false	false	element.element_id
+enemy	is_boss	bool	false	false	
+enemy	night_only	bool	false	false	
+enemy	hp	int	false	false	
+enemy	atk	int	false	false	
+enemy	def	int	false	false	
+enemy	dv2_asset_id	int	false	true	
+stage	stage_id	id	true	false	
+stage	text_id	id	false	false	text.text_id
+stage	region_id	id	false	false	region.region_id
+stage	order	int	false	false	
+stage	level	int	false	false	
+stage	boss_enemy_id	id	false	false	enemy.enemy_id
+stage	has_night	bool	false	false	
+text	text_id	id	true	false	
+text	ko	text	false	false	
+cat_stat	role_id	id	false	false	role.role_id
+cat_stat	stat_tier	id	false	false	
+cat_stat	base_hp	int	false	false	
+cat_stat	base_atk	int	false	false	
+cat_stat	base_def	int	false	false	
+cat_stat	growth_hp	int	false	false	
+cat_stat	growth_atk	int	false	false	
+cat_stat	growth_def	int	false	false	
+level_exp	level	int	true	false	
+level_exp	exp_to_next	int	false	false	
+basket_pool	basket_id	id	false	false	
+basket_pool	star	int	false	false	
+basket_pool	weight	int	false	false	
+stage_enemy	stage_id	id	false	false	stage.stage_id
+stage_enemy	slot	int	false	false	
+stage_enemy	enemy_id	id	false	false	enemy.enemy_id
+stage_enemy	level	int	false	false	
+stage_enemy	hp	int	false	false	
+stage_enemy	atk	int	false	false	
+stage_enemy	def	int	false	false	
+stage_enemy	is_boss	bool	false	false	
+config	key	id	true	false	
+config	value	text	false	false	
+screen	screen_id	id	true	false	
+screen	scene_path	text	false	false	
+element	color	text	false	false	
+cat	sprite_id	id	false	false	sprite.sprite_id
+region	sprite_id	id	false	false	sprite.sprite_id
+region	boss_sprite_id	id	false	false	sprite.sprite_id
+element	sprite_id	id	false	true	sprite.sprite_id
+sprite	sprite_id	id	true	false	
+sprite	path	text	false	false	
+sprite	columns	int	false	false	
+sprite	rows	int	false	false	
+sprite	start	int	false	false	
+sprite	count	int	false	false	
+element	hit_sprite_id	id	false	false	sprite.sprite_id
+element	skill_sprite_id	id	false	false	sprite.sprite_id
+card	card_id	id	true	false	
+card	text_id	id	false	false	text.text_id
+card	color	text	false	false	
+card	power_pct	int	false	false	
+card	hits	int	false	false	
+card	gauge	int	false	false	
+role_card	role_id	id	false	false	role.role_id
+role_card	card_id	id	false	false	card.card_id
+role_card	count	int	false	false	
+attack_style	attack_style_id	id	true	false	
+attack_style	moves	bool	false	false	
+attack_style	slash	bool	false	false	
+attack_style	cast	bool	false	false	
+role	attack_style_id	id	false	false	attack_style.attack_style_id
+element	shot_sprite_id	id	false	false	sprite.sprite_id
+element	burns	bool	false	false	
+enemy	sprite_id	id	false	true	sprite.sprite_id
+currency	currency_id	id	true	false	
+currency	text_id	id	false	false	text.text_id
+currency	element_id	id	false	true	element.element_id
+item	item_id	id	true	false	
+item	text_id	id	false	false	text.text_id
+item	category	id	false	false	
+item	subcategory	id	false	true	
+item	element_id	id	false	true	element.element_id
+item	icon_id	id	false	true	icon.icon_id
+item	stack	bool	false	false	
+item	tier	int	false	true	
+item	grade	int	false	true	
+item	dv2_row	int	false	false	
+icon	icon_id	id	true	false	
+icon	group	id	false	false	
+icon	dir	id	false	true	
+icon	frame	id	false	false	
+shop_wallet	wallet_id	id	false	false	
+shop_wallet	slot	int	false	false	
+shop_wallet	currency_id	id	false	false	currency.currency_id
+shop_tab	tab_id	id	true	false	
+shop_tab	text_id	id	false	false	text.text_id
+shop_tab	order	int	false	false	
+shop_tab	wallet_id	id	false	false	shop_wallet.wallet_id
+shop_tab	icon_id	id	false	true	icon.icon_id
+shop_stock	tab_id	id	false	false	shop_tab.tab_id
+shop_stock	slot	int	false	false	
+shop_stock	item_id	id	false	false	item.item_id
+shop_stock	price	int	false	false	
+shop_stock	currency_id	id	false	false	currency.currency_id
+shop_stock	bundle	int	false	true	
+shop_stock	sale_pct	int	false	true	
+shop_stock	once	bool	false	false	
+shop_gacha	gacha_id	id	true	false	
+shop_gacha	text_id	id	false	false	text.text_id
+shop_gacha	tab_id	id	false	false	shop_tab.tab_id
+shop_gacha	price	int	false	false	
+shop_gacha	currency_id	id	false	false	currency.currency_id
+shop_gacha	count	int	false	false	
+shop_gacha	grade	id	false	false	
+sell_rule	kind	id	true	false	
+sell_rule	ratio_pct	int	false	false	

@@ -1,0 +1,259 @@
+item_id	text_id	category	subcategory	element_id	icon_id	stack	tier	grade	dv2_row
+item_001	item_001_name	material	alchemy		icon_0490	true			0
+item_002	item_002_name	material	alchemy		icon_0491	true			1
+item_003	item_003_name	material	alchemy		icon_0492	true			2
+item_004	item_004_name	material	alchemy		icon_0493	true			3
+item_005	item_005_name	material	alchemy		icon_0494	true			4
+item_006	item_006_name	material	alchemy		icon_0495	true			5
+item_007	item_007_name	material	alchemy		icon_0496	true			6
+item_008	item_008_name	material	alchemy		icon_0497	true			7
+item_009	item_009_name	material	alchemy		icon_0498	true			8
+item_010	item_010_name	material	awaken_mat		icon_0499	true			9
+item_011	item_011_name	consumable	nest		icon_0500	true			10
+item_012	item_012_name	material	shard		icon_0501	true			11
+item_013	item_013_name	material	shard		icon_0502	true			12
+item_014	item_014_name	material	shard		icon_0503	true			13
+item_015	item_015_name	material	shard		icon_0504	true			14
+item_016	item_016_name	material	shard		icon_0505	true			15
+item_017	item_017_name	material	shard		icon_0506	true			16
+item_018	item_018_name	material	shard		icon_0507	true			17
+item_019	item_019_name	food	drink		icon_0508	true	1		18
+item_020	item_020_name	food	drink		icon_0509	true	2		19
+item_021	item_021_name	food	drink		icon_0510	true	3		20
+item_022	item_022_name	material	powder		icon_0511	true			21
+item_023	item_023_name	material	craft		icon_0512	true			22
+item_024	item_024_name	consumable	blessing		icon_0513	true			23
+item_025	item_025_name	consumable	blessing		icon_0514	true			24
+item_026	item_026_name	consumable	blessing		icon_0515	true			25
+item_027	item_027_name	consumable	blessing		icon_0516	true			26
+item_028	item_028_name	material	awaken_mat		icon_0517	true			27
+item_029	item_029_name	consumable	box		icon_0518	true			28
+item_030	item_030_name	consumable	box		icon_0519	true			29
+item_031	item_031_name	consumable	box		icon_0520	true			30
+item_032	item_032_name	consumable	box		icon_0521	true			31
+item_033	item_033_name	consumable	nest		icon_0522	true			32
+item_034	item_034_name	material	shard		icon_0523	true			33
+item_035	item_035_name	material	shard		icon_0524	true			34
+item_036	item_036_name	material	shard		icon_0525	true			35
+item_037	item_037_name	material	shard		icon_0526	true			36
+item_038	item_038_name	material	shard		icon_0527	true			37
+item_039	item_039_name	material	shard		icon_0528	true			38
+item_040	item_040_name	material	shard		icon_0529	true			39
+item_041	item_041_name	currency	pvp		icon_0530	true			40
+item_042	item_042_name	food	drink		icon_0531	true	1		41
+item_043	item_043_name	food	drink		icon_0532	true	2		42
+item_044	item_044_name	food	drink		icon_0533	true	3		43
+item_045	item_045_name	currency	raid_shard		icon_0534	true			44
+item_046	item_046_name	material	crystal_ex	dusk	icon_0535	true			45
+item_047	item_047_name	material	crystal_ex	moon	icon_0536	true			46
+item_048	item_048_name	material	crystal_ex	leaf	icon_0537	true			47
+item_049	item_049_name	material	crystal_ex	fire	icon_0538	true			48
+item_050	item_050_name	material	crystal_ex	star	icon_0539	true			49
+item_051	item_051_name	material	crystal_ex	sun	icon_0540	true			50
+item_052	item_052_name	material	crystal_ex	water	icon_0541	true			51
+item_053	item_053_name	material	crystal_ex	wind	icon_0542	true			52
+item_054	item_054_name	material	crystal	dusk	icon_0543	true			53
+item_055	item_055_name	material	crystal	moon	icon_0544	true			54
+item_056	item_056_name	material	crystal	leaf	icon_0545	true			55
+item_057	item_057_name	material	crystal	fire	icon_0546	true			56
+item_058	item_058_name	material	crystal	star	icon_0547	true			57
+item_059	item_059_name	material	crystal	sun	icon_0548	true			58
+item_060	item_060_name	material	crystal	shade	icon_0549	true			59
+item_061	item_061_name	material	crystal	water	icon_0550	true			60
+item_062	item_062_name	material	crystal	wind	icon_0551	true			61
+item_063	item_063_name	food	drink		icon_0552	true	1		62
+item_064	item_064_name	food	drink		icon_0553	true	2		63
+item_065	item_065_name	food	drink		icon_0554	true	3		64
+item_066	item_066_name	material	powder		icon_0555	true			65
+item_067	item_067_name	material	enchant		icon_0556	true			66
+item_068	item_068_name	consumable	qol		icon_0557	true			67
+item_069	item_069_name	food	drink		icon_0558	true			68
+item_070	item_070_name	document	recipe		icon_0559	true			69
+item_071	item_071_name	document	recipe		icon_0560	true			70
+item_072	item_072_name	document	recipe		icon_0561	true			71
+item_073	item_073_name	document	recipe		icon_0562	true			72
+item_074	item_074_name	document	recipe		icon_0563	true			73
+item_075	item_075_name	currency	essence	dusk	icon_0564	true			74
+item_076	item_076_name	currency	essence	moon	icon_0565	true			75
+item_077	item_077_name	currency	essence	fire	icon_0566	true			76
+item_078	item_078_name	currency	essence	leaf	icon_0567	true			77
+item_079	item_079_name	currency	essence	star	icon_0568	true			78
+item_080	item_080_name	currency	essence	sun	icon_0569	true			79
+item_081	item_081_name	currency	essence	shade	icon_0570	true			80
+item_082	item_082_name	currency	essence	water	icon_0571	true			81
+item_083	item_083_name	currency	essence	wind	icon_0572	true			82
+item_084	item_084_name	food	revive		icon_0573	true			83
+item_085	item_085_name	consumable	qol		icon_0574	true			84
+item_086	item_086_name	material	awaken_stone		icon_0575	true		3	85
+item_087	item_087_name	material	awaken_stone		icon_0576	true		4	86
+item_088	item_088_name	material	awaken_stone		icon_0577	true		5	87
+item_089	item_089_name	material	awaken_stone		icon_0578	true		6	88
+item_090	item_090_name	consumable	buff		icon_0579	true			89
+item_091	item_091_name	consumable	buff		icon_0580	true			90
+item_092	item_092_name	food	feed	dusk	icon_0581	true			91
+item_093	item_093_name	food	feed	dusk	icon_0582	true			92
+item_094	item_094_name	food	feed	moon	icon_0583	true			93
+item_095	item_095_name	food	feed	moon	icon_0584	true			94
+item_096	item_096_name	food	feed	fire	icon_0585	true			95
+item_097	item_097_name	food	feed	fire	icon_0586	true			96
+item_098	item_098_name	food	feed	leaf	icon_0587	true			97
+item_099	item_099_name	food	feed	leaf	icon_0588	true			98
+item_100	item_100_name	food	feed	star	icon_0589	true			99
+item_101	item_101_name	food	feed	star	icon_0590	true			100
+item_102	item_102_name	food	feed	sun	icon_0591	true			101
+item_103	item_103_name	food	feed	sun	icon_0592	true			102
+item_104	item_104_name	food	feed	shade	icon_0593	true			103
+item_105	item_105_name	food	feed	shade	icon_0594	true			104
+item_106	item_106_name	food	feed	water	icon_0595	true			105
+item_107	item_107_name	food	feed	water	icon_0596	true			106
+item_108	item_108_name	food	feed	wind	icon_0597	true			107
+item_109	item_109_name	food	feed	wind	icon_0598	true			108
+item_110	item_110_name	consumable	slot		icon_0599	true			109
+item_111	item_111_name	consumable	slot		icon_0600	true			110
+item_112	item_112_name	consumable	slot		icon_0601	true			111
+item_113	item_113_name	consumable	slot		icon_0602	true			112
+item_114	item_114_name	consumable	slot		icon_0603	true			113
+item_115	item_115_name	consumable	buff		icon_0604	true			114
+item_116	item_116_name	consumable	buff		icon_0605	true			115
+item_117	item_117_name	consumable	box	dusk	icon_0606	true			116
+item_118	item_118_name	consumable	box	moon	icon_0607	true			117
+item_119	item_119_name	consumable	box	leaf	icon_0608	true			118
+item_120	item_120_name	consumable	box	fire	icon_0609	true			119
+item_121	item_121_name	consumable	box	star	icon_0610	true			120
+item_122	item_122_name	consumable	box	sun	icon_0611	true			121
+item_123	item_123_name	consumable	box	shade	icon_0612	true			122
+item_124	item_124_name	consumable	box	water	icon_0613	true			123
+item_125	item_125_name	consumable	box	wind	icon_0614	true			124
+item_126	item_126_name	food	heal		icon_0615	true	1		125
+item_127	item_127_name	food	heal		icon_0616	true	2		126
+item_128	item_128_name	food	heal		icon_0617	true	3		127
+item_129	item_129_name	consumable	qol		icon_0618	true			128
+item_130	item_130_name	consumable	qol		icon_0619	true			129
+item_131	item_131_name	material	shard		icon_0620	true			130
+item_132	item_132_name	material	shard		icon_0621	true			131
+item_133	item_133_name	material	shard		icon_0622	true			132
+item_134	item_134_name	material	shard		icon_0623	true			133
+item_135	item_135_name	material	shard		icon_0624	true			134
+item_136	item_136_name	material	shard		icon_0625	true			135
+item_137	item_137_name	material	shard		icon_0626	true			136
+item_138	item_138_name	consumable	nest		icon_0627	true			137
+item_139	item_139_name	food	drink		icon_0628	true	1		138
+item_140	item_140_name	food	drink		icon_0629	true	2		139
+item_141	item_141_name	food	drink		icon_0630	true	3		140
+item_142	item_142_name	material	powder		icon_0631	true			141
+item_143	item_143_name	consumable	qol		icon_0632	true			142
+item_144	item_144_name	material	shard		icon_0633	true			143
+item_145	item_145_name	material	shard		icon_0634	true			144
+item_146	item_146_name	material	shard		icon_0635	true			145
+item_147	item_147_name	material	shard		icon_0636	true			146
+item_148	item_148_name	material	shard		icon_0637	true			147
+item_149	item_149_name	material	shard		icon_0638	true			148
+item_150	item_150_name	material	shard		icon_0639	true			149
+item_151	item_151_name	consumable	box		icon_0640	true			150
+item_152	item_152_name	material	jewel		icon_0641	true			151
+item_153	item_153_name	material	jewel		icon_0642	true			152
+item_154	item_154_name	material	jewel		icon_0643	true			153
+item_155	item_155_name	material	jewel		icon_0644	true			154
+item_156	item_156_name	currency	raid_shard		icon_0645	true			155
+item_157	item_157_name	consumable	key		icon_0646	true			156
+item_158	item_158_name	consumable	key		icon_0647	true			157
+item_159	item_159_name	consumable	key		icon_0648	true			158
+item_160	item_160_name	consumable	key		icon_0649	true			159
+item_161	item_161_name	consumable	key		icon_0650	true			160
+item_162	item_162_name	consumable	key		icon_0651	true			161
+item_163	item_163_name	consumable	level		icon_0652	true			162
+item_164	item_164_name	consumable	level		icon_0653	true			163
+item_165	item_165_name	material	shard		icon_0654	true			164
+item_166	item_166_name	material	shard		icon_0655	true			165
+item_167	item_167_name	material	shard		icon_0656	true			166
+item_168	item_168_name	material	shard		icon_0657	true			167
+item_169	item_169_name	material	shard		icon_0658	true			168
+item_170	item_170_name	material	shard		icon_0659	true			169
+item_171	item_171_name	material	shard		icon_0660	true			170
+item_172	item_172_name	consumable	box		icon_0661	true			171
+item_173	item_173_name	egg	dragon_egg	sun	icon_0662	true			172
+item_174	item_174_name	egg	dragon_egg	sun	icon_0663	true			173
+item_175	item_175_name	egg	dragon_egg	moon	icon_0664	true			174
+item_176	item_176_name	egg	element_egg	dusk	icon_0665	true			175
+item_177	item_177_name	egg	element_egg	moon	icon_0666	true			176
+item_178	item_178_name	egg	dragon_egg	moon	icon_0667	true			177
+item_179	item_179_name	egg	element_egg	fire	icon_0668	true			178
+item_180	item_180_name	egg	dragon_egg	moon	icon_0669	true			179
+item_181	item_181_name	egg	element_egg	leaf	icon_0670	true			180
+item_182	item_182_name	egg	dragon_egg	wind	icon_0671	true			181
+item_183	item_183_name	egg	element_egg	star	icon_0672	true			182
+item_184	item_184_name	egg	dragon_egg	fire	icon_0673	true			183
+item_185	item_185_name	egg	dragon_egg	leaf	icon_0674	true			184
+item_186	item_186_name	egg	element_egg	sun	icon_0675	true			185
+item_187	item_187_name	egg	dragon_egg	wind	icon_0676	true			186
+item_188	item_188_name	egg	gacha_egg		icon_0677	true			187
+item_189	item_189_name	egg	gacha_egg		icon_0678	true			188
+item_190	item_190_name	egg	dragon_egg	star	icon_0679	true			189
+item_191	item_191_name	egg	dragon_egg	moon	icon_0680	true			190
+item_192	item_192_name	egg	dragon_egg	leaf	icon_0681	true			191
+item_193	item_193_name	egg	dragon_egg	water	icon_0682	true			192
+item_194	item_194_name	egg	dragon_egg	fire	icon_0683	true			193
+item_195	item_195_name	egg	dragon_egg	sun	icon_0684	true			194
+item_196	item_196_name	egg	element_egg	water	icon_0685	true			195
+item_197	item_197_name	egg	element_egg	wind	icon_0686	true			196
+item_198	item_198_name	egg	dragon_egg	water	icon_0687	true			197
+item_199	item_199_name	egg	dragon_egg	fire	icon_0688	true			198
+item_200	item_200_name	egg	dragon_egg	wind	icon_0689	true			199
+item_201	item_201_name	document	map		icon_0690	true			200
+item_202	item_202_name	document	map		icon_0691	true			201
+item_203	item_203_name	document	map		icon_0692	true			202
+item_204	item_204_name	document	map		icon_0693	true			203
+item_205	item_205_name	document	map		icon_0694	true			204
+item_206	item_206_name	document	map		icon_0695	true			205
+item_207	item_207_name	document	map		icon_0696	true			206
+item_208	item_208_name	food	drink		icon_0697	true	1		207
+item_209	item_209_name	food	drink		icon_0698	true	2		208
+item_210	item_210_name	food	drink		icon_0699	true	3		209
+item_211	item_211_name	document	mix_book		icon_0700	true			210
+item_212	item_212_name	document	mix_book		icon_0701	true			211
+item_213	item_213_name	consumable	qol		icon_0702	true			212
+item_214	item_214_name	material	shard		icon_0703	true			213
+item_215	item_215_name	material	shard		icon_0704	true			214
+item_216	item_216_name	material	shard		icon_0705	true			215
+item_217	item_217_name	material	shard		icon_0706	true			216
+item_218	item_218_name	material	shard		icon_0707	true			217
+item_219	item_219_name	material	shard		icon_0708	true			218
+item_220	item_220_name	material	shard		icon_0709	true			219
+item_221	item_221_name	consumable	ticket		icon_0710	true			220
+item_222	item_222_name	food	drink		icon_0711	true	1		221
+item_223	item_223_name	food	drink		icon_0712	true	2		222
+item_224	item_224_name	food	drink		icon_0713	true	3		223
+item_225	item_225_name	consumable	story		icon_0714	true			224
+item_226	item_226_name	material	shard		icon_0715	true			225
+item_227	item_227_name	material	shard		icon_0716	true			226
+item_228	item_228_name	material	shard		icon_0717	true			227
+item_229	item_229_name	material	shard		icon_0718	true			228
+item_230	item_230_name	material	shard		icon_0719	true			229
+item_231	item_231_name	material	shard		icon_0720	true			230
+item_232	item_232_name	material	shard		icon_0721	true			231
+item_233	item_233_name	document	memory_select		icon_0722	true			232
+item_234	item_234_name	document	memory_select		icon_0723	true			233
+item_235	item_235_name	document	memory_select		icon_0724	true			234
+item_236	item_236_name	document	memory_select		icon_0725	true			235
+item_237	item_237_name	document	memory_select		icon_0726	true			236
+item_238	item_238_name	document	memory_random		icon_0727	true			237
+item_239	item_239_name	document	memory_random		icon_0728	true			238
+item_240	item_240_name	document	memory_random		icon_0729	true			239
+item_241	item_241_name	document	memory_random		icon_0730	true			240
+item_242	item_242_name	document	memory_random		icon_0731	true			241
+item_243	item_243_name	document	memory_random		icon_0732	true			242
+item_244	item_244_name	document	memory_random		icon_0733	true			243
+item_245	item_245_name	consumable	slot		icon_0734	true			244
+item_246	item_246_name	consumable	slot		icon_0735	true			245
+item_247	item_247_name	consumable	story		icon_0736	true			246
+item_248	item_248_name	consumable	story		icon_0737	true			247
+item_249	item_249_name	material	stone_heart		icon_0738	true	1		248
+item_250	item_250_name	material	stone_heart		icon_0739	true	2		249
+item_251	item_251_name	material	stone_heart		icon_0740	true	3		250
+item_252	item_252_name	material	stone_heart		icon_0741	true	4		251
+item_253	item_253_name	consumable	box		icon_0742	true			252
+item_254	item_254_name	material	spirit_stone		icon_0743	true	1		253
+item_255	item_255_name	material	spirit_stone		icon_0744	true	2		254
+item_256	item_256_name	material	spirit_stone		icon_0745	true	3		255
+item_257	item_257_name	material	spirit_stone		icon_0746	true	4		256
+item_258	item_258_name	consumable	ticket		icon_0747	true			257

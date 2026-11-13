@@ -1,0 +1,5 @@
+attack_style_id	moves	slash	cast
+style_slash	true	true	false
+style_bash	true	false	false
+style_shot	false	false	false
+style_cast	false	false	true

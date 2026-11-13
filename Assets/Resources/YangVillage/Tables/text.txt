@@ -1,0 +1,966 @@
+text_id	ko
+element_fire_name	불꽃
+element_water_name	물방울
+element_leaf_name	풀잎
+element_wind_name	바람
+element_sun_name	햇살
+element_moon_name	달빛
+element_star_name	별빛
+element_dusk_name	노을
+element_shade_name	그림자
+element_none_name	떠돌이
+role_atk_name	공격
+role_hp_name	체력
+role_def_name	방어
+role_ha_name	체공
+role_ad_name	공방
+role_hd_name	체방
+cat_0001_name	햇살 까망이
+cat_0002_name	휘파람 양말이
+cat_0003_name	산들바람 회색이
+cat_0004_name	회오리 크림
+cat_0005_name	촛불 얼룩이
+cat_0006_name	불씨 치즈
+cat_0007_name	난로 삼색이
+cat_0008_name	모닥불 까망이
+cat_0009_name	이슬 줄무늬
+cat_0010_name	이슬 깨소금
+cat_0011_name	소나기 치즈
+cat_0012_name	개울 노랑이
+cat_0013_name	텃밭 삼색이
+cat_0014_name	도토리 깨소금
+cat_0015_name	텃밭 까망이
+cat_0016_name	텃밭 고등어
+cat_0017_name	물안개 턱시도
+cat_0018_name	회오리 깨소금
+cat_0019_name	이끼 양말이
+cat_0020_name	아궁이 줄무늬
+cat_0021_name	양지 노랑이
+cat_0022_name	낙엽 솜뭉치
+cat_0023_name	이슬 솜뭉치
+cat_0024_name	소나기 고등어
+cat_0025_name	새싹 점박이
+cat_0026_name	아궁이 노랑이
+cat_0027_name	군밤 젖소
+cat_0028_name	도토리 삼색이
+cat_0029_name	연못 얼룩이
+cat_0030_name	산들바람 까망이
+cat_0031_name	군밤 턱시도
+cat_0032_name	민들레 양말이
+cat_0033_name	낙엽 삼색이
+cat_0034_name	자정 회색이
+cat_0035_name	양지 깨소금
+cat_0036_name	아침 회색이
+cat_0037_name	한낮 회색이
+cat_0038_name	한낮 흰둥이
+cat_0039_name	볕뉘 치즈
+cat_0040_name	한낮 점박이
+cat_0041_name	볕뉘 깨소금
+cat_0042_name	물안개 솜뭉치
+cat_0043_name	밤마실 줄무늬
+cat_0044_name	자정 까망이
+cat_0045_name	그믐 치즈
+cat_0046_name	초승달 노랑이
+cat_0047_name	자정 턱시도
+cat_0048_name	자정 노랑이
+cat_0049_name	밤마실 젖소
+cat_0050_name	텃밭 양말이
+cat_0051_name	군밤 크림
+cat_0052_name	산들바람 고등어
+cat_0053_name	달무리 양말이
+cat_0054_name	한낮 턱시도
+cat_0055_name	초승달 치즈
+cat_0056_name	초승달 줄무늬
+cat_0057_name	풀잎 까망이
+cat_0058_name	소나기 노랑이
+cat_0059_name	깃털 크림
+cat_0060_name	자정 삼색이
+cat_0061_name	햇살 점박이
+cat_0062_name	풀잎 점박이
+cat_0063_name	민들레 크림
+cat_0064_name	볕뉘 얼룩이
+cat_0065_name	깃털 흰둥이
+cat_0066_name	그믐 까망이
+cat_0067_name	연못 솜뭉치
+cat_0068_name	한낮 까망이
+cat_0069_name	달빛 솜뭉치
+cat_0070_name	해바라기 크림
+cat_0071_name	아궁이 회색이
+cat_0072_name	초승달 크림
+cat_0073_name	새싹 까망이
+cat_0074_name	군밤 양말이
+cat_0075_name	바람개비 고등어
+cat_0076_name	새싹 삼색이
+cat_0077_name	볕뉘 까망이
+cat_0078_name	아침 까망이
+cat_0079_name	한낮 크림
+cat_0080_name	그믐 점박이
+cat_0081_name	해바라기 솜뭉치
+cat_0082_name	양지 양말이
+cat_0083_name	초승달 깨소금
+cat_0084_name	햇살 양말이
+cat_0085_name	자정 크림
+cat_0086_name	그믐 흰둥이
+cat_0087_name	달빛 점박이
+cat_0088_name	아궁이 크림
+cat_0089_name	소나기 크림
+cat_0090_name	초승달 삼색이
+cat_0091_name	소나기 양말이
+cat_0092_name	민들레 얼룩이
+cat_0093_name	아궁이 얼룩이
+cat_0094_name	회오리 줄무늬
+cat_0095_name	불씨 얼룩이
+cat_0096_name	촛불 삼색이
+cat_0100_name	촛불 젖소
+cat_0101_name	물안개 치즈
+cat_0102_name	한낮 젖소
+cat_0103_name	불씨 양말이
+cat_0104_name	자정 양말이
+cat_0105_name	자정 치즈
+cat_0106_name	새싹 고등어
+cat_0107_name	아궁이 점박이
+cat_0108_name	텃밭 회색이
+cat_0115_name	휘파람 치즈
+cat_0116_name	군밤 흰둥이
+cat_0117_name	텃밭 크림
+cat_0118_name	자정 젖소
+cat_0119_name	빗방울 노랑이
+cat_0120_name	휘파람 솜뭉치
+cat_0121_name	빗방울 치즈
+cat_0122_name	민들레 회색이
+cat_0123_name	물안개 양말이
+cat_0124_name	산들바람 줄무늬
+cat_0125_name	산들바람 노랑이
+cat_0129_name	볕뉘 고등어
+cat_0133_name	빗방울 까망이
+cat_0137_name	아궁이 까망이
+cat_0141_name	민들레 깨소금
+cat_0145_name	밤마실 회색이
+cat_0167_name	난로 젖소
+cat_0168_name	이슬 젖소
+cat_0169_name	빗방울 젖소
+cat_0170_name	햇살 깨소금
+cat_0171_name	그믐 깨소금
+cat_0172_name	군밤 까망이
+cat_0173_name	달빛 까망이
+cat_0174_name	아침 점박이
+cat_0175_name	자정 고등어
+cat_0176_name	이끼 노랑이
+cat_0177_name	소나기 턱시도
+cat_0178_name	도토리 턱시도
+cat_0179_name	이슬 삼색이
+cat_0180_name	군밤 얼룩이
+cat_0181_name	해바라기 양말이
+cat_0182_name	휘파람 깨소금
+cat_0183_name	소나기 젖소
+cat_0184_name	달빛 얼룩이
+cat_0185_name	텃밭 흰둥이
+cat_0186_name	불씨 흰둥이
+cat_0187_name	깃털 점박이
+cat_0188_name	이슬 치즈
+cat_0189_name	물안개 까망이
+cat_0195_name	초승달 젖소
+cat_0196_name	볕뉘 회색이
+cat_0600_name	떠돌이 젖소
+cat_0666_name	땅거미 삼색이
+cat_0700_name	나그네 점박이
+cat_0777_name	모닥불 노랑이
+cat_0800_name	저녁놀 고등어
+cat_3001_name	땅거미 까망이
+cat_3002_name	별빛 삼색이
+cat_3003_name	해거름 고등어
+cat_3004_name	노을 크림
+cat_3005_name	샛별 줄무늬
+cat_3006_name	별똥 양말이
+cat_3007_name	도토리 줄무늬
+cat_3008_name	텃밭 턱시도
+cat_3009_name	이끼 턱시도
+cat_3010_name	민들레 젖소
+cat_3011_name	빗방울 깨소금
+cat_3012_name	물안개 회색이
+cat_3013_name	연못 노랑이
+cat_3014_name	빗방울 삼색이
+cat_3015_name	산들바람 턱시도
+cat_3016_name	바람개비 양말이
+cat_3017_name	깃털 고등어
+cat_3018_name	낙엽 치즈
+cat_3019_name	군밤 솜뭉치
+cat_3020_name	촛불 고등어
+cat_3021_name	난로 점박이
+cat_3022_name	불씨 줄무늬
+cat_3023_name	해바라기 흰둥이
+cat_3024_name	양지 점박이
+cat_3025_name	볕뉘 노랑이
+cat_3026_name	햇살 얼룩이
+cat_3027_name	밤마실 노랑이
+cat_3028_name	달빛 치즈
+cat_3029_name	달무리 회색이
+cat_3030_name	밤마실 고등어
+cat_3031_name	은하수 흰둥이
+cat_3032_name	별빛 고등어
+cat_3033_name	별빛 점박이
+cat_3034_name	저녁놀 노랑이
+cat_3035_name	저녁놀 얼룩이
+cat_3036_name	저녁놀 양말이
+cat_3037_name	물안개 노랑이
+cat_3038_name	달무리 삼색이
+cat_3039_name	회오리 양말이
+cat_3040_name	한낮 삼색이
+cat_3041_name	아침 삼색이
+cat_3042_name	그믐 삼색이
+cat_4000_name	낙엽 젖소
+cat_4001_name	달빛 양말이
+cat_4002_name	빗방울 줄무늬
+cat_4003_name	촛불 점박이
+cat_4004_name	민들레 치즈
+cat_4005_name	산들바람 솜뭉치
+cat_4006_name	연못 점박이
+cat_4007_name	달무리 점박이
+cat_4008_name	모닥불 흰둥이
+cat_4009_name	회오리 삼색이
+cat_4010_name	해바라기 턱시도
+cat_4011_name	이끼 삼색이
+cat_4012_name	개울 얼룩이
+cat_4013_name	개울 젖소
+cat_4014_name	새싹 양말이
+cat_4015_name	볕뉘 턱시도
+cat_4016_name	회오리 회색이
+cat_4017_name	달빛 회색이
+cat_4018_name	땅거미 노랑이
+cat_4019_name	회오리 젖소
+cat_4020_name	별똥 줄무늬
+cat_4021_name	양지 고등어
+cat_4022_name	도토리 까망이
+cat_4023_name	해거름 턱시도
+cat_4024_name	그믐 회색이
+cat_4025_name	연못 젖소
+cat_4026_name	새싹 줄무늬
+cat_4027_name	불씨 회색이
+cat_4028_name	한낮 노랑이
+cat_4029_name	텃밭 솜뭉치
+cat_4030_name	자정 깨소금
+cat_4031_name	아침 노랑이
+cat_4032_name	낙엽 고등어
+cat_4033_name	달무리 얼룩이
+cat_4034_name	산들바람 깨소금
+cat_4035_name	은하수 양말이
+cat_4036_name	노을 회색이
+cat_4037_name	아궁이 솜뭉치
+cat_4038_name	촛불 크림
+cat_4039_name	해바라기 회색이
+cat_4040_name	달빛 젖소
+cat_4041_name	아궁이 삼색이
+cat_4042_name	개울 턱시도
+cat_4043_name	풀잎 깨소금
+cat_4044_name	휘파람 점박이
+cat_4045_name	새싹 젖소
+cat_4046_name	그믐 줄무늬
+cat_4047_name	텃밭 깨소금
+cat_4048_name	깃털 젖소
+cat_4049_name	텃밭 얼룩이
+cat_4050_name	이끼 회색이
+cat_4051_name	볕뉘 젖소
+cat_4052_name	그믐 양말이
+cat_4053_name	새싹 크림
+cat_4055_name	한낮 솜뭉치
+cat_4056_name	텃밭 줄무늬
+cat_4057_name	처마 고등어
+cat_4058_name	처마 깨소금
+cat_4059_name	골목 점박이
+cat_4061_name	땅거미 고등어
+cat_4062_name	난로 얼룩이
+cat_4064_name	초승달 양말이
+cat_4065_name	난로 치즈
+cat_4066_name	불씨 크림
+cat_4067_name	깃털 삼색이
+cat_4068_name	새싹 얼룩이
+cat_4069_name	산들바람 양말이
+cat_4070_name	아침 고등어
+cat_4071_name	자정 점박이
+cat_4072_name	처마 젖소
+cat_4073_name	처마 까망이
+cat_4075_name	난로 줄무늬
+cat_4083_name	나그네 턱시도
+cat_4097_name	산들바람 삼색이
+cat_4098_name	아침 흰둥이
+cat_4099_name	이끼 젖소
+cat_4100_name	개울 치즈
+cat_4101_name	밤마실 크림
+cat_4102_name	양지 턱시도
+cat_4103_name	밤마실 턱시도
+cat_4104_name	불씨 노랑이
+cat_4105_name	그림자 크림
+cat_4106_name	소나기 솜뭉치
+cat_4107_name	별똥 깨소금
+cat_4108_name	촛불 치즈
+cat_4109_name	이끼 얼룩이
+cat_4110_name	물안개 삼색이
+cat_4111_name	이슬 까망이
+cat_4112_name	산들바람 젖소
+cat_4113_name	빗방울 얼룩이
+cat_4114_name	바람개비 삼색이
+cat_4115_name	모닥불 고등어
+cat_4116_name	별빛 치즈
+cat_4117_name	골목 크림
+cat_4118_name	처마 노랑이
+cat_4119_name	담벼락 양말이
+cat_4120_name	처마 얼룩이
+cat_4121_name	별빛 크림
+cat_4122_name	별똥 흰둥이
+cat_4123_name	은하수 줄무늬
+cat_4124_name	해거름 줄무늬
+cat_4125_name	노을 고등어
+cat_4126_name	노을 얼룩이
+cat_4127_name	도토리 크림
+cat_4128_name	민들레 고등어
+cat_4129_name	모닥불 턱시도
+cat_4130_name	양지 까망이
+cat_4131_name	달무리 줄무늬
+cat_4132_name	달무리 솜뭉치
+cat_4135_name	처마 솜뭉치
+cat_4136_name	이슬 얼룩이
+cat_4137_name	풀잎 고등어
+cat_4138_name	회오리 얼룩이
+cat_4139_name	모닥불 얼룩이
+cat_4140_name	해바라기 줄무늬
+cat_4141_name	달빛 삼색이
+cat_4142_name	촛불 솜뭉치
+cat_4143_name	도토리 점박이
+cat_4144_name	낙엽 노랑이
+cat_4145_name	그림자 깨소금
+cat_4146_name	휘파람 까망이
+cat_4147_name	이슬 노랑이
+cat_4148_name	담벼락 흰둥이
+cat_4149_name	밤마실 치즈
+cat_4150_name	촛불 턱시도
+cat_4151_name	햇살 솜뭉치
+cat_4152_name	아궁이 고등어
+cat_4153_name	깃털 턱시도
+cat_4154_name	회오리 턱시도
+cat_4155_name	한낮 얼룩이
+cat_4156_name	은하수 젖소
+cat_4157_name	볕뉘 흰둥이
+cat_4158_name	아침 얼룩이
+cat_4159_name	난로 양말이
+cat_4160_name	그믐 얼룩이
+cat_4161_name	모닥불 점박이
+cat_4162_name	도토리 흰둥이
+cat_4163_name	자정 얼룩이
+cat_4164_name	한낮 고등어
+cat_4165_name	은하수 점박이
+cat_4166_name	휘파람 회색이
+cat_4173_name	별빛 까망이
+cat_4174_name	노을 양말이
+cat_4175_name	군밤 고등어
+cat_4176_name	개울 깨소금
+cat_4177_name	모닥불 크림
+cat_4178_name	달무리 흰둥이
+cat_4179_name	도토리 노랑이
+cat_4180_name	군밤 깨소금
+cat_4181_name	깃털 치즈
+cat_4182_name	난로 턱시도
+cat_4183_name	도토리 회색이
+cat_4184_name	소나기 삼색이
+cat_4185_name	물안개 젖소
+cat_4186_name	해바라기 점박이
+cat_4187_name	이끼 솜뭉치
+cat_4188_name	낙엽 턱시도
+cat_4189_name	초승달 흰둥이
+cat_4190_name	볕뉘 줄무늬
+cat_4191_name	샛별 치즈
+cat_4192_name	모닥불 삼색이
+cat_4193_name	불씨 턱시도
+cat_4194_name	별빛 솜뭉치
+cat_4195_name	풀잎 삼색이
+cat_4196_name	바람개비 턱시도
+cat_4197_name	별빛 젖소
+cat_4198_name	낙엽 양말이
+cat_4199_name	텃밭 치즈
+cat_4200_name	그림자 점박이
+cat_4201_name	초승달 회색이
+cat_4202_name	군밤 치즈
+cat_4203_name	소나기 회색이
+cat_4204_name	아침 턱시도
+cat_4205_name	노을 젖소
+cat_4206_name	깃털 까망이
+cat_4207_name	은하수 회색이
+cat_4208_name	밤마실 양말이
+cat_4209_name	산들바람 크림
+cat_4210_name	햇살 젖소
+cat_4211_name	군밤 회색이
+cat_4212_name	소나기 얼룩이
+region_alley_name	골목길
+region_wire_forest_name	전깃줄 숲
+region_hill_name	공사장 언덕
+region_dark_house_name	불 꺼진 집
+enemy_001_name	수다쟁이 개미
+enemy_002_name	덥수룩한 나방
+enemy_003_name	늙은 지렁이
+enemy_004_name	외눈 시궁쥐
+enemy_005_name	거미 터줏대감
+enemy_006_name	늙은 시궁쥐
+enemy_007_name	재빠른 파리
+enemy_008_name	겁 많은 시궁쥐
+enemy_009_name	덥수룩한 바퀴
+enemy_010_name	파리 두목
+enemy_011_name	수다쟁이 파리
+enemy_012_name	꼬마 시궁쥐
+enemy_013_name	통통한 바퀴
+enemy_014_name	심술궂은 개미
+enemy_015_name	달팽이 터줏대감
+enemy_016_name	통통한 지렁이
+enemy_017_name	배고픈 파리
+enemy_018_name	꼬마 생쥐
+enemy_019_name	겁 많은 바퀴
+enemy_020_name	바퀴 두목
+enemy_021_name	외눈 참새
+enemy_022_name	재빠른 들쥐
+enemy_023_name	배고픈 지렁이
+enemy_024_name	덥수룩한 거미
+enemy_025_name	참새 왕초
+enemy_026_name	외눈 지렁이
+enemy_027_name	외눈 달팽이
+enemy_028_name	외눈 비둘기
+enemy_029_name	겁 많은 달팽이
+enemy_030_name	개미 대장
+enemy_031_name	심술궂은 파리
+enemy_032_name	재빠른 나방
+enemy_033_name	늙은 바퀴
+enemy_034_name	겁 많은 파리
+enemy_035_name	파리 대장
+enemy_036_name	늙은 비둘기
+enemy_037_name	재빠른 바퀴
+enemy_038_name	절름발이 달팽이
+enemy_039_name	수다쟁이 생쥐
+enemy_040_name	꼬마 비둘기
+enemy_041_name	달팽이 대장
+enemy_042_name	재빠른 시궁쥐
+enemy_043_name	배고픈 나방
+enemy_044_name	덥수룩한 들쥐
+enemy_045_name	심술궂은 참새
+enemy_046_name	늙은 거미
+enemy_047_name	거미 맏이
+enemy_048_name	꼬마 개미
+enemy_049_name	배고픈 참새
+enemy_050_name	절름발이 파리
+enemy_051_name	통통한 거미
+enemy_052_name	참새 두목
+enemy_053_name	배고픈 바퀴
+enemy_054_name	절름발이 생쥐
+enemy_055_name	통통한 생쥐
+enemy_056_name	통통한 들쥐
+enemy_057_name	개미 우두머리
+enemy_058_name	겁 많은 개미
+enemy_059_name	수다쟁이 시궁쥐
+enemy_060_name	외눈 거미
+enemy_061_name	재빠른 달팽이
+enemy_062_name	거미 두목
+enemy_063_name	덥수룩한 달팽이
+enemy_064_name	절름발이 바퀴
+enemy_065_name	겁 많은 거미
+enemy_066_name	겁 많은 참새
+enemy_067_name	꼬마 거미
+enemy_068_name	참새 맏이
+enemy_069_name	심술궂은 거미
+enemy_070_name	덥수룩한 비둘기
+enemy_071_name	수다쟁이 나방
+enemy_072_name	덥수룩한 파리
+enemy_073_name	개미 터줏대감
+enemy_074_name	심술궂은 생쥐
+enemy_075_name	수다쟁이 지렁이
+enemy_076_name	생쥐 골목대장
+enemy_077_name	배고픈 비둘기
+enemy_078_name	재빠른 개미
+enemy_079_name	나방 골목대장
+enemy_080_name	지렁이 두목
+enemy_081_name	생쥐 터줏대감
+enemy_082_name	달팽이 골목대장
+enemy_083_name	생쥐 두목
+enemy_084_name	지렁이 골목대장
+enemy_085_name	들쥐 두목
+enemy_086_name	비둘기 왕초
+enemy_087_name	참새 우두머리
+enemy_088_name	거미 대장
+enemy_089_name	파리 골목대장
+enemy_090_name	시궁쥐 두목
+enemy_091_name	바퀴 맏이
+enemy_092_name	개미 왕초
+enemy_093_name	꼬마 족제비
+enemy_094_name	통통한 떠돌이 개
+enemy_095_name	절름발이 족제비
+enemy_096_name	심술궂은 멧비둘기
+enemy_097_name	족제비 왕초
+enemy_098_name	외눈 족제비
+enemy_099_name	재빠른 들개
+enemy_100_name	배고픈 멧비둘기
+enemy_101_name	덥수룩한 멧비둘기
+enemy_102_name	떠돌이 개 큰형님
+enemy_103_name	심술궂은 너구리
+enemy_104_name	심술궂은 떠돌이 개
+enemy_105_name	외눈 멧비둘기
+enemy_106_name	덥수룩한 두더지
+enemy_107_name	두더지 두목
+enemy_108_name	재빠른 떠돌이 개
+enemy_109_name	재빠른 두더지
+enemy_110_name	배고픈 두더지
+enemy_111_name	늙은 족제비
+enemy_112_name	멧비둘기 골목대장
+enemy_113_name	너구리 터줏대감
+enemy_114_name	덥수룩한 까치
+enemy_115_name	덥수룩한 직박구리
+enemy_116_name	수다쟁이 직박구리
+enemy_117_name	늙은 올빼미
+enemy_118_name	올빼미 큰형님
+enemy_119_name	심술궂은 올빼미
+enemy_120_name	수다쟁이 까치
+enemy_121_name	심술궂은 까마귀
+enemy_122_name	겁 많은 직박구리
+enemy_123_name	까마귀 골목대장
+enemy_124_name	배고픈 올빼미
+enemy_125_name	외눈 직박구리
+enemy_126_name	꼬마 딱따구리
+enemy_127_name	꼬마 까치
+enemy_128_name	올빼미 맏이
+enemy_129_name	외눈 까마귀
+enemy_130_name	재빠른 까마귀
+enemy_131_name	재빠른 직박구리
+enemy_132_name	늙은 청설모
+enemy_133_name	청설모 우두머리
+enemy_134_name	졸린 장난감 로봇
+enemy_135_name	배고픈 태엽 쥐
+enemy_136_name	장난감 로봇 맏이
+enemy_137_name	재빠른 태엽 쥐
+enemy_138_name	겁 많은 리모컨 차
+enemy_139_name	배고픈 먼지 뭉치
+enemy_140_name	리모컨 차 터줏대감
+enemy_141_name	겁 많은 두꺼비
+enemy_142_name	수다쟁이 밤나방
+enemy_143_name	배고픈 밤나방
+enemy_144_name	외눈 밤나방
+enemy_145_name	겁 많은 밤나방
+enemy_146_name	통통한 밤나방
+enemy_147_name	늙은 두꺼비
+enemy_148_name	절름발이 박쥐
+enemy_149_name	절름발이 두꺼비
+enemy_150_name	심술궂은 귀뚜라미
+enemy_151_name	졸린 귀뚜라미
+enemy_152_name	외눈 귀뚜라미
+enemy_153_name	꼬마 귀뚜라미
+enemy_154_name	통통한 박쥐
+enemy_155_name	꼬마 두꺼비
+enemy_156_name	외눈 두꺼비
+stage_1_1_name	골목 입구
+stage_1_2_name	쓰레기통 뒤
+stage_1_3_name	전깃줄 아래
+stage_1_4_name	빈 공터
+stage_1_5_name	담장 위
+stage_1_6_name	하수구 옆
+stage_1_7_name	우유 상자
+stage_1_8_name	자전거 보관대
+stage_1_9_name	빨랫줄 밑
+stage_1_10_name	가로등 밑
+stage_1_11_name	계단참
+stage_1_12_name	화분 틈
+stage_1_13_name	배수로
+stage_1_14_name	주차장 구석
+stage_1_15_name	공사장 울타리
+stage_2_1_name	전봇대 숲
+stage_2_2_name	까치 둥지
+stage_2_3_name	반짝이 가지
+stage_2_4_name	까마귀 둥지
+stage_3_1_name	자재 더미
+stage_3_2_name	흙 언덕
+stage_3_3_name	굴착기 그늘
+stage_3_4_name	언덕 꼭대기
+stage_4_1_name	현관
+stage_4_2_name	다락
+ui_title	냥빌
+ui_tagline	고양이들이 사는 작은 마을
+ui_reset	처음부터
+ui_reset_done	새 마을을 열었어요
+growth_stage_0	아기
+growth_stage_1	청소년
+growth_stage_2	성묘
+ui_coins	생선 코인 {0}
+ui_treats	츄르 {0}
+ui_village_title	우리 마을
+ui_cats	고양이 {0}마리
+ui_cat_line	{0}  Lv{1} {2} · {3}
+ui_cat_exp	경험치 {0} / {1}
+ui_cat_max	최고 레벨
+ui_party_in	파티 ✓
+ui_party_out	파티에 넣기
+ui_party_full	파티는 {0}마리까지예요
+ui_feed	츄르 주기
+ui_no_treats	츄르가 없어요
+ui_hatchery	부화소 ({0} / {1})
+ui_basket_wait	털실 바구니 · {0} 남음
+ui_basket_ready	털실 바구니 · 나올 준비가 됐어요
+ui_hatch	맞이하기
+ui_hatched	{0}가 식구가 됐어요
+ui_buy_basket	바구니 데려오기 ({0} 코인)
+ui_buy_treat	츄르 사기 ({0} 코인)
+ui_cant_buy	코인이 부족하거나 자리가 없어요
+ui_adventure	모험 떠나기  →
+ui_back	돌아가기
+ui_stage_progress	{0}  ·  {1} / {2} 거점
+ui_stage_locked	아직 닿지 않은 길
+ui_stage_locked_detail	앞선 거점을 클리어하면 이 길이 열려요.
+ui_stage_boss	{0} · 보스 거점
+ui_stage_detail	{0}웨이브 · 적 Lv{1}   {2}\n생선 코인 {3} · 츄르 {4}
+ui_first_basket	 · 첫 승리 바구니
+ui_depart	모험 출발  →
+ui_depart_locked	잠긴 길
+ui_depart_no_party	파티를 편성해 주세요
+ui_star_on	★
+ui_star_off	☆
+ui_retreat	물러나기
+ui_victory	승리!
+ui_defeat	패배…
+ui_result_reward	{0}\n\n생선 코인 +{1}\n츄르 +{2}
+ui_result_basket	\n{0} 바구니 획득!
+ui_result_basket_hint	바구니는 부화소에 있어요. 마을에서 맞이해 주세요.
+ui_result_defeat	고양이들을 더 키워서 다시 도전해요\n기운 상성도 확인해 보세요
+ui_result_defeat_hint	마을에서 츄르로 레벨을 올리거나 상성 유리한 고양이를 편성해요.
+ui_next	다음: {0}
+ui_retry	다시 도전
+ui_stages	거점 지도
+ui_home	마을로
+ui_close	닫기
+ui_version	v{0}
+ui_cat_list	식구들
+ui_stage_number	{0}
+ui_battle_wave	{0}  WAVE {1}/{2}
+ui_battle_start	모험을 시작해요
+ui_log_skill	{0}의 필살!
+ui_log_wave	WAVE {0} / {1}
+ui_pop_damage	-{0}
+ui_pop_strong	효과 굉장!
+ui_pop_weak	별로…
+ui_boss_caption	보스 · {0}
+ui_ally_caption	{0} · {1}
+ui_focus_mark	▼
+ui_tag_ready	필살 준비!
+ui_tag_down	쓰러짐
+ui_tag_gauge	게이지 {0}/{1}
+ui_cut_in	{0}\n필살!
+ui_speed	{0}x
+ui_pause	정지
+ui_resume	계속
+ui_turn	턴 {0}/{1}
+card_power_name	힘껏
+card_charge_name	기운
+card_swift_name	날쌔게
+ui_card_skill	필살\n{0}
+ui_card_picked	{0} · {1}
+ui_log_card	{0}의 {1}
+ui_log_extra	{0}의 추가 일격!
+ui_log_chain	{0} 연쇄!
+ui_command	카드 {0}장을 골라요 ({1}/{0})
+ui_auto_on	자동 ON
+ui_auto_off	자동 OFF
+ui_status	{0}\n{1}/{2} · {3}
+ui_attack	공격
+ui_menu_hatchery	부화소
+ui_menu_shop	상점
+ui_menu_cats	식구들
+ui_menu_adventure	모험
+ui_menu_badge	{0} ({1})
+ui_guide_hatch	바구니가 열렸어요. 부화소에서 새 식구를 맞아 주세요.
+ui_guide_basket	상점에서 바구니를 데려와 보세요.
+ui_guide_wait	바구니 속 새끼가 낯가림을 푸는 중이에요.
+ui_guide_party	식구들에서 모험에 나설 고양이를 골라 주세요.
+ui_guide_adventure	모험을 떠나 골목을 넓혀 보세요.
+ui_hatchery_empty	비어 있어요.
+ui_bark_hurt_0	아야!
+ui_bark_hurt_1	으냥!
+ui_bark_hurt_2	따가워!
+ui_bark_hurt_3	히잉…
+ui_bark_down_0	힘들어…
+ui_bark_down_1	조금만 쉴게…
+ui_bark_down_2	눈이 빙글빙글…
+ui_bark_down_3	털썩…
+currency_01_name	생선 코인
+currency_02_name	별 조각
+currency_03_name	풀잎 구슬
+currency_04_name	떠돌이 구슬
+currency_05_name	햇살 구슬
+currency_06_name	바람 구슬
+currency_07_name	달빛 구슬
+currency_08_name	불꽃 구슬
+currency_09_name	대결 메달
+item_001_name	연금 재료 1
+item_002_name	연금 재료 2
+item_003_name	연금 재료 3
+item_004_name	연금 재료 4
+item_005_name	연금 재료 5
+item_006_name	연금 재료 6
+item_007_name	연금 재료 7
+item_008_name	연금 재료 8
+item_009_name	연금 재료 9
+item_010_name	각성 재료 1
+item_011_name	집 꾸밈권 1
+item_012_name	조각 1
+item_013_name	조각 2
+item_014_name	조각 3
+item_015_name	조각 4
+item_016_name	조각 5
+item_017_name	조각 6
+item_018_name	조각 7
+item_019_name	음료 1
+item_020_name	음료 2
+item_021_name	음료 3
+item_022_name	가루 1
+item_023_name	재료
+item_024_name	축복 1
+item_025_name	축복 2
+item_026_name	축복 3
+item_027_name	축복 4
+item_028_name	각성 재료 2
+item_029_name	보물 상자 1
+item_030_name	보물 상자 2
+item_031_name	보물 상자 3
+item_032_name	보물 상자 4
+item_033_name	집 꾸밈권 2
+item_034_name	조각 8
+item_035_name	조각 9
+item_036_name	조각 10
+item_037_name	조각 11
+item_038_name	조각 12
+item_039_name	조각 13
+item_040_name	조각 14
+item_041_name	정수
+item_042_name	음료 4
+item_043_name	음료 5
+item_044_name	음료 6
+item_045_name	정수 1
+item_046_name	노을 고급 결정
+item_047_name	달빛 고급 결정
+item_048_name	풀잎 고급 결정
+item_049_name	불꽃 고급 결정
+item_050_name	별빛 고급 결정
+item_051_name	햇살 고급 결정
+item_052_name	물방울 고급 결정
+item_053_name	바람 고급 결정
+item_054_name	노을 결정
+item_055_name	달빛 결정
+item_056_name	풀잎 결정
+item_057_name	불꽃 결정
+item_058_name	별빛 결정
+item_059_name	햇살 결정
+item_060_name	그림자 결정
+item_061_name	물방울 결정
+item_062_name	바람 결정
+item_063_name	음료 7
+item_064_name	음료 8
+item_065_name	음료 9
+item_066_name	가루 2
+item_067_name	재료
+item_068_name	편의권 1
+item_069_name	음료 10
+item_070_name	조리법 1
+item_071_name	조리법 2
+item_072_name	조리법 3
+item_073_name	조리법 4
+item_074_name	조리법 5
+item_075_name	노을 정수
+item_076_name	달빛 정수
+item_077_name	불꽃 정수
+item_078_name	풀잎 정수
+item_079_name	별빛 정수
+item_080_name	햇살 정수
+item_081_name	그림자 정수
+item_082_name	물방울 정수
+item_083_name	바람 정수
+item_084_name	먹이
+item_085_name	편의권 2
+item_086_name	각성석 1
+item_087_name	각성석 2
+item_088_name	각성석 3
+item_089_name	각성석 4
+item_090_name	응원 버프 1
+item_091_name	응원 버프 2
+item_092_name	노을 간식 1
+item_093_name	노을 간식 2
+item_094_name	달빛 간식 1
+item_095_name	달빛 간식 2
+item_096_name	불꽃 간식 1
+item_097_name	불꽃 간식 2
+item_098_name	풀잎 간식 1
+item_099_name	풀잎 간식 2
+item_100_name	별빛 간식 1
+item_101_name	별빛 간식 2
+item_102_name	햇살 간식 1
+item_103_name	햇살 간식 2
+item_104_name	그림자 간식 1
+item_105_name	그림자 간식 2
+item_106_name	물방울 간식 1
+item_107_name	물방울 간식 2
+item_108_name	바람 간식 1
+item_109_name	바람 간식 2
+item_110_name	슬롯권 1
+item_111_name	슬롯권 2
+item_112_name	슬롯권 3
+item_113_name	슬롯권 4
+item_114_name	슬롯권 5
+item_115_name	응원 버프 3
+item_116_name	응원 버프 4
+item_117_name	노을 보물 상자
+item_118_name	달빛 보물 상자
+item_119_name	풀잎 보물 상자
+item_120_name	불꽃 보물 상자
+item_121_name	별빛 보물 상자
+item_122_name	햇살 보물 상자
+item_123_name	그림자 보물 상자
+item_124_name	물방울 보물 상자
+item_125_name	바람 보물 상자
+item_126_name	회복약 1
+item_127_name	회복약 2
+item_128_name	회복약 3
+item_129_name	편의권 3
+item_130_name	편의권 4
+item_131_name	조각 15
+item_132_name	조각 16
+item_133_name	조각 17
+item_134_name	조각 18
+item_135_name	조각 19
+item_136_name	조각 20
+item_137_name	조각 21
+item_138_name	집 꾸밈권 3
+item_139_name	음료 11
+item_140_name	음료 12
+item_141_name	음료 13
+item_142_name	가루 3
+item_143_name	편의권 5
+item_144_name	조각 22
+item_145_name	조각 23
+item_146_name	조각 24
+item_147_name	조각 25
+item_148_name	조각 26
+item_149_name	조각 27
+item_150_name	조각 28
+item_151_name	보물 상자 5
+item_152_name	보석 1
+item_153_name	보석 2
+item_154_name	보석 3
+item_155_name	보석 4
+item_156_name	정수 2
+item_157_name	열쇠 1
+item_158_name	열쇠 2
+item_159_name	열쇠 3
+item_160_name	열쇠 4
+item_161_name	열쇠 5
+item_162_name	열쇠 6
+item_163_name	소모품 1
+item_164_name	소모품 2
+item_165_name	조각 29
+item_166_name	조각 30
+item_167_name	조각 31
+item_168_name	조각 32
+item_169_name	조각 33
+item_170_name	조각 34
+item_171_name	조각 35
+item_172_name	보물 상자 6
+item_173_name	햇살 특별 바구니 1
+item_174_name	햇살 특별 바구니 2
+item_175_name	달빛 특별 바구니 1
+item_176_name	노을 속성 바구니
+item_177_name	달빛 속성 바구니
+item_178_name	달빛 특별 바구니 2
+item_179_name	불꽃 속성 바구니
+item_180_name	달빛 특별 바구니 3
+item_181_name	풀잎 속성 바구니
+item_182_name	바람 특별 바구니 1
+item_183_name	별빛 속성 바구니
+item_184_name	불꽃 특별 바구니 1
+item_185_name	풀잎 특별 바구니 1
+item_186_name	햇살 속성 바구니
+item_187_name	바람 특별 바구니 2
+item_188_name	뽑기 바구니 1
+item_189_name	뽑기 바구니 2
+item_190_name	별빛 특별 바구니
+item_191_name	달빛 특별 바구니 4
+item_192_name	풀잎 특별 바구니 2
+item_193_name	물방울 특별 바구니 1
+item_194_name	불꽃 특별 바구니 2
+item_195_name	햇살 특별 바구니 3
+item_196_name	물방울 속성 바구니
+item_197_name	바람 속성 바구니
+item_198_name	물방울 특별 바구니 2
+item_199_name	불꽃 특별 바구니 3
+item_200_name	바람 특별 바구니 3
+item_201_name	지도 1
+item_202_name	지도 2
+item_203_name	지도 3
+item_204_name	지도 4
+item_205_name	지도 5
+item_206_name	지도 6
+item_207_name	지도 7
+item_208_name	음료 14
+item_209_name	음료 15
+item_210_name	음료 16
+item_211_name	조합서 1
+item_212_name	조합서 2
+item_213_name	편의권 6
+item_214_name	조각 36
+item_215_name	조각 37
+item_216_name	조각 38
+item_217_name	조각 39
+item_218_name	조각 40
+item_219_name	조각 41
+item_220_name	조각 42
+item_221_name	소모품 1
+item_222_name	음료 17
+item_223_name	음료 18
+item_224_name	음료 19
+item_225_name	이야기권 1
+item_226_name	조각 43
+item_227_name	조각 44
+item_228_name	조각 45
+item_229_name	조각 46
+item_230_name	조각 47
+item_231_name	조각 48
+item_232_name	조각 49
+item_233_name	추억 선택권 1
+item_234_name	추억 선택권 2
+item_235_name	추억 선택권 3
+item_236_name	추억 선택권 4
+item_237_name	추억 선택권 5
+item_238_name	추억 조각 1
+item_239_name	추억 조각 2
+item_240_name	추억 조각 3
+item_241_name	추억 조각 4
+item_242_name	추억 조각 5
+item_243_name	추억 조각 6
+item_244_name	추억 조각 7
+item_245_name	슬롯권 6
+item_246_name	슬롯권 7
+item_247_name	이야기권 2
+item_248_name	이야기권 3
+item_249_name	심장석 1
+item_250_name	심장석 2
+item_251_name	심장석 3
+item_252_name	심장석 4
+item_253_name	보물 상자 7
+item_254_name	정령석 1
+item_255_name	정령석 2
+item_256_name	정령석 3
+item_257_name	정령석 4
+item_258_name	소모품 2
+shop_wallet_money_name	기본 재화
+shop_wallet_element_name	속성 재화
+shop_wallet_pvp_name	대결 재화
+shop_tab_1_name	추천
+shop_tab_2_name	대결
+shop_tab_3_name	간식
+shop_tab_4_name	물건
+shop_tab_5_name	바구니
+shop_tab_6_name	기타
+shop_tab_7_name	팔기
+shop_gacha_01_name	특별 장비 뽑기
+shop_gacha_02_name	보통 장식 뽑기
+shop_gacha_03_name	고급 장식 뽑기
+shop_gacha_04_name	normal10 장식 뽑기
+shop_gacha_05_name	high10 장식 뽑기
+shop_gacha_06_name	only 장식 뽑기
+shop_gacha_07_name	only10 장식 뽑기

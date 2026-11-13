@@ -1,0 +1,375 @@
+cat_id	text_id	element_id	role_id	star	stat_tier	awaken_skill_id	acquire_locked	dex_hidden	dv2_id	sprite_id
+cat_0001	cat_0001_name	sun	hd	4	4	49	false	false	1	sprite_cat_tuxedo_staff
+cat_0002	cat_0002_name	wind	hp	2	2		false	false	2	sprite_cat_tuxedo_shield
+cat_0003	cat_0003_name	wind	hp	3	3		false	false	3	sprite_cat_mackerel_shield
+cat_0004	cat_0004_name	wind	atk	4	4	33	false	false	4	sprite_cat_cheese_sword
+cat_0005	cat_0005_name	fire	atk	3	3	44	false	false	5	sprite_cat_calico_sword
+cat_0006	cat_0006_name	fire	ha	4	4	55	false	false	6	sprite_cat_cheese_bow
+cat_0007	cat_0007_name	fire	ha	2	2		false	false	7	sprite_cat_calico_bow
+cat_0008	cat_0008_name	fire	atk	3	3	16	false	false	8	sprite_cat_tuxedo_sword
+cat_0009	cat_0009_name	water	atk	4	4	54	false	false	9	sprite_cat_mackerel_sword
+cat_0010	cat_0010_name	water	hp	4	4	36	false	false	10	sprite_cat_mackerel_shield
+cat_0011	cat_0011_name	water	hd	2	2		false	false	11	sprite_cat_cheese_staff
+cat_0012	cat_0012_name	water	hd	3	3		false	false	12	sprite_cat_cheese_staff
+cat_0013	cat_0013_name	leaf	ha	3	3		false	false	13	sprite_cat_calico_bow
+cat_0014	cat_0014_name	leaf	atk	4	4	53	false	false	14	sprite_cat_mackerel_sword
+cat_0015	cat_0015_name	leaf	def	3	3		false	false	15	sprite_cat_tuxedo_shield
+cat_0016	cat_0016_name	leaf	def	3	3		false	false	16	sprite_cat_mackerel_shield
+cat_0017	cat_0017_name	water	atk	2	2		false	false	17	sprite_cat_tuxedo_sword
+cat_0018	cat_0018_name	wind	hd	3	3		false	false	18	sprite_cat_mackerel_staff
+cat_0019	cat_0019_name	leaf	def	3	3		false	false	19	sprite_cat_tuxedo_shield
+cat_0020	cat_0020_name	fire	ad	4	4		false	false	20	sprite_cat_mackerel_bow
+cat_0021	cat_0021_name	sun	hd	4	4	42	false	false	21	sprite_cat_tuxedo_staff
+cat_0022	cat_0022_name	wind	ad	3	3		false	false	22	sprite_cat_mackerel_bow
+cat_0023	cat_0023_name	water	ad	3	3	60	false	false	23	sprite_cat_calico_bow
+cat_0024	cat_0024_name	water	hp	3	3		false	false	24	sprite_cat_mackerel_shield
+cat_0025	cat_0025_name	leaf	hp	3	3		false	false	25	sprite_cat_tuxedo_shield
+cat_0026	cat_0026_name	fire	def	3	3		false	false	26	sprite_cat_mackerel_shield
+cat_0027	cat_0027_name	fire	ad	3	3		false	false	27	sprite_cat_calico_bow
+cat_0028	cat_0028_name	leaf	def	3	3	36	false	false	28	sprite_cat_calico_shield
+cat_0029	cat_0029_name	water	def	3	3		false	false	29	sprite_cat_calico_shield
+cat_0030	cat_0030_name	wind	ad	2	2		false	false	30	sprite_cat_tuxedo_bow
+cat_0031	cat_0031_name	fire	ad	3	3		false	false	31	sprite_cat_tuxedo_bow
+cat_0032	cat_0032_name	leaf	def	2	2		false	false	32	sprite_cat_tuxedo_shield
+cat_0033	cat_0033_name	wind	hp	3	3		false	false	33	sprite_cat_calico_shield
+cat_0034	cat_0034_name	moon	ha	4	4	23	false	false	34	sprite_cat_mackerel_bow
+cat_0035	cat_0035_name	sun	hd	4	4	76	false	false	35	sprite_cat_calico_staff
+cat_0036	cat_0036_name	sun	ha	3	3		false	false	36	sprite_cat_mackerel_bow
+cat_0037	cat_0037_name	sun	hp	3	3		false	false	37	sprite_cat_mackerel_shield
+cat_0038	cat_0038_name	sun	hd	3	3		false	false	38	sprite_cat_mackerel_staff
+cat_0039	cat_0039_name	sun	ha	3	3		false	false	39	sprite_cat_cheese_bow
+cat_0040	cat_0040_name	sun	atk	3	3		false	false	40	sprite_cat_cheese_sword
+cat_0041	cat_0041_name	sun	hd	3	3		false	false	41	sprite_cat_tuxedo_staff
+cat_0042	cat_0042_name	water	hd	3	3		false	false	42	sprite_cat_mackerel_staff
+cat_0043	cat_0043_name	moon	atk	3	3		false	false	43	sprite_cat_mackerel_sword
+cat_0044	cat_0044_name	moon	ha	3	3		false	false	44	sprite_cat_tuxedo_bow
+cat_0045	cat_0045_name	moon	ha	3	3		false	false	45	sprite_cat_cheese_bow
+cat_0046	cat_0046_name	moon	ad	3	3		false	false	46	sprite_cat_mackerel_bow
+cat_0047	cat_0047_name	moon	ha	3	3		false	false	47	sprite_cat_tuxedo_bow
+cat_0048	cat_0048_name	moon	atk	3	3		false	false	48	sprite_cat_cheese_sword
+cat_0049	cat_0049_name	moon	atk	3	3		false	false	49	sprite_cat_tuxedo_sword
+cat_0050	cat_0050_name	leaf	hp	3	3		false	false	50	sprite_cat_tuxedo_shield
+cat_0051	cat_0051_name	fire	hd	3	3	56	false	false	51	sprite_cat_cheese_staff
+cat_0052	cat_0052_name	wind	ad	3	3		false	false	52	sprite_cat_mackerel_bow
+cat_0053	cat_0053_name	moon	ha	4	4	90	false	false	53	sprite_cat_tuxedo_bow
+cat_0054	cat_0054_name	sun	hd	4	4	23	false	false	54	sprite_cat_tuxedo_staff
+cat_0055	cat_0055_name	moon	ha	3	3		false	false	55	sprite_cat_cheese_bow
+cat_0056	cat_0056_name	moon	atk	3	3		false	false	56	sprite_cat_mackerel_sword
+cat_0057	cat_0057_name	leaf	hd	4	4		false	false	57	sprite_cat_tuxedo_staff
+cat_0058	cat_0058_name	water	atk	3	3	17	false	false	58	sprite_cat_mackerel_sword
+cat_0059	cat_0059_name	wind	hp	4	4		false	false	59	sprite_cat_cheese_shield
+cat_0060	cat_0060_name	moon	ha	4	4		false	false	60	sprite_cat_calico_bow
+cat_0061	cat_0061_name	sun	hp	3	3		false	false	61	sprite_cat_tuxedo_shield
+cat_0062	cat_0062_name	leaf	def	3	3		false	false	62	sprite_cat_mackerel_shield
+cat_0063	cat_0063_name	leaf	ad	3	3		false	false	63	sprite_cat_cheese_bow
+cat_0064	cat_0064_name	sun	ad	4	4		false	false	64	sprite_cat_calico_bow
+cat_0065	cat_0065_name	wind	def	4	4	39	false	false	65	sprite_cat_tuxedo_shield
+cat_0066	cat_0066_name	moon	atk	4	4	42	false	false	66	sprite_cat_tuxedo_sword
+cat_0067	cat_0067_name	water	def	4	4	31	false	false	67	sprite_cat_calico_shield
+cat_0068	cat_0068_name	sun	def	3	3		false	false	68	sprite_cat_tuxedo_shield
+cat_0069	cat_0069_name	moon	ad	3	3	32	false	false	69	sprite_cat_tuxedo_bow
+cat_0070	cat_0070_name	sun	hp	4	4		false	false	70	sprite_cat_cheese_shield
+cat_0071	cat_0071_name	fire	ha	3	3		false	false	71	sprite_cat_mackerel_bow
+cat_0072	cat_0072_name	moon	def	3	3		false	false	72	sprite_cat_cheese_shield
+cat_0073	cat_0073_name	leaf	hd	3	3		false	false	73	sprite_cat_tuxedo_staff
+cat_0074	cat_0074_name	fire	atk	3	3	1	false	false	74	sprite_cat_tuxedo_sword
+cat_0075	cat_0075_name	wind	def	4	4		false	false	75	sprite_cat_mackerel_shield
+cat_0076	cat_0076_name	leaf	ad	3	3		false	false	76	sprite_cat_calico_bow
+cat_0077	cat_0077_name	sun	def	4	4	48	false	false	77	sprite_cat_tuxedo_shield
+cat_0078	cat_0078_name	sun	ha	4	4		false	false	78	sprite_cat_tuxedo_bow
+cat_0079	cat_0079_name	sun	hd	4	4		false	false	79	sprite_cat_cheese_staff
+cat_0080	cat_0080_name	moon	ha	4	4		false	false	80	sprite_cat_cheese_bow
+cat_0081	cat_0081_name	sun	hp	4	4		false	false	81	sprite_cat_tuxedo_shield
+cat_0082	cat_0082_name	sun	ad	4	4		false	false	82	sprite_cat_tuxedo_bow
+cat_0083	cat_0083_name	moon	atk	4	4		false	false	83	sprite_cat_calico_sword
+cat_0084	cat_0084_name	sun	def	4	4		false	false	84	sprite_cat_tuxedo_shield
+cat_0085	cat_0085_name	moon	hp	4	4		false	false	85	sprite_cat_cheese_shield
+cat_0086	cat_0086_name	moon	atk	4	4		false	false	86	sprite_cat_mackerel_sword
+cat_0087	cat_0087_name	moon	hd	4	4		false	false	87	sprite_cat_calico_staff
+cat_0088	cat_0088_name	fire	ad	4	4		false	false	88	sprite_cat_cheese_bow
+cat_0089	cat_0089_name	water	ha	4	4		false	false	89	sprite_cat_cheese_bow
+cat_0090	cat_0090_name	moon	ha	4	4		false	false	90	sprite_cat_calico_bow
+cat_0091	cat_0091_name	water	hd	4	4		false	false	91	sprite_cat_tuxedo_staff
+cat_0092	cat_0092_name	leaf	hd	3	3	28	false	false	92	sprite_cat_calico_staff
+cat_0093	cat_0093_name	fire	def	4	4		false	false	93	sprite_cat_calico_shield
+cat_0094	cat_0094_name	wind	ad	4	4		false	false	94	sprite_cat_mackerel_bow
+cat_0095	cat_0095_name	fire	ha	4	4		false	false	95	sprite_cat_calico_bow
+cat_0096	cat_0096_name	fire	atk	4	4		false	false	96	sprite_cat_calico_sword
+cat_0100	cat_0100_name	fire	atk	4	4		false	false	100	sprite_cat_cheese_sword
+cat_0101	cat_0101_name	water	hd	4	4		false	false	101	sprite_cat_cheese_staff
+cat_0102	cat_0102_name	sun	hd	4	4		false	false	102	sprite_cat_mackerel_staff
+cat_0103	cat_0103_name	fire	hd	4	4		false	false	103	sprite_cat_tuxedo_staff
+cat_0104	cat_0104_name	moon	hd	4	4	69	false	false	104	sprite_cat_tuxedo_staff
+cat_0105	cat_0105_name	moon	hd	4	4		false	false	105	sprite_cat_cheese_staff
+cat_0106	cat_0106_name	leaf	atk	3	3		false	false	106	sprite_cat_mackerel_sword
+cat_0107	cat_0107_name	fire	ha	4	4		false	false	107	sprite_cat_calico_bow
+cat_0108	cat_0108_name	leaf	hd	4	4		false	false	108	sprite_cat_mackerel_staff
+cat_0115	cat_0115_name	wind	def	3	3		false	false	115	sprite_cat_cheese_shield
+cat_0116	cat_0116_name	fire	ha	4	4		false	false	116	sprite_cat_cheese_bow
+cat_0117	cat_0117_name	leaf	hd	4	4		false	false	117	sprite_cat_cheese_staff
+cat_0118	cat_0118_name	moon	ad	3	3		false	false	118	sprite_cat_mackerel_bow
+cat_0119	cat_0119_name	water	ad	3	3		false	false	119	sprite_cat_calico_bow
+cat_0120	cat_0120_name	wind	hp	3	3		false	false	120	sprite_cat_cheese_shield
+cat_0121	cat_0121_name	water	def	3	3		false	false	121	sprite_cat_cheese_shield
+cat_0122	cat_0122_name	leaf	ad	3	3		false	false	122	sprite_cat_mackerel_bow
+cat_0123	cat_0123_name	water	hp	5	5		false	false	123	sprite_cat_tuxedo_shield
+cat_0124	cat_0124_name	wind	hp	3	3		false	false	124	sprite_cat_mackerel_shield
+cat_0125	cat_0125_name	wind	def	5	5	14	false	false	125	sprite_cat_tuxedo_shield
+cat_0129	cat_0129_name	sun	hp	5	5	48	false	false	129	sprite_cat_mackerel_shield
+cat_0133	cat_0133_name	water	ha	5	5	57	false	false	133	sprite_cat_tuxedo_bow
+cat_0137	cat_0137_name	fire	hd	5	5	88	false	false	137	sprite_cat_tuxedo_staff
+cat_0141	cat_0141_name	leaf	ad	5	5	57	false	false	141	sprite_cat_tuxedo_bow
+cat_0145	cat_0145_name	moon	atk	5	5	22	false	false	145	sprite_cat_mackerel_sword
+cat_0167	cat_0167_name	fire	hd	3	3		false	false	167	sprite_cat_calico_staff
+cat_0168	cat_0168_name	water	ad	4	4		false	false	168	sprite_cat_cheese_bow
+cat_0169	cat_0169_name	water	hp	4	4	5	false	false	169	sprite_cat_tuxedo_shield
+cat_0170	cat_0170_name	sun	def	4	4		false	false	170	sprite_cat_mackerel_shield
+cat_0171	cat_0171_name	moon	ha	4	4		false	false	171	sprite_cat_calico_bow
+cat_0172	cat_0172_name	fire	ad	4	4		false	false	172	sprite_cat_tuxedo_bow
+cat_0173	cat_0173_name	moon	hd	4	4		false	false	173	sprite_cat_tuxedo_staff
+cat_0174	cat_0174_name	sun	ha	4	4		false	false	174	sprite_cat_mackerel_bow
+cat_0175	cat_0175_name	moon	ha	3	3		false	false	175	sprite_cat_mackerel_bow
+cat_0176	cat_0176_name	leaf	ad	4	4		false	false	176	sprite_cat_cheese_bow
+cat_0177	cat_0177_name	water	ad	5	5		false	false	177	sprite_cat_tuxedo_bow
+cat_0178	cat_0178_name	leaf	ad	4	4	17	false	false	178	sprite_cat_tuxedo_bow
+cat_0179	cat_0179_name	water	atk	4	4	2	false	false	179	sprite_cat_calico_sword
+cat_0180	cat_0180_name	fire	atk	4	4	60	false	false	180	sprite_cat_calico_sword
+cat_0181	cat_0181_name	sun	hp	4	4		false	false	181	sprite_cat_tuxedo_shield
+cat_0182	cat_0182_name	wind	atk	4	4		false	false	182	sprite_cat_mackerel_sword
+cat_0183	cat_0183_name	water	hd	5	5		false	false	183	sprite_cat_calico_staff
+cat_0184	cat_0184_name	moon	ha	4	4	60	false	false	184	sprite_cat_calico_bow
+cat_0185	cat_0185_name	leaf	hd	3	3		false	false	185	sprite_cat_tuxedo_staff
+cat_0186	cat_0186_name	fire	atk	4	4	42	false	false	186	sprite_cat_mackerel_sword
+cat_0187	cat_0187_name	wind	def	4	4		false	false	187	sprite_cat_calico_shield
+cat_0188	cat_0188_name	water	def	4	4		false	false	188	sprite_cat_cheese_shield
+cat_0189	cat_0189_name	water	hd	4	4		false	false	189	sprite_cat_tuxedo_staff
+cat_0195	cat_0195_name	moon	ha	4	4		false	false	195	sprite_cat_calico_bow
+cat_0196	cat_0196_name	sun	hp	3	3		false	false	196	sprite_cat_mackerel_shield
+cat_0600	cat_0600_name	none	def	6	custom	600	true	true	600	sprite_cat_cheese_shield
+cat_0666	cat_0666_name	dusk	def	6	custom	666	true	false	666	sprite_cat_calico_shield
+cat_0700	cat_0700_name	none	atk	6	custom	700	true	true	700	sprite_cat_cheese_sword
+cat_0777	cat_0777_name	fire	atk	6	custom	777	true	false	777	sprite_cat_tuxedo_sword
+cat_0800	cat_0800_name	dusk	def	6	6b	800	false	false	800	sprite_cat_mackerel_shield
+cat_3001	cat_3001_name	dusk	def	5	5	32	false	false	3001	sprite_cat_tuxedo_shield
+cat_3002	cat_3002_name	star	atk	5	5	1	false	false	3002	sprite_cat_calico_sword
+cat_3003	cat_3003_name	dusk	atk	6	6a	98	false	false	3003	sprite_cat_mackerel_sword
+cat_3004	cat_3004_name	dusk	hp	5	5		false	false	3004	sprite_cat_cheese_shield
+cat_3005	cat_3005_name	star	ad	5	5	62	false	false	3005	sprite_cat_mackerel_bow
+cat_3006	cat_3006_name	star	ad	5	5		false	false	3006	sprite_cat_tuxedo_bow
+cat_3007	cat_3007_name	leaf	ad	4	4		false	false	3007	sprite_cat_mackerel_bow
+cat_3008	cat_3008_name	leaf	ha	5	5	92	false	false	3008	sprite_cat_tuxedo_bow
+cat_3009	cat_3009_name	leaf	ad	4	4		false	false	3009	sprite_cat_tuxedo_bow
+cat_3010	cat_3010_name	leaf	def	5	5		false	false	3010	sprite_cat_mackerel_shield
+cat_3011	cat_3011_name	water	atk	5	5	6	false	false	3011	sprite_cat_calico_sword
+cat_3012	cat_3012_name	water	def	5	5		false	false	3012	sprite_cat_mackerel_shield
+cat_3013	cat_3013_name	water	ha	5	5	34	false	false	3013	sprite_cat_tuxedo_bow
+cat_3014	cat_3014_name	water	atk	6	6a	25	false	false	3014	sprite_cat_calico_sword
+cat_3015	cat_3015_name	wind	atk	5	5		false	false	3015	sprite_cat_tuxedo_sword
+cat_3016	cat_3016_name	wind	hp	5	5		false	false	3016	sprite_cat_tuxedo_shield
+cat_3017	cat_3017_name	wind	hp	5	5	7	false	false	3017	sprite_cat_mackerel_shield
+cat_3018	cat_3018_name	wind	hd	6	6a	30	false	false	3018	sprite_cat_cheese_staff
+cat_3019	cat_3019_name	fire	ha	5	5	60	false	false	3019	sprite_cat_calico_bow
+cat_3020	cat_3020_name	fire	atk	5	5	3	false	false	3020	sprite_cat_mackerel_sword
+cat_3021	cat_3021_name	fire	atk	5	5		false	false	3021	sprite_cat_tuxedo_sword
+cat_3022	cat_3022_name	fire	hd	5	5		false	false	3022	sprite_cat_mackerel_staff
+cat_3023	cat_3023_name	sun	def	5	5		false	false	3023	sprite_cat_calico_shield
+cat_3024	cat_3024_name	sun	atk	5	5	9	false	false	3024	sprite_cat_cheese_sword
+cat_3025	cat_3025_name	sun	hd	5	5		false	false	3025	sprite_cat_tuxedo_staff
+cat_3026	cat_3026_name	sun	def	6	6a	18	false	false	3026	sprite_cat_calico_shield
+cat_3027	cat_3027_name	moon	hp	5	5		false	false	3027	sprite_cat_calico_shield
+cat_3028	cat_3028_name	moon	ad	5	5		false	false	3028	sprite_cat_cheese_bow
+cat_3029	cat_3029_name	moon	hd	5	5	21	false	false	3029	sprite_cat_mackerel_staff
+cat_3030	cat_3030_name	moon	ha	5	5	46	false	false	3030	sprite_cat_mackerel_bow
+cat_3031	cat_3031_name	star	ha	5	5		false	false	3031	sprite_cat_calico_bow
+cat_3032	cat_3032_name	star	hp	5	5	36	false	false	3032	sprite_cat_mackerel_shield
+cat_3033	cat_3033_name	star	atk	6	6a	66	false	false	3033	sprite_cat_tuxedo_sword
+cat_3034	cat_3034_name	dusk	ad	5	5	16	false	false	3034	sprite_cat_mackerel_bow
+cat_3035	cat_3035_name	dusk	ad	6	6a	77	false	false	3035	sprite_cat_calico_bow
+cat_3036	cat_3036_name	dusk	hd	5	5	85	false	false	3036	sprite_cat_tuxedo_staff
+cat_3037	cat_3037_name	water	hp	5	5		false	false	3037	sprite_cat_tuxedo_shield
+cat_3038	cat_3038_name	moon	ad	5	5		false	false	3038	sprite_cat_calico_bow
+cat_3039	cat_3039_name	wind	hp	5	5	1	false	false	3039	sprite_cat_tuxedo_shield
+cat_3040	cat_3040_name	sun	atk	5	5		false	false	3040	sprite_cat_calico_sword
+cat_3041	cat_3041_name	sun	hp	5	5		false	false	3041	sprite_cat_calico_shield
+cat_3042	cat_3042_name	moon	ad	5	5		false	false	3042	sprite_cat_calico_bow
+cat_4000	cat_4000_name	wind	atk	4	4		false	false	4000	sprite_cat_cheese_sword
+cat_4001	cat_4001_name	moon	hd	4	4		false	false	4001	sprite_cat_tuxedo_staff
+cat_4002	cat_4002_name	water	ha	4	4	13	false	false	4002	sprite_cat_mackerel_bow
+cat_4003	cat_4003_name	fire	atk	4	4		false	false	4003	sprite_cat_calico_sword
+cat_4004	cat_4004_name	leaf	ad	4	4		false	false	4004	sprite_cat_cheese_bow
+cat_4005	cat_4005_name	wind	ha	5	5	83	false	false	4005	sprite_cat_tuxedo_bow
+cat_4006	cat_4006_name	water	hp	5	5		false	false	4006	sprite_cat_mackerel_shield
+cat_4007	cat_4007_name	moon	hd	4	4		false	false	4007	sprite_cat_calico_staff
+cat_4008	cat_4008_name	fire	ad	4	4	83	false	false	4008	sprite_cat_cheese_bow
+cat_4009	cat_4009_name	wind	atk	5	5	2	false	false	4009	sprite_cat_calico_sword
+cat_4010	cat_4010_name	sun	hd	5	5		false	false	4010	sprite_cat_tuxedo_staff
+cat_4011	cat_4011_name	leaf	ha	5	5	16	false	false	4011	sprite_cat_calico_bow
+cat_4012	cat_4012_name	water	hd	5	5	23	false	false	4012	sprite_cat_calico_staff
+cat_4013	cat_4013_name	water	hd	5	5		false	false	4013	sprite_cat_tuxedo_staff
+cat_4014	cat_4014_name	leaf	hp	5	5		false	false	4014	sprite_cat_tuxedo_shield
+cat_4015	cat_4015_name	sun	atk	5	5	19	false	false	4015	sprite_cat_tuxedo_sword
+cat_4016	cat_4016_name	wind	ha	5	5		false	false	4016	sprite_cat_mackerel_bow
+cat_4017	cat_4017_name	moon	def	5	5		false	false	4017	sprite_cat_mackerel_shield
+cat_4018	cat_4018_name	dusk	hp	6	6a	99	false	false	4018	sprite_cat_mackerel_shield
+cat_4019	cat_4019_name	wind	hd	4	4	36	false	false	4019	sprite_cat_calico_staff
+cat_4020	cat_4020_name	star	def	6	6a	97	false	false	4020	sprite_cat_mackerel_shield
+cat_4021	cat_4021_name	sun	ad	5	5		false	false	4021	sprite_cat_mackerel_bow
+cat_4022	cat_4022_name	leaf	ha	5	5	61	false	false	4022	sprite_cat_tuxedo_bow
+cat_4023	cat_4023_name	dusk	ha	6	6a	94	false	false	4023	sprite_cat_tuxedo_bow
+cat_4024	cat_4024_name	moon	def	5	5	29	false	false	4024	sprite_cat_mackerel_shield
+cat_4025	cat_4025_name	water	ad	5	5		false	false	4025	sprite_cat_tuxedo_bow
+cat_4026	cat_4026_name	leaf	def	4	4		false	false	4026	sprite_cat_mackerel_shield
+cat_4027	cat_4027_name	fire	atk	4	4		false	false	4027	sprite_cat_mackerel_sword
+cat_4028	cat_4028_name	sun	ha	5	5		false	false	4028	sprite_cat_cheese_bow
+cat_4029	cat_4029_name	leaf	atk	4	4		false	false	4029	sprite_cat_tuxedo_sword
+cat_4030	cat_4030_name	moon	atk	5	5		false	false	4030	sprite_cat_mackerel_sword
+cat_4031	cat_4031_name	sun	def	5	5		false	false	4031	sprite_cat_calico_shield
+cat_4032	cat_4032_name	wind	hd	5	5		false	false	4032	sprite_cat_mackerel_staff
+cat_4033	cat_4033_name	moon	ha	5	5		false	false	4033	sprite_cat_calico_bow
+cat_4034	cat_4034_name	wind	ad	5	5		false	false	4034	sprite_cat_mackerel_bow
+cat_4035	cat_4035_name	star	hd	5	5	39	false	false	4035	sprite_cat_tuxedo_staff
+cat_4036	cat_4036_name	dusk	atk	5	5	2	false	false	4036	sprite_cat_mackerel_sword
+cat_4037	cat_4037_name	fire	def	4	4		false	false	4037	sprite_cat_tuxedo_shield
+cat_4038	cat_4038_name	fire	ha	5	5	15	false	false	4038	sprite_cat_cheese_bow
+cat_4039	cat_4039_name	sun	ad	4	4		false	false	4039	sprite_cat_mackerel_bow
+cat_4040	cat_4040_name	moon	def	4	4		false	false	4040	sprite_cat_cheese_shield
+cat_4041	cat_4041_name	fire	atk	5	5	8	false	false	4041	sprite_cat_calico_sword
+cat_4042	cat_4042_name	water	hd	5	5		false	false	4042	sprite_cat_tuxedo_staff
+cat_4043	cat_4043_name	leaf	hd	5	5		false	false	4043	sprite_cat_calico_staff
+cat_4044	cat_4044_name	wind	hp	5	5	68	false	false	4044	sprite_cat_cheese_shield
+cat_4045	cat_4045_name	leaf	hp	5	5	4	false	false	4045	sprite_cat_tuxedo_shield
+cat_4046	cat_4046_name	moon	hp	5	5		false	false	4046	sprite_cat_mackerel_shield
+cat_4047	cat_4047_name	leaf	atk	5	5		false	false	4047	sprite_cat_calico_sword
+cat_4048	cat_4048_name	wind	atk	5	5		false	false	4048	sprite_cat_cheese_sword
+cat_4049	cat_4049_name	leaf	hp	5	5	82	false	false	4049	sprite_cat_calico_shield
+cat_4050	cat_4050_name	leaf	hd	5	5	39	false	false	4050	sprite_cat_mackerel_staff
+cat_4051	cat_4051_name	sun	ha	5	5		false	false	4051	sprite_cat_calico_bow
+cat_4052	cat_4052_name	moon	ha	5	5	10	false	false	4052	sprite_cat_tuxedo_bow
+cat_4053	cat_4053_name	leaf	atk	5	5	87	false	false	4053	sprite_cat_cheese_sword
+cat_4055	cat_4055_name	sun	hp	5	5		false	false	4055	sprite_cat_calico_shield
+cat_4056	cat_4056_name	leaf	ad	4	4		false	false	4056	sprite_cat_mackerel_bow
+cat_4057	cat_4057_name	shade	hp	5	5		false	false	4057	sprite_cat_mackerel_shield
+cat_4058	cat_4058_name	shade	atk	5	5		false	false	4058	sprite_cat_mackerel_sword
+cat_4059	cat_4059_name	shade	def	5	5	20	false	false	4059	sprite_cat_calico_shield
+cat_4061	cat_4061_name	dusk	atk	4	4		false	false	4061	sprite_cat_mackerel_sword
+cat_4062	cat_4062_name	fire	hp	5	5		false	false	4062	sprite_cat_calico_shield
+cat_4064	cat_4064_name	moon	ad	4	4		false	false	4064	sprite_cat_tuxedo_bow
+cat_4065	cat_4065_name	fire	def	5	5		false	false	4065	sprite_cat_cheese_shield
+cat_4066	cat_4066_name	fire	def	5	5		false	false	4066	sprite_cat_cheese_shield
+cat_4067	cat_4067_name	wind	hd	5	5		false	false	4067	sprite_cat_calico_staff
+cat_4068	cat_4068_name	leaf	atk	5	5		false	false	4068	sprite_cat_calico_sword
+cat_4069	cat_4069_name	wind	ad	5	5		false	false	4069	sprite_cat_tuxedo_bow
+cat_4070	cat_4070_name	sun	ad	6	6a		false	false	4070	sprite_cat_mackerel_bow
+cat_4071	cat_4071_name	moon	hd	5	5		false	false	4071	sprite_cat_calico_staff
+cat_4072	cat_4072_name	shade	atk	5	5		false	false	4072	sprite_cat_cheese_sword
+cat_4073	cat_4073_name	shade	hd	5	5		false	false	4073	sprite_cat_tuxedo_staff
+cat_4075	cat_4075_name	fire	ad	5	5		false	false	4075	sprite_cat_mackerel_bow
+cat_4083	cat_4083_name	none	atk	5	5		false	false	4083	sprite_cat_tuxedo_sword
+cat_4097	cat_4097_name	wind	hd	5	5		false	false	4097	sprite_cat_calico_staff
+cat_4098	cat_4098_name	sun	ha	5	5		false	false	4098	sprite_cat_mackerel_bow
+cat_4099	cat_4099_name	leaf	def	6	6b	43	false	false	4099	sprite_cat_calico_shield
+cat_4100	cat_4100_name	water	atk	5	5		false	false	4100	sprite_cat_cheese_sword
+cat_4101	cat_4101_name	moon	hd	5	5		false	false	4101	sprite_cat_cheese_staff
+cat_4102	cat_4102_name	sun	ad	5	5		false	false	4102	sprite_cat_tuxedo_bow
+cat_4103	cat_4103_name	moon	hp	4	4		false	false	4103	sprite_cat_tuxedo_shield
+cat_4104	cat_4104_name	fire	hp	5	5		false	false	4104	sprite_cat_cheese_shield
+cat_4105	cat_4105_name	shade	ad	5	5		false	false	4105	sprite_cat_cheese_bow
+cat_4106	cat_4106_name	water	hd	5	5		false	false	4106	sprite_cat_mackerel_staff
+cat_4107	cat_4107_name	star	hd	5	5		false	false	4107	sprite_cat_calico_staff
+cat_4108	cat_4108_name	fire	hd	5	5		false	false	4108	sprite_cat_cheese_staff
+cat_4109	cat_4109_name	leaf	hp	5	5		false	false	4109	sprite_cat_calico_shield
+cat_4110	cat_4110_name	water	def	5	5		false	false	4110	sprite_cat_calico_shield
+cat_4111	cat_4111_name	water	ha	6	6b	47	false	false	4111	sprite_cat_tuxedo_bow
+cat_4112	cat_4112_name	wind	ad	5	5		false	false	4112	sprite_cat_cheese_bow
+cat_4113	cat_4113_name	water	def	5	5		false	false	4113	sprite_cat_calico_shield
+cat_4114	cat_4114_name	wind	ad	5	5		false	false	4114	sprite_cat_calico_bow
+cat_4115	cat_4115_name	fire	atk	6	6a	24	false	false	4115	sprite_cat_mackerel_sword
+cat_4116	cat_4116_name	star	hp	5	5		false	false	4116	sprite_cat_cheese_shield
+cat_4117	cat_4117_name	shade	ad	4	4		false	false	4117	sprite_cat_cheese_bow
+cat_4118	cat_4118_name	shade	atk	4	4		false	false	4118	sprite_cat_mackerel_sword
+cat_4119	cat_4119_name	shade	hp	4	4		false	false	4119	sprite_cat_tuxedo_shield
+cat_4120	cat_4120_name	shade	hd	6	6a	52	false	false	4120	sprite_cat_calico_staff
+cat_4121	cat_4121_name	star	def	5	5		false	false	4121	sprite_cat_cheese_shield
+cat_4122	cat_4122_name	star	atk	5	5		false	false	4122	sprite_cat_mackerel_sword
+cat_4123	cat_4123_name	star	hp	5	5		false	false	4123	sprite_cat_mackerel_shield
+cat_4124	cat_4124_name	dusk	hd	5	5		false	false	4124	sprite_cat_mackerel_staff
+cat_4125	cat_4125_name	dusk	def	6	6a	102	false	false	4125	sprite_cat_mackerel_shield
+cat_4126	cat_4126_name	dusk	ha	6	6a		false	false	4126	sprite_cat_calico_bow
+cat_4127	cat_4127_name	leaf	hp	5	5		false	false	4127	sprite_cat_cheese_shield
+cat_4128	cat_4128_name	leaf	def	5	5		false	false	4128	sprite_cat_mackerel_shield
+cat_4129	cat_4129_name	fire	ad	5	5		false	false	4129	sprite_cat_tuxedo_bow
+cat_4130	cat_4130_name	sun	atk	5	5		false	false	4130	sprite_cat_tuxedo_sword
+cat_4131	cat_4131_name	moon	ad	5	5		false	false	4131	sprite_cat_mackerel_bow
+cat_4132	cat_4132_name	moon	atk	6	6b	59	false	false	4132	sprite_cat_cheese_sword
+cat_4135	cat_4135_name	shade	hd	6	6b	101	false	false	4135	sprite_cat_calico_staff
+cat_4136	cat_4136_name	water	hp	6	6a	35	false	false	4136	sprite_cat_calico_shield
+cat_4137	cat_4137_name	leaf	hp	4	4		false	false	4137	sprite_cat_mackerel_shield
+cat_4138	cat_4138_name	wind	atk	6	6b	63	false	false	4138	sprite_cat_calico_sword
+cat_4139	cat_4139_name	fire	ad	6	6a	78	false	false	4139	sprite_cat_calico_bow
+cat_4140	cat_4140_name	sun	hd	6	6a	51	false	false	4140	sprite_cat_mackerel_staff
+cat_4141	cat_4141_name	moon	hp	6	6a		false	false	4141	sprite_cat_calico_shield
+cat_4142	cat_4142_name	fire	atk	5	5	93	false	false	4142	sprite_cat_mackerel_sword
+cat_4143	cat_4143_name	leaf	atk	5	5	100	false	false	4143	sprite_cat_calico_sword
+cat_4144	cat_4144_name	wind	def	5	5	38	false	false	4144	sprite_cat_cheese_shield
+cat_4145	cat_4145_name	shade	hp	6	6a	41	false	false	4145	sprite_cat_tuxedo_shield
+cat_4146	cat_4146_name	wind	def	5	5		false	false	4146	sprite_cat_tuxedo_shield
+cat_4147	cat_4147_name	water	ad	5	5		false	false	4147	sprite_cat_calico_bow
+cat_4148	cat_4148_name	shade	hp	5	5		false	false	4148	sprite_cat_cheese_shield
+cat_4149	cat_4149_name	moon	ha	5	5		false	false	4149	sprite_cat_cheese_bow
+cat_4150	cat_4150_name	fire	hp	5	5		false	false	4150	sprite_cat_tuxedo_shield
+cat_4151	cat_4151_name	sun	hp	6	6b	81	false	false	4151	sprite_cat_calico_shield
+cat_4152	cat_4152_name	fire	ha	5	5		false	false	4152	sprite_cat_mackerel_bow
+cat_4153	cat_4153_name	wind	hd	5	5		false	false	4153	sprite_cat_tuxedo_staff
+cat_4154	cat_4154_name	wind	ha	5	5		false	false	4154	sprite_cat_tuxedo_bow
+cat_4155	cat_4155_name	sun	atk	6	6b		false	false	4155	sprite_cat_calico_sword
+cat_4156	cat_4156_name	star	hd	5	5		false	false	4156	sprite_cat_cheese_staff
+cat_4157	cat_4157_name	sun	ha	6	6a		false	false	4157	sprite_cat_tuxedo_bow
+cat_4158	cat_4158_name	sun	def	5	5		false	false	4158	sprite_cat_calico_shield
+cat_4159	cat_4159_name	fire	hp	6	6a	26	false	false	4159	sprite_cat_tuxedo_shield
+cat_4160	cat_4160_name	moon	def	5	5		false	false	4160	sprite_cat_calico_shield
+cat_4161	cat_4161_name	fire	def	5	5		false	false	4161	sprite_cat_tuxedo_shield
+cat_4162	cat_4162_name	leaf	ad	6	6a	27	false	false	4162	sprite_cat_mackerel_bow
+cat_4163	cat_4163_name	moon	ad	5	5		false	false	4163	sprite_cat_calico_bow
+cat_4164	cat_4164_name	sun	ha	5	5		false	false	4164	sprite_cat_mackerel_bow
+cat_4165	cat_4165_name	star	atk	5	5		false	false	4165	sprite_cat_tuxedo_sword
+cat_4166	cat_4166_name	wind	ad	6	6b	79	false	false	4166	sprite_cat_mackerel_bow
+cat_4173	cat_4173_name	star	hd	6	6b	72	false	false	4173	sprite_cat_tuxedo_staff
+cat_4174	cat_4174_name	dusk	ad	6	6b	96	false	false	4174	sprite_cat_tuxedo_bow
+cat_4175	cat_4175_name	fire	ha	6	6b	95	false	false	4175	sprite_cat_mackerel_bow
+cat_4176	cat_4176_name	water	def	6	6b	67	false	false	4176	sprite_cat_cheese_shield
+cat_4177	cat_4177_name	fire	ha	5	5		false	false	4177	sprite_cat_cheese_bow
+cat_4178	cat_4178_name	moon	atk	5	5	74	false	false	4178	sprite_cat_mackerel_sword
+cat_4179	cat_4179_name	leaf	ha	5	5	12	false	false	4179	sprite_cat_calico_bow
+cat_4180	cat_4180_name	fire	def	6	6b	23	false	false	4180	sprite_cat_cheese_shield
+cat_4181	cat_4181_name	wind	hp	6	6a	36	false	false	4181	sprite_cat_cheese_shield
+cat_4182	cat_4182_name	fire	ha	5	5		false	false	4182	sprite_cat_tuxedo_bow
+cat_4183	cat_4183_name	leaf	hd	5	5		false	false	4183	sprite_cat_mackerel_staff
+cat_4184	cat_4184_name	water	hd	5	5	57	false	false	4184	sprite_cat_calico_staff
+cat_4185	cat_4185_name	water	ha	5	5		false	false	4185	sprite_cat_tuxedo_bow
+cat_4186	cat_4186_name	sun	hp	5	5	36	false	false	4186	sprite_cat_mackerel_shield
+cat_4187	cat_4187_name	leaf	hd	6	6a	39	false	false	4187	sprite_cat_calico_staff
+cat_4188	cat_4188_name	wind	ad	5	5		false	false	4188	sprite_cat_tuxedo_bow
+cat_4189	cat_4189_name	moon	hp	5	5	91	false	false	4189	sprite_cat_tuxedo_shield
+cat_4190	cat_4190_name	sun	hd	6	6b	23	false	false	4190	sprite_cat_mackerel_staff
+cat_4191	cat_4191_name	star	ha	6	6b	15	false	false	4191	sprite_cat_cheese_bow
+cat_4192	cat_4192_name	fire	hd	5	5	30	false	false	4192	sprite_cat_calico_staff
+cat_4193	cat_4193_name	fire	ad	5	5		false	false	4193	sprite_cat_tuxedo_bow
+cat_4194	cat_4194_name	star	def	5	5	36	false	false	4194	sprite_cat_mackerel_shield
+cat_4195	cat_4195_name	leaf	hd	6	6a	30	false	false	4195	sprite_cat_calico_staff
+cat_4196	cat_4196_name	wind	ad	5	5		false	false	4196	sprite_cat_tuxedo_bow
+cat_4197	cat_4197_name	star	def	6	6b	65	false	false	4197	sprite_cat_tuxedo_shield
+cat_4198	cat_4198_name	wind	hd	6	6b	84	false	false	4198	sprite_cat_tuxedo_staff
+cat_4199	cat_4199_name	leaf	ha	6	6b	71	false	false	4199	sprite_cat_cheese_bow
+cat_4200	cat_4200_name	shade	atk	6	6b	37	false	false	4200	sprite_cat_cheese_sword
+cat_4201	cat_4201_name	moon	hp	6	6b	89	false	false	4201	sprite_cat_mackerel_shield
+cat_4202	cat_4202_name	fire	hd	6	6b	45	false	false	4202	sprite_cat_cheese_staff
+cat_4203	cat_4203_name	water	ha	6	6b	75	false	false	4203	sprite_cat_mackerel_bow
+cat_4204	cat_4204_name	sun	atk	6	6b	58	false	false	4204	sprite_cat_tuxedo_sword
+cat_4205	cat_4205_name	dusk	def	6	6b	40	false	false	4205	sprite_cat_tuxedo_shield
+cat_4206	cat_4206_name	wind	atk	6	6b	11	false	false	4206	sprite_cat_tuxedo_sword
+cat_4207	cat_4207_name	star	ad	6	6b	86	false	false	4207	sprite_cat_mackerel_bow
+cat_4208	cat_4208_name	moon	ha	6	6b	70	false	false	4208	sprite_cat_tuxedo_bow
+cat_4209	cat_4209_name	wind	atk	6	6b	73	false	false	4209	sprite_cat_cheese_sword
+cat_4210	cat_4210_name	sun	hd	6	6b	50	false	false	4210	sprite_cat_mackerel_staff
+cat_4211	cat_4211_name	fire	atk	6	6b	80	false	false	4211	sprite_cat_mackerel_sword
+cat_4212	cat_4212_name	water	def	6	6b	64	false	false	4212	sprite_cat_calico_shield

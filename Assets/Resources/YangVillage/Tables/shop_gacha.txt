@@ -1,0 +1,8 @@
+gacha_id	text_id	tab_id	price	currency_id	count	grade
+shop_gacha_01	shop_gacha_01_name	shop_tab_2	777	currency_09	1	special
+shop_gacha_02	shop_gacha_02_name	shop_tab_4	5000	currency_01	1	normal
+shop_gacha_03	shop_gacha_03_name	shop_tab_4	15	currency_02	1	high
+shop_gacha_04	shop_gacha_04_name	shop_tab_4	45000	currency_01	10	normal
+shop_gacha_05	shop_gacha_05_name	shop_tab_4	150	currency_02	10	high
+shop_gacha_06	shop_gacha_06_name	shop_tab_4	30	currency_02	1	only
+shop_gacha_07	shop_gacha_07_name	shop_tab_4	300	currency_02	10	only

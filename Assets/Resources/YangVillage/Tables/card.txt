@@ -1,0 +1,4 @@
+card_id	text_id	color	power_pct	hits	gauge
+card_power	card_power_name	e2574c	150	1	0
+card_charge	card_charge_name	4a8fd9	100	1	2
+card_swift	card_swift_name	4fae5a	60	2	1

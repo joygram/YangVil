@@ -1,0 +1,10 @@
+currency_id	text_id	element_id
+currency_01	currency_01_name	
+currency_02	currency_02_name	
+currency_03	currency_03_name	leaf
+currency_04	currency_04_name	none
+currency_05	currency_05_name	sun
+currency_06	currency_06_name	wind
+currency_07	currency_07_name	moon
+currency_08	currency_08_name	fire
+currency_09	currency_09_name	

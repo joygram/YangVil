@@ -1,0 +1,10 @@
+wallet_id	slot	currency_id
+money	0	currency_01
+money	1	currency_02
+element	0	currency_03
+element	1	currency_04
+element	2	currency_05
+element	3	currency_06
+element	4	currency_07
+element	5	currency_08
+pvp	0	currency_09

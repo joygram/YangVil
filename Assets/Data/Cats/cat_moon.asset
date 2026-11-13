@@ -36,75 +36,25 @@ MonoBehaviour:
     accent2: {r: 0.050980393, g: 0.047058824, b: 0.0627451, a: 1}
   sprites:
     idle:
-    - m_AssetGUID: f5fcd01f2f8ab074cb992cc3ba07c856
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    - m_AssetGUID: 79616f61c237a414f8a7efb1c946a697
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    - m_AssetGUID: 22a6d19e463202d4f97718f1767a567d
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    - m_AssetGUID: e4a46fee4b8a60345a473a27b288d9e2
+    - m_AssetGUID: cb62c5281fcd47da82dd6dc40a6833a1
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     walk:
-    - m_AssetGUID: b2ed9831ae93d6a4aa1da35f3a7ea8f2
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    - m_AssetGUID: 87a78a1137adfff4f82510fdad98aa0e
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    - m_AssetGUID: 4bd71ab5bf9daf844a03f829cee9b097
+    - m_AssetGUID: cb62c5281fcd47da82dd6dc40a6833a1
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     attack:
-    - m_AssetGUID: 2cd9efada95a13b43ba1ca668af3b0a3
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    - m_AssetGUID: ce1d8b407dc29b74398df7a2d16d15f3
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    - m_AssetGUID: 58f428472c0536541b8a62a267e9e157
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    - m_AssetGUID: 5a220fa73129f2b41ac01fbad4858ef3
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    - m_AssetGUID: 9b030e981eb811a4398d8a17f8bf3d48
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    - m_AssetGUID: 28e3fae11f865d440b3b06440575626e
+    - m_AssetGUID: cb62c5281fcd47da82dd6dc40a6833a1
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     hurt:
-    - m_AssetGUID: 73fb8fb63f9f0964fa91f234277fb7cf
+    - m_AssetGUID: cb62c5281fcd47da82dd6dc40a6833a1
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 

@@ -1,0 +1,5 @@
+region_id	text_id	act	sprite_id	boss_sprite_id
+region_alley	region_alley_name	1	sprite_mouse	sprite_elite_rat
+region_wire_forest	region_wire_forest_name	2	sprite_pigeon	sprite_pigeon
+region_hill	region_hill_name	3	sprite_goblin	sprite_wolf_boss
+region_dark_house	region_dark_house_name	4	sprite_ghost	sprite_imp

@@ -129,6 +129,86 @@ MonoBehaviour:
     m_SerializedLabels:
     - ForestCritters
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c56ad9ba3501b25dde05e34ae9ce614
+    m_Address: Assets/Art/Cats/cat_cheese_sword.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1bba584de95cd87a083e36d32e0c64b4
+    m_Address: Assets/Art/Cats/cat_cheese_shield.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c94e9056d9393280f51d8ba49f1aed1
+    m_Address: Assets/Art/Cats/cat_cheese_bow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e59981679a9bdd04561186ade378adbe
+    m_Address: Assets/Art/Cats/cat_cheese_staff.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: df35f597acccc48ed6f9ed8d6507e6e1
+    m_Address: Assets/Art/Cats/cat_tuxedo_sword.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c6576808d8abea6fd098ec1201f70fdf
+    m_Address: Assets/Art/Cats/cat_tuxedo_shield.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 287663422eebc8a24a6664c8ac4297a7
+    m_Address: Assets/Art/Cats/cat_tuxedo_bow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43cd0c4db7d4db4ff283a002cef2273c
+    m_Address: Assets/Art/Cats/cat_tuxedo_staff.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c25e0503afac8eaba9d2bf8636663f48
+    m_Address: Assets/Art/Cats/cat_mackerel_sword.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 288a74a5a96bc97d38f27a19a70cf5e8
+    m_Address: Assets/Art/Cats/cat_mackerel_shield.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb62c5281fcd47da82dd6dc40a6833a1
+    m_Address: Assets/Art/Cats/cat_mackerel_bow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e942df5df481923a49c7f922b2cc9f90
+    m_Address: Assets/Art/Cats/cat_mackerel_staff.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21c41b7ac1fc525261ca2231f4ac17d7
+    m_Address: Assets/Art/Cats/cat_calico_sword.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95f045f67b42b689d0efef1c666fff82
+    m_Address: Assets/Art/Cats/cat_calico_shield.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3349a63414ddede409c2f0176266e27
+    m_Address: Assets/Art/Cats/cat_calico_bow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5999a5c1f16b38fa5c49e7a51e5bad9f
+    m_Address: Assets/Art/Cats/cat_calico_staff.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 979bbe879c9c76d4799e301dbda9d457, type: 2}
   m_SchemaSet:

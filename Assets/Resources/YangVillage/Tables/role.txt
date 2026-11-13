@@ -1,0 +1,7 @@
+role_id	text_id	spd	attack_style_id
+atk	role_atk_name	12	style_slash
+hp	role_hp_name	8	style_bash
+def	role_def_name	7	style_bash
+ha	role_ha_name	10	style_shot
+ad	role_ad_name	11	style_shot
+hd	role_hd_name	9	style_cast

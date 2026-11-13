@@ -1,0 +1,6 @@
+screen_id	scene_path
+intro	res://scenes/intro.tscn
+village	res://scenes/village.tscn
+stage_select	res://scenes/stage_select.tscn
+battle	res://scenes/battle.tscn
+result	res://scenes/result.tscn

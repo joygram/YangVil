@@ -1,0 +1,8 @@
+basket_id	star	weight
+basket_1	2	18
+basket_1	3	50
+basket_1	4	29
+basket_1	5	3
+basket_2	4	55
+basket_2	5	38
+basket_2	6	7

@@ -1,0 +1,11 @@
+element_id	text_id	dv2_element	beats	color	sprite_id	hit_sprite_id	skill_sprite_id	shot_sprite_id	burns
+fire	element_fire_name	fire	leaf	ff7a5c	sprite_element_fire	sprite_fx_fire_hit	sprite_fx_fire_skill	sprite_fx_fire_shot	true
+water	element_water_name	aqua	fire	5cb8ff	sprite_element_water	sprite_fx_water_hit	sprite_fx_water_skill	sprite_fx_water_shot	false
+leaf	element_leaf_name	earth	wind	7ccf6a	sprite_element_leaf	sprite_fx_leaf_hit	sprite_fx_leaf_skill	sprite_fx_leaf_shot	false
+wind	element_wind_name	wind	water	a8e6cf	sprite_element_wind	sprite_fx_wind_hit	sprite_fx_wind_skill	sprite_fx_wind_shot	false
+sun	element_sun_name	light	moon	ffd65c	sprite_element_sun	sprite_fx_sun_hit	sprite_fx_sun_skill	sprite_fx_sun_shot	false
+moon	element_moon_name	dark	sun	b59cff	sprite_element_moon	sprite_fx_moon_hit	sprite_fx_moon_skill	sprite_fx_moon_shot	false
+star	element_star_name	holy		fff3b0		sprite_paw	sprite_boss_claw	sprite_furball	false
+dusk	element_dusk_name	chaos		ff9e7a		sprite_paw	sprite_boss_claw	sprite_furball	false
+shade	element_shade_name	shadow		8a8aa8		sprite_paw	sprite_boss_claw	sprite_furball	false
+none	element_none_name			ffffff		sprite_paw	sprite_boss_claw	sprite_furball	false

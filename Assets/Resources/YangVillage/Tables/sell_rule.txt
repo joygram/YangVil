@@ -1,0 +1,4 @@
+kind	ratio_pct
+item	10
+gem	25
+equip	25
