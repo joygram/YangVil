@@ -18,8 +18,9 @@ namespace YangVil.Core
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void StartFromBoot()
         {
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex != 0)
-                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            // 시작 씬 = YangVillage(Godot 이식, 빌드 0). 기존 흐름의 Village·Battle 씬(빌드 목록 밖)을 직접 열면 기존 Intro 로.
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex < 0)
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Intro");
         }
 
         void Start()

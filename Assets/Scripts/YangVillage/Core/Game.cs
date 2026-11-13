@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using YangVillage.Battle;
 
-// Godot YangVillage game/scripts/core (SaveData·Game) 이식. 마을(고양이) 규칙만 — 전투·거점은 미이식.
+// Godot YangVillage game/scripts/core (SaveData·Game) 이식. 동작 동일.
 namespace YangVillage.Core
 {
     [Serializable]
@@ -189,5 +190,130 @@ namespace YangVillage.Core
             Commit();
             return cat;
         }
+
+        // 거점
+        public List<string[]> Stages => Db.Set.Get("stage").Rows
+            .OrderBy(r => Db.Int("region", "region_id", Db.Cell("stage", r, "region_id"), "act"))
+            .ThenBy(r => int.Parse(Db.Cell("stage", r, "order"))).ToList();
+
+        public string StageName(string stageId) => Db.Text(Db.Get("stage", "stage_id", stageId, "text_id"));
+
+        public int Stars(string stageId) => Data.stages.Find(r => r.stageId == stageId)?.stars ?? 0;
+
+        public bool IsUnlocked(int index) => index == 0 || Stars(Db.Cell("stage", Stages[index - 1], "stage_id")) > 0;
+
+        public string NextStageId(string stageId)
+        {
+            var list = Stages;
+            var i = list.FindIndex(r => Db.Cell("stage", r, "stage_id") == stageId) + 1;
+            return i > 0 && i < list.Count && IsUnlocked(i) ? Db.Cell("stage", list[i], "stage_id") : null;
+        }
+
+        public int RewardCoins(string stageId) =>
+            Db.ConfigInt("reward_coin_base") + Db.Int("stage", "stage_id", stageId, "level") * Db.ConfigInt("reward_coin_per_level");
+
+        // 전투
+        public BattleUnit UnitFromCat(OwnedCat cat)
+        {
+            var row = Db.Row("cat", "cat_id", cat.catId);
+            var role = Db.Cell("cat", row, "role_id");
+            var tier = Db.Cell("cat", row, "stat_tier");
+            var stat = Db.Where("cat_stat", "role_id", role).First(r => Db.Cell("cat_stat", r, "stat_tier") == tier);
+            int At(string name) => int.Parse(Db.Cell("cat_stat", stat, "base_" + name)) + int.Parse(Db.Cell("cat_stat", stat, "growth_" + name)) * (cat.level - 1);
+            var mult = Math.Pow(Db.ConfigInt("growth_stage_mult_pct") / 100.0, GrowthStage(cat.level));
+            var hp = (int)(At("hp") * mult);
+            return new BattleUnit
+            {
+                Uid = cat.uid, Name = CatName(cat), Level = cat.level, ElementId = Db.Cell("cat", row, "element_id"), SpriteId = Db.Cell("cat", row, "sprite_id"), IsAlly = true,
+                MaxHp = hp, Hp = hp, Atk = (int)(At("atk") * mult), Def = (int)(At("def") * mult),
+                Spd = Db.Int("role", "role_id", role, "spd"), Deck = DeckOf(role), StyleId = Db.Get("role", "role_id", role, "attack_style_id")
+            };
+        }
+
+        readonly Dictionary<string, CardDef> _cards = new Dictionary<string, CardDef>();
+
+        CardDef Card(string cardId)
+        {
+            if (_cards.TryGetValue(cardId, out var card)) return card;
+            return _cards[cardId] = new CardDef
+            {
+                Id = cardId, Name = Db.Text(Db.Get("card", "card_id", cardId, "text_id")), Color = Db.Get("card", "card_id", cardId, "color"),
+                PowerPct = Db.Int("card", "card_id", cardId, "power_pct"), Hits = Db.Int("card", "card_id", cardId, "hits"), Gauge = Db.Int("card", "card_id", cardId, "gauge")
+            };
+        }
+
+        List<CardDef> DeckOf(string role)
+        {
+            var deck = new List<CardDef>();
+            foreach (var row in Db.Where("role_card", "role_id", role))
+                for (var i = int.Parse(Db.Cell("role_card", row, "count")); i > 0; i--)
+                    deck.Add(Card(Db.Cell("role_card", row, "card_id")));
+            return deck;
+        }
+
+        BattleUnit UnitFromEnemy(string[] row)
+        {
+            var enemyId = Db.Cell("stage_enemy", row, "enemy_id");
+            var boss = Db.Cell("stage_enemy", row, "is_boss") == "true";
+            var hp = int.Parse(Db.Cell("stage_enemy", row, "hp"));
+            // 적마다 제 그림이 있으면 그것을, 아직 없으면 지역 공용 그림을 쓴다.
+            var sprite = Db.Get("enemy", "enemy_id", enemyId, "sprite_id");
+            if (sprite == "") sprite = Db.Get("region", "region_id", Db.Get("enemy", "enemy_id", enemyId, "region_id"), boss ? "boss_sprite_id" : "sprite_id");
+            return new BattleUnit
+            {
+                Uid = enemyId, Name = Db.Text(Db.Get("enemy", "enemy_id", enemyId, "text_id")),
+                Level = int.Parse(Db.Cell("stage_enemy", row, "level")),
+                ElementId = Db.Get("enemy", "enemy_id", enemyId, "element_id"), IsBoss = boss,
+                SpriteId = sprite,
+                MaxHp = hp, Hp = hp, Atk = int.Parse(Db.Cell("stage_enemy", row, "atk")), Def = int.Parse(Db.Cell("stage_enemy", row, "def")),
+                Spd = Db.ConfigInt(boss ? "boss_spd" : "enemy_spd"), StyleId = Db.Config(boss ? "boss_attack_style_id" : "enemy_attack_style_id")
+            };
+        }
+
+        public BattleState BuildBattle(string stageId)
+        {
+            var size = Db.ConfigInt("wave_size");
+            var rows = Db.Where("stage_enemy", "stage_id", stageId)
+                .OrderBy(r => Db.Cell("stage_enemy", r, "is_boss") == "true" ? 1 : 0)
+                .ThenBy(r => int.Parse(Db.Cell("stage_enemy", r, "slot"))).ToList();
+            var waves = new List<List<BattleUnit>>();
+            for (var i = 0; i < rows.Count; i += size)
+                waves.Add(rows.Skip(i).Take(size).Select(UnitFromEnemy).ToList());
+            return new BattleState(new Affinity(Db), Party.Select(UnitFromCat).ToList(), waves,
+                new BattleRules
+                {
+                    MaxTurns = Db.ConfigInt("max_battle_turns"), FastClearTurns = Db.ConfigInt("fast_clear_turns"), SkillPowerPct = Db.ConfigInt("skill_power_pct"),
+                    HandSize = Db.ConfigInt("hand_size"), PickCount = Db.ConfigInt("pick_count"), ChainBonusPct = Db.ConfigInt("chain_bonus_pct"), ExtraPowerPct = Db.ConfigInt("extra_power_pct")
+                }, _rng);
+        }
+
+        public BattleReward ApplyVictory(string stageId, int stars)
+        {
+            var record = Data.stages.Find(r => r.stageId == stageId);
+            var firstClear = record == null;
+            if (firstClear) Data.stages.Add(record = new StageRecord { stageId = stageId });
+            record.stars = Math.Max(record.stars, stars);
+
+            var reward = new BattleReward { coins = RewardCoins(stageId), treats = Db.ConfigInt("reward_treats"), stars = stars };
+            Data.coins += reward.coins;
+            Data.treats += reward.treats;
+            var exp = Db.Int("stage", "stage_id", stageId, "level") * Db.ConfigInt("reward_exp_per_level");
+            foreach (var cat in Party) GainExp(cat, exp);
+            if (firstClear && FreeHatcherySlots > 0)
+            {
+                reward.basketCatId = RollBasketCat(Db.Config("stage_basket_id"));
+                Data.baskets.Add(new Basket { catId = reward.basketCatId, hatchAtUnix = Now + Db.ConfigInt("hatch_seconds") });
+            }
+            Commit();
+            return reward;
+        }
+    }
+
+    public class BattleReward
+    {
+        public int coins;
+        public int treats;
+        public int stars;
+        public string basketCatId;
     }
 }

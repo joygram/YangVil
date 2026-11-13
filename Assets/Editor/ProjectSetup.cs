@@ -127,7 +127,8 @@ namespace YangVil.EditorTools
             bootGo.AddComponent<AudioHub>();
 
             EditorSceneManager.SaveScene(scene, IntroScenePath);
-            EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(IntroScenePath, true) };
+            // 0 = YangVillage(Godot 이식 시작 씬), 1 = 기존 흐름 Intro.
+            EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene("Assets/Scenes/YangVillage.unity", true), new EditorBuildSettingsScene(IntroScenePath, true) };
         }
     }
 }

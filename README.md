@@ -9,7 +9,67 @@
 - 플랫폼: PC(Windows) · 웹 브라우저(WebGL)
 - 엔진: Unity 6000.6.8f1 (정본: ProjectSettings/ProjectVersion.txt)
 
-## 플레이 흐름
+## 지금 버전 (YangVillage 이식판)
+- 시작 씬 = `Assets/Scenes/YangVillage.unity` (빌드 0번)
+- Godot 프로젝트 `YangVillage/game` 의 현재 화면·규칙을 그대로 옮김
+- 흐름: 인트로 → 마을(마당·부화소·상점·식구) → 모험 지도 → 전투 → 결과 → 마을
+- 코드: `Assets/Scripts/YangVillage/` (Core = 규칙, Ui = 화면)
+- 저장: `persistentDataPath/yangvillage_save.json`
+- 아래 "이전 버전" 이하 = `Assets/Scenes/Intro.unity` 설명. 그 씬을 직접 열어 Play 하면 이전 버전 실행
+
+## 에셋 바꾸기 (협업자용)
+- 코드 수정 없음 → 그림 파일 교체 또는 표(TSV) 한 줄 수정
+- 그림 폴더 `R` = `Assets/Resources/YangVillage/assets/shared`
+- 표 폴더 `T` = `Assets/Resources/YangVillage/Tables` (TSV, 확장자 .txt)
+
+### 그림이 있는 곳
+| 종류 | 파일 |
+|---|---|
+| 고양이 16종 (4무늬×4직업) | `R/cats/cat_professions.png` (4×4 칸) |
+| 적 (쥐·비둘기·보스) | `R/actors/*.png` |
+| 타격·필살·발사 이펙트 | `R/effects/*.png` |
+| 속성 아이콘 6종 | `R/effects/elements.png` (4×6 칸) |
+| 마당·전투 배경 | `R/world/village_courtyard.png` |
+| 마당 소품 | `R/props/*.png` |
+| 지도 노드·코인 | `R/ui/*.png` |
+| 메뉴 바구니·깃발 | `assets/ui/village/*.png` |
+
+- 베기 궤적·불티·컷인 띠·땀·별 = 그림 없이 도형으로 그림. 색 = `T/element.txt` 의 `color`
+
+### 1) 같은 자리 그림만 바꾸기 (가장 쉬움)
+- png 를 같은 이름·같은 칸 배치로 덮어쓰기 → Unity 로 돌아오면 자동 반영
+- 여러 칸 시트는 칸 수 유지. 크기 자유 (칸 = 가로÷열, 세로÷행)
+- 배경 투명 PNG
+
+### 2) 새 그림 추가해서 바꿔 끼우기
+- png 를 `Assets/Resources/YangVillage/assets/` 아래에 넣기
+- `T/sprite.txt` 에 한 줄 추가: `sprite_id  path  columns  rows  start  count`
+- `path` = `res://assets/...png` (Resources/YangVillage 기준)
+- 한 장짜리 = `1 1 0 1`. `count` 2 이상 = 칸 넘기는 애니메이션 (0.15초)
+- 쓸 곳의 표 칸에 새 `sprite_id` 적기
+
+| 바꿀 것 | 표 · 칸 |
+|---|---|
+| 고양이 한 마리 외형 | `cat.txt` → `sprite_id` |
+| 적 한 종 외형 | `enemy.txt` → `sprite_id` (빈칸 = 지역 공용) |
+| 지역 공용 적·보스 | `region.txt` → `sprite_id`, `boss_sprite_id` |
+| 속성 타격·필살 이펙트 | `element.txt` → `hit_sprite_id`, `skill_sprite_id` |
+| 속성 발사체·아이콘 | `element.txt` → `shot_sprite_id`, `sprite_id` |
+| 전투 배경 | `config.txt` → `battle_backdrop_sprite_id` |
+| 돌진 먼지 | `config.txt` → `dust_sprite_id` |
+
+### 3) UI 색·글자·타격감
+- 색: `Assets/Scripts/YangVillage/Ui/Kit.cs` 맨 위 색 목록 (Ink·Paper·Accent·Grass…)
+- 문구: `T/text.txt` 의 `ko` 칸
+- 폰트: `Assets/Art/UI/Fonts/Galmuri11 SDF.asset` (씬 `Boot` 오브젝트 font 칸)
+- 히트스톱·흔들림·넉백·확대·컷인 시간: `T/config.txt` (`*_ms`, `*_px`, `*_pct`)
+
+### 4) Godot 원본과 맞추기
+- 정본 = Godot `YangVillage/game` (표·그림)
+- Godot 쪽 수정 후: `python scripts/sync_godot_village.py` → 표·그림 다시 복사
+- Unity 에서만 고친 표·그림은 이 명령에 덮어써짐 → Godot 에도 같이 반영
+
+## 이전 버전 플레이 흐름
 ```
 인트로 ─▶ 마을(월드) ─┬─ 부화소: 바구니 부화 → 고양이 탄생
                       ├─ 고양이 집: 속성 맞는 집으로 이동 → 마당에서 배회·코인 생산

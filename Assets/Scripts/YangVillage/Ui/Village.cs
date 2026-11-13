@@ -2,13 +2,10 @@ using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.UI;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using YangVillage.Core;
 
-// Godot YangVillage game/scripts/ui/Village.cs (scenes/village.tscn) 이식. 씬: Assets/Scenes/CatYard.unity
+// Godot YangVillage game/scripts/ui/Village.cs (scenes/village.tscn) 이식. screen_id = village
 namespace YangVillage.Ui
 {
     // 마을: 화면 전체가 마당(고양이 배회). 위에 재화·가이드, 아래에 메뉴 줄, 나머지는 메뉴에서 여는 창.
@@ -17,12 +14,6 @@ namespace YangVillage.Ui
         const float CatSize = 240;
         const float MenuHeight = 104;
         const float IconSize = 52;
-        static readonly Vector2 Viewport = new Vector2(540, 960);
-
-        // 모험 = Godot stage_select (미이식) → 기존 Unity 흐름 입구로 보냄.
-        public string adventureScene = "Intro";
-        public TMP_FontAsset font;
-
         Game G => App.Game;
         RectTransform _root, _yard, _popup;
         TextMeshProUGUI _coins, _treats, _guide;
@@ -33,22 +24,8 @@ namespace YangVillage.Ui
 
         void Awake()
         {
-            Kit.Font = font;
-            if (EventSystem.current == null)
-                new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
-            var canvasGo = new GameObject("Canvas", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
-            canvasGo.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-            var scaler = canvasGo.GetComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = Viewport;
-            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
-            _root = (RectTransform)canvasGo.transform;
-            Build();
-        }
-
-        void Build()
-        {
-            Kit.Rect(_root, Kit.Grass);
+            _root = (RectTransform)transform;
+            Kit.Root(_root, Kit.Grass);
             _yard = Kit.Node("yard", _root);
             Kit.Fill(_yard);
             _yard.gameObject.AddComponent<RectMask2D>();
@@ -74,7 +51,7 @@ namespace YangVillage.Ui
             _hatcheryButton = MenuButton(menu, "sprite_basket", "ui_menu_hatchery", () => Open(Hatchery), false);
             MenuButton(menu, "sprite_reward_coin", "ui_menu_shop", () => Open(Shop), false);
             _catsButton = MenuButton(menu, "sprite_food_bowl", "ui_menu_cats", () => Open(Cats), false);
-            MenuButton(menu, "sprite_pawprint", "ui_menu_adventure", () => SceneManager.LoadScene(adventureScene), true);
+            MenuButton(menu, "sprite_pawprint", "ui_menu_adventure", () => App.Go("stage_select"), true);
 
             // Godot 은 마당 크기가 정해진 뒤(deferred) 첫 갱신 — 여기선 Start 에서.
         }

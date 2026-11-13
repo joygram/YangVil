@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/YangVillage.unity
+    guid: 6a1e0c3b9f5d4e21a7b8c9d0e1f2a3a0
+  - enabled: 1
     path: Assets/Scenes/Intro.unity
     guid: 38a5046a8577a3e46ab43bfb5b9a1edf
-  - enabled: 1
-    path: Assets/Scenes/CatYard.unity
-    guid: 6a1e0c3b9f5d4e21a7b8c9d0e1f2a3a0
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 4fc82c56b77ad1d44a477ab8145ed178, type: 2}

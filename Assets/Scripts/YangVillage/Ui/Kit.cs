@@ -182,6 +182,72 @@ namespace YangVillage.Ui
 
         public static TextMeshProUGUI ButtonText(Button button) => button.GetComponentInChildren<TextMeshProUGUI>();
 
+        public static readonly Color Down = new Color(0.45f, 0.45f, 0.5f, 0.5f);
+
+        // 화면 루트: 바탕색 채움 (Godot Kit.Root).
+        public static void Root(RectTransform root, Color background) => Rect(root, background);
+
+        // Godot PanelContainer + VBoxContainer: 종이 상자 + 안쪽 세로 줄.
+        public static RectTransform Card(Transform parent, int gap = 4)
+        {
+            var panel = Panel(parent, Paper, Ink, 16);
+            var r = (RectTransform)panel.transform;
+            VBox(r, gap, 14);
+            return r;
+        }
+
+        // 세로 줄 가운데 정렬 (Godot BoxContainer.AlignmentMode.Center).
+        public static void CenterColumn(RectTransform column) => column.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.MiddleCenter;
+
+        // Godot Control 자리(왼쪽 위·크기) → 가운데 축으로 놓기.
+        public static void PlaceCentered(RectTransform r, Vector2 position, Vector2 size)
+        {
+            r.anchorMin = r.anchorMax = r.pivot = new Vector2(0.5f, 0.5f);
+            r.sizeDelta = size;
+            r.anchoredPosition = new Vector2(position.x + size.x / 2, -(position.y + size.y / 2));
+        }
+
+        public static void Outline(TextMeshProUGUI label, Color color, int size)
+        {
+            label.outlineColor = color;
+            label.outlineWidth = Mathf.Clamp01(size / 24f);
+        }
+
+        public static void NoWrap(TextMeshProUGUI label) => label.textWrappingMode = TextWrappingModes.NoWrap;
+
+        public static void SetDisabled(Button button, bool disabled)
+        {
+            button.interactable = !disabled;
+            ButtonText(button).color = disabled ? Muted : Ink;
+        }
+
+        // 버튼 상자 색 바꾸기 (Godot AddThemeStyleboxOverride).
+        public static void Restyle(Button button, Color fill, Color border, int radius = 12)
+        {
+            var img = (Image)button.targetGraphic;
+            img.sprite = BoxSprite(fill, border, radius);
+            button.transition = Selectable.Transition.None;
+        }
+
+        // Godot Modulate: 하위 그림·글 색에 곱함. 처음 색을 기억해 둔다.
+        public static void Modulate(Component root, Color tint)
+        {
+            foreach (var g in root.GetComponentsInChildren<Graphic>(true))
+            {
+                if (!g.TryGetComponent<BaseColor>(out var b)) { b = g.gameObject.AddComponent<BaseColor>(); b.Value = g.color; }
+                g.color = b.Value * tint;
+            }
+        }
+
+        public class BaseColor : MonoBehaviour { public Color Value; }
+
+        public static string Stars(int stars)
+        {
+            var text = "";
+            for (var i = 0; i < YangVillage.Battle.BattleState.MaxStars; i++) text += App.T(i < stars ? "ui_star_on" : "ui_star_off");
+            return text;
+        }
+
         // 버튼 글 위에 그림 (Godot ExpandIcon + 위쪽 정렬).
         public static Image ButtonIcon(Button button, Sprite sprite, float size, bool above = true)
         {
