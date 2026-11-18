@@ -53,6 +53,8 @@ namespace YangVillage.Ui
             Kit.Fill(r);
             _current = r.gameObject;
             r.gameObject.AddComponent(Screens[screenId]);
+            // 측정·검사 신호 (yangvil-godot-csharp scripts/web/play.mjs)
+            Debug.Log($"[screen] {screenId}");
         }
 
         public static IEnumerable<string> ScreenIds => Screens.Keys;
